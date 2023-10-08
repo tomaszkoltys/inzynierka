@@ -3,11 +3,11 @@ Navbar:
 1. Zrobione:
 
 - UI
+- Wygląd podstron O nas, Kontakt
+- Funkcjonalność zmiany języka (pliki w src/locales/en.json i src/locales/pl.json)
 
 2. Do zrobienia:
-
-- dodac wygląd postron O nas, Kontakt
-- dodac funkcjonalność zmiany języka
+   
 - dodać warunek czy mają być wyświetlane zakładki dla Vol czy Ref
 
 Vol:
