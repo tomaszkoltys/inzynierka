@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer utilities {
+  * {
+    font-family: "Mukta", sans-serif;
+  }
+  body {
+    background-color: #c7b68a;
+  }
+  .h-form {
+    height: calc(100vh - 96px);
+  }
+  .h-form-short {
+    height: calc(100vh - 190px);
+  }
+  input {
+    outline: none;
+  }
+  .register-radiobutton {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .register-radiobutton:checked::before {
+    content: "x";
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: black;
+  }
+  .p-container {
+    padding-top: 6rem;
+  }
+  .settings-checkbox {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .settings-checkbox:checked::before {
+    content: "x";
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: black;
+  }
+}
+
+p {
+  font-family: "Mukta", sans-serif;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+h1 {
+  font-size: 20px;
+
+  font-family: "Mukta", sans-serif;
+}
