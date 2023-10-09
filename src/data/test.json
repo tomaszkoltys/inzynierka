@@ -4,7 +4,7 @@
     "voivodeship": "Lubelskie",
     "district": "Lublin",
     "service": "Medyczna",
-    "description": "Oferuję leki przeciwbólowe",
+    "description": "Potrzebuję leków przeciwbólowych",
     "img": "https://i.imgur.com/yaXNpE6.jpg"
   },
   {
@@ -12,7 +12,7 @@
     "voivodeship": "Mazowieckie",
     "district": "Warszawa",
     "service": "Inna",
-    "description": "Oferuję 10kg makaronu, 5kg ryżu.",
+    "description": "Potrzebuję 10kg makaronu, 5kg ryżu.",
     "img": "https://i.imgur.com/vU2ajjQ.jpg"
   },
   {
@@ -20,7 +20,7 @@
     "voivodeship": "Przykład 1",
     "district": "Przykład 2",
     "service": "Humanitarna",
-    "description": "Oferuję zakwaterowanie dla 1 osoby",
+    "description": "Potrzebuję zakwaterowania dla 1 osoby",
     "img": "https://i.imgur.com/yV5OQht.jpg"
   }
 ]

@@ -65,34 +65,45 @@ export const CurrentNeeds = () => {
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1.5%]">
             {t('current-needs')}
           </div>
-          <div className="flex flex-col">
-            <div className="grid grid-cols-1 lg:grid-cols-2 mt-8 mb-12 gap-6">
-              <div>
-                <span className="border-b border-gray-300">{t('sorting')}</span>
-              </div>
-              <div className="flex justify-center items-center text-[#000] w-60 h-10 border border-gray-300 rounded-md">
-                <input
-                  autoFocus
-                  placeholder={t('search-need')}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="w-full border-none outline-none ml-2 text-sm"
-                />
-                <label className="border-l border-gray-300 h-full flex justify-center items-center w-14 rounded-md hover:cursor-pointer">
-                  <AiOutlineSearch />
-                </label>
-              </div>
-              <Dropdown label={t("choose-voivodeship")} options={voivodeshipList} />
-              <Dropdown label={t("choose-county")} options={districtList} />
-              <Dropdown label={t("choose-type-of-help")} options={serviceList} />
-              <div className="flex items-center text-[#000]">
-                <div className="flex items-center w-40 h-10 border border-gray-300 rounded-md outline-none pl-2">
-                  {location}
+          <div className="mx-2 my-2">
+            <span className="border-b border-gray-300">{t("sorting")}</span>
+          </div>
+          <div className="flex flex-col mx-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 mt-3 mb-12">
+              <div >
+                <div className="flex justify-center items-center text-[#000] w-60 h-10 border border-gray-300 rounded-md">
+                  <input
+                    autoFocus
+                    placeholder={t('search-need')}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="w-full border-none outline-none ml-2 text-sm"
+                  />
+                  <label className="border-l border-gray-300 h-full flex justify-center items-center w-16 rounded-md hover:cursor-pointer">
+                    <AiOutlineSearch />
+                  </label>
                 </div>
-                <div
-                  className="bg-gray-200 text-sm px-2 h-[80%] flex justify-center items-center ml-6 font-medium rounded-sm hover:cursor-pointer"
-                  onClick={() => userCoordinates()}
-                >
-                  {t('get-location')}
+                <div className="mt-3">
+                <Dropdown label={t("choose-type-of-help")} options={serviceList} />
+                </div>
+              </div>
+
+              <div>
+                <div>
+                <Dropdown label={t("choose-voivodeship")} options={voivodeshipList} />
+                </div>
+                <div className="mt-3">
+                <Dropdown label={t("choose-county")} options={districtList} />
+                </div>
+                <div className="flex items-center text-[#000] mt-3">
+                  <div className="flex items-center w-60 h-10 border border-gray-300 rounded-md outline-none pl-2">
+                    {location}
+                  </div>
+                  <div
+                    className="bg-gray-200 text-sm px-2 h-[80%] flex justify-center items-center ml-6 font-medium rounded-sm hover:cursor-pointer"
+                    onClick={() => userCoordinates()}
+                  >
+                    {t('get-location')}
+                  </div>
                 </div>
               </div>
             </div>
