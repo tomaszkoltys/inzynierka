@@ -3,8 +3,8 @@ import { SlArrowDown } from "react-icons/sl";
 import { TfiWorld, TfiMenu, TfiClose } from "react-icons/tfi";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useState } from 'react';
-import i18n from '../services/i18next';
+import { useState } from "react";
+import i18n from "../services/i18next";
 
 export const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
@@ -13,9 +13,9 @@ export const Navbar = () => {
     i18n.changeLanguage(lng);
   };
   // Tymczasowy sposob na zmiane wyswietlanych zakladek
-   const userType = 'vol';
+  const userType: string = "vol";
   //const userType = 'ref';
-  
+
   return (
     <div className="flex justify-between items-center h-24 w-full px-2 sm:px-8 text-black bg-[#fff] border-b border-gray-300 fixed z-30">
       <div className="group relative">
@@ -26,19 +26,27 @@ export const Navbar = () => {
           <TfiWorld className="mr-2" size={15} />
           &nbsp;Language&nbsp;
           <SlArrowDown
-            className={`ml-2 group-hover:rotate-180 group-hover:transition duration-100 ${toggleMenu ? 'rotate-180' : ''}`}
+            className={`ml-2 group-hover:rotate-180 group-hover:transition duration-100 ${
+              toggleMenu ? "rotate-180" : ""
+            }`}
             size={15}
           />
         </div>
         <ul
           className={`${
-            toggleMenu ? 'block' : 'hidden'
+            toggleMenu ? "block" : "hidden"
           } group-hover:block bg-yellow-light absolute w-full text-[#fff] text-sm`}
         >
-          <li className="p-2 hover:bg-yellow-dark hover:cursor-pointer" onClick={() => changeLanguage('pl')}>
+          <li
+            className="p-2 hover:bg-yellow-dark hover:cursor-pointer"
+            onClick={() => changeLanguage("pl")}
+          >
             <a className="m-4">Polski</a>
           </li>
-          <li className="p-2 hover:bg-yellow-dark hover:cursor-pointer" onClick={() => changeLanguage('en')}>
+          <li
+            className="p-2 hover:bg-yellow-dark hover:cursor-pointer"
+            onClick={() => changeLanguage("en")}
+          >
             <a className="m-4">English</a>
           </li>
         </ul>
@@ -48,68 +56,75 @@ export const Navbar = () => {
           <li>
             <div className="group relative">
               <div className="border-b hover:cursor-pointer">
-                <Link to="/" className="cursor-pointer flex justify-center items-center">
-                  {t('main-page')}&nbsp;
+                <Link
+                  to="/"
+                  className="cursor-pointer flex justify-center items-center"
+                >
+                  {t("main-page")}&nbsp;
                   <SlArrowDown
                     className="ml-14 group-hover:rotate-180 group-hover:transition duration-100"
                     size={15}
                   />
                 </Link>
               </div>
-              <ul className={`hidden group-hover:block bg-yellow-light absolute w-full text-[#fff] text-sm z-10`}>
-                {userType === 'vol' && (
+              <ul
+                className={`hidden group-hover:block bg-yellow-light absolute w-full text-[#fff] text-sm z-10`}
+              >
+                {userType === "vol" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/add_offer">
-                      <div className="px-2 py-4">{t('add-offer')}</div>
+                      <div className="px-2 py-4">{t("add-offer")}</div>
                     </Link>
                   </li>
                 )}
-                {userType === 'vol' && (
-                <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                  <Link to="/">
-                    <div className="px-2 py-4">{t('current-needs')}</div>
-                  </Link>
-                </li>
-                )}
-                {userType === 'vol' && (
-                <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                  <Link to="/">
-                    <div className="px-2 py-4">{t('accepted-needs')}</div>
-                  </Link>
-                </li>
-                )}
-                {userType === 'vol' && (
+                {userType === "vol" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/">
-                      <div className="px-2 py-4">{t('my-help-offers')}</div>
+                      <div className="px-2 py-4">{t("current-needs")}</div>
                     </Link>
                   </li>
                 )}
-                {userType === 'ref' && (
+                {userType === "vol" && (
+                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                    <Link to="/">
+                      <div className="px-2 py-4">{t("accepted-needs")}</div>
+                    </Link>
+                  </li>
+                )}
+                {userType === "vol" && (
+                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                    <Link to="/">
+                      <div className="px-2 py-4">{t("my-help-offers")}</div>
+                    </Link>
+                  </li>
+                )}
+                {userType === "ref" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/add-request">
-                      <div className="px-2 py-4">{t('add-request')}</div>
+                      <div className="px-2 py-4">{t("add-request")}</div>
                     </Link>
                   </li>
                 )}
-                {userType === 'ref' && (
+                {userType === "ref" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/help-offers">
-                      <div className="px-2 py-4">{t('help-offers')}</div>
+                      <div className="px-2 py-4">{t("help-offers")}</div>
                     </Link>
                   </li>
                 )}
-                {userType === 'ref' && (
+                {userType === "ref" && (
                   <li className="hover-bg-yellow-dark hover:cursor-pointer">
                     <Link to="/accepted-help-offers">
-                      <div className="px-2 py-4">{t('accepted-help-offers')}</div>
+                      <div className="px-2 py-4">
+                        {t("accepted-help-offers")}
+                      </div>
                     </Link>
                   </li>
                 )}
-                {userType === 'ref' && (
+                {userType === "ref" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/my-needs">
-                      <div className="px-2 py-4">{t('my-needs')}</div>
+                      <div className="px-2 py-4">{t("my-needs")}</div>
                     </Link>
                   </li>
                 )}
@@ -118,35 +133,35 @@ export const Navbar = () => {
           </li>
           <li>
             <Link to="/about" className="mx-8 hover:cursor-pointer">
-            {t('about-us')}
+              {t("about-us")}
             </Link>
           </li>
           <li>
             <Link to="/contact" className="mx-8 hover:cursor-pointer">
-              {t('contact')}
+              {t("contact")}
             </Link>
           </li>
         </ul>
         <div className="flex">
           <div className="text-[#fff] hidden justify-center items-center mr-4 sm:flex">
-            {userType === 'vol' && (
-            <Link to="add_offer">
-              <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
-              {t('add-offer')}
-              </a>
-            </Link>
+            {userType === "vol" && (
+              <Link to="add_offer">
+                <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
+                  {t("add-offer")}
+                </a>
+              </Link>
             )}
-            {userType === 'ref' && (
-            <Link to="add_request">
-              <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
-              {t('add-request')}
-              </a>
-            </Link>
+            {userType === "ref" && (
+              <Link to="add_request">
+                <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
+                  {t("add-request")}
+                </a>
+              </Link>
             )}
           </div>
           <div className="group relative">
             <div className="flex hover:cursor-pointer">
-            {t('my-account')}&nbsp;
+              {t("my-account")}&nbsp;
               <VscTriangleDown
                 className="group-hover:rotate-180 group-hover:transition duration-100"
                 size={15}
@@ -155,17 +170,17 @@ export const Navbar = () => {
             <ul className="hidden group-hover:block bg-yellow-light absolute w-full text-[#fff] text-sm z-20">
               <li className="hover:bg-yellow-dark hover:cursor-pointer">
                 <Link to="/login">
-                  <div className="px-2 py-4">{t('log-in')}</div>
+                  <div className="px-2 py-4">{t("log-in")}</div>
                 </Link>
               </li>
               <li className="hover:bg-yellow-dark hover:cursor-pointer">
                 <Link to="/register">
-                  <div className="px-2 py-4">{t('register')}</div>
+                  <div className="px-2 py-4">{t("register")}</div>
                 </Link>
               </li>
               <li className="hover:bg-yellow-dark hover:cursor-pointer">
                 <Link to="/settings">
-                  <div className="px-2 py-4">{t('settings')}</div>
+                  <div className="px-2 py-4">{t("settings")}</div>
                 </Link>
               </li>
             </ul>
@@ -194,7 +209,7 @@ export const Navbar = () => {
                     to="/"
                     className="cursor-pointer flex items-center pl-2"
                   >
-                    {t('main-page')}&nbsp;
+                    {t("main-page")}&nbsp;
                     <SlArrowDown
                       className="ml-14 group-hover:rotate-180 group-hover:transition duration-100"
                       size={15}
@@ -205,23 +220,23 @@ export const Navbar = () => {
             </li>
             <li className="py-4">
               <Link to="/about" className="pl-2 y-2 hover:cursor-pointer">
-              {t('about-us')}
+                {t("about-us")}
               </Link>
             </li>
             <li className="py-4">
               <Link to="/contact" className="pl-2 hover:cursor-pointer">
-              {t('contact')}
+                {t("contact")}
               </Link>
             </li>
-            
+
             <div className="text-[#fff] flex items-center mt-6 ml-2">
-            {userType === 'vol' && (
-              <Link to="add_offer">
-                <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
-                {t('help')}
-                </a>
-              </Link>
-            )}
+              {userType === "vol" && (
+                <Link to="add_offer">
+                  <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
+                    {t("help")}
+                  </a>
+                </Link>
+              )}
             </div>
           </ul>
         </div>
