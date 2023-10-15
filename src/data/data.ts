@@ -397,9 +397,9 @@ export const districtList = [
   { value: "żywiecki" },
 ];
 export const serviceList = [
-  { value: "Medyczna" },
-  { value: "Humanitarna" },
-  { value: "Prawna" },
-  { value: "Edukacyjna" },
-  { value: "Inne" },
+  { value: "Inna" },
+  { value: "Zakwaterowanie" },
+  { value: "Ubrania" },
+  { value: "Żywność" },
+  { value: "Leki" },
 ];
