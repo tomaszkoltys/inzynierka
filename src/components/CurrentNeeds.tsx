@@ -1,25 +1,34 @@
 import { Dropdown } from "./Dropdown";
 import { voivodeshipList, districtList, serviceList } from "../data/data.ts";
 import { AiOutlineSearch } from "react-icons/ai";
-import testData from "../data/test.json";
 import { SingleOffer } from "./SingleOffer.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 
 type OfferProps = {
   id: number;
-  voivodeship: string;
-  district: string;
-  service: string;
+  author: number;
+  supporter: number;
+  country: number;
+  type: number;
   description: string;
-  img: string;
+  photo: string;
+  side: string;
+  help_status: number;
+};
+
+type HelpTypeProps = {
+  id: number;
+  name: string;
 };
 
 export const CurrentNeeds = () => {
   const { t } = useTranslation();
   const [location, setLocation] = useState<string>("");
   const [search, setSearch] = useState<string>("");
+  const [helps, setHelps] = useState<OfferProps[]>([]);
+  const [helpTypes, setHelpTypes] = useState<HelpTypeProps[]>([]);
 
   const userCoordinates = () => {
     if (navigator.geolocation) {
@@ -30,7 +39,7 @@ export const CurrentNeeds = () => {
         },
         (err) => {
           alert(err.message);
-        },
+        }
       );
     } else {
       alert("Geolocation is not supported by this browser");
@@ -52,10 +61,26 @@ export const CurrentNeeds = () => {
       });
   };
 
-  const searchOffers = testData.filter((offer) => {
+  useEffect(() => {
+    axios
+      .get<OfferProps[]>("http://localhost:8080/allhelps")
+      .then((response) => setHelps(response.data))
+      .catch((error) => {
+        console.error("Error fetching /allhelps:", error);
+      });
+
+    axios
+      .get<HelpTypeProps[]>("http://localhost:8080/allhelptypes")
+      .then((response) => setHelpTypes(response.data))
+      .catch((error) => {
+        console.error("Error fetching /allhelpstypes:", error);
+      });
+  }, []);
+
+  const searchOffers = helps.filter((offer) => {
     return search.toLowerCase() === ""
       ? offer
-      : offer.service.toLowerCase().includes(search);
+      : offer.description.toLowerCase().includes(search);
   });
 
   return (
@@ -63,18 +88,18 @@ export const CurrentNeeds = () => {
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1.5%]">
-            {t('current-needs')}
+            {t("current-needs")}
           </div>
           <div className="mx-2 my-2">
             <span className="border-b border-gray-300">{t("sorting")}</span>
           </div>
           <div className="flex flex-col mx-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 mt-3 mb-12">
-              <div >
+              <div>
                 <div className="flex justify-center items-center text-[#000] w-60 h-10 border border-gray-300 rounded-md">
                   <input
                     autoFocus
-                    placeholder={t('search-need')}
+                    placeholder={t("search-need")}
                     onChange={(e) => setSearch(e.target.value)}
                     className="w-full border-none outline-none ml-2 text-sm"
                   />
@@ -83,16 +108,22 @@ export const CurrentNeeds = () => {
                   </label>
                 </div>
                 <div className="mt-3">
-                <Dropdown label={t("choose-type-of-help")} options={serviceList} />
+                  <Dropdown
+                    label={t("choose-type-of-help")}
+                    options={serviceList}
+                  />
                 </div>
               </div>
 
               <div>
                 <div>
-                <Dropdown label={t("choose-voivodeship")} options={voivodeshipList} />
+                  <Dropdown
+                    label={t("choose-voivodeship")}
+                    options={voivodeshipList}
+                  />
                 </div>
                 <div className="mt-3">
-                <Dropdown label={t("choose-county")} options={districtList} />
+                  <Dropdown label={t("choose-county")} options={districtList} />
                 </div>
                 <div className="flex items-center text-[#000] mt-3">
                   <div className="flex items-center w-60 h-10 border border-gray-300 rounded-md outline-none pl-2">
@@ -102,7 +133,7 @@ export const CurrentNeeds = () => {
                     className="bg-gray-200 text-sm px-2 h-[80%] flex justify-center items-center ml-6 font-medium rounded-sm hover:cursor-pointer"
                     onClick={() => userCoordinates()}
                   >
-                    {t('get-location')}
+                    {t("get-location")}
                   </div>
                 </div>
               </div>
@@ -111,9 +142,7 @@ export const CurrentNeeds = () => {
           <div className="border-t border-gray-300">
             <div className="grid grid-cols-1 gap-x-24 gap-y-12 lg:grid-cols-2 px-2 sm:px-8 mt-12">
               {searchOffers.length === 0 ? (
-                <p className="text-center font-medium">
-                  {t('no-needs-found')}
-                </p>
+                <p className="text-center font-medium">{t("no-needs-found")}</p>
               ) : (
                 searchOffers.map((offer: OfferProps) => (
                   <SingleOffer key={offer.id} {...offer} />
