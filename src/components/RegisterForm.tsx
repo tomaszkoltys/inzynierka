@@ -34,7 +34,7 @@ export const RegisterForm = () => {
       .max(30)
       .regex(
         /^[A-Za-z0-9_]+$/,
-        "Pole może zawierać wyłącznie litery, cyfry lub znak '_' ",
+        "Pole może zawierać wyłącznie litery, cyfry lub znak '_' "
       ),
     password: z
       .string()
@@ -42,14 +42,14 @@ export const RegisterForm = () => {
       .max(20)
       .regex(
         /^[A-Za-z0-9!@#$]+$/,
-        "Pole może zawierać wyłącznie litery, cyfry lub znaki ! @ # $ ",
+        "Pole może zawierać wyłącznie litery, cyfry lub znaki ! @ # $ "
       ),
     email: z
       .string()
       .email("Pole musi zawierać znak @")
       .regex(
         /^[^ ]+@[^ ]+\.[a-z]{2,3}$/,
-        "Pole musi być w formacie xyz@xyz.xyz",
+        "Pole musi być w formacie xyz@xyz.xyz"
       ),
     pesel: z
       .string()
@@ -64,7 +64,7 @@ export const RegisterForm = () => {
       .max(9)
       .regex(
         /^(?:[A-Z]{3}[0-9]{6}|[A-Z]{2}[0-9]{7})$/,
-        "Pole musi być w formacie XYZ000000 lub XY0000000",
+        "Pole musi być w formacie XYZ000000 lub XY0000000"
       )
       .optional()
       .or(z.literal("")),
@@ -90,7 +90,7 @@ export const RegisterForm = () => {
       <div className="w-full md:w-[50%] h-form flex flex-col min-h-[1200px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1.5%]">
-          {t("registration")}
+            {t("registration")}
           </div>
           <form className="flex flex-col" onSubmit={handleSubmit(submitData)}>
             <label className="mt-6">{t("name")}*</label>
@@ -155,7 +155,7 @@ export const RegisterForm = () => {
                   checked={selectedOption === false}
                   {...register("selectedOption")}
                 />
-                &nbsp;{t("volunteer")}
+                &nbsp;{t("volunteer")}{" "}
               </label>
               <label
                 className="flex items-center justify-center"
@@ -168,11 +168,12 @@ export const RegisterForm = () => {
                   checked={selectedOption === true}
                   {...register("selectedOption")}
                 />
-                &nbsp;{t("refugee")}
-              </label>
+                &nbsp;{t("refugee")}{" "}
+              </label>{" "}
               {errors.selectedOption && (
                 <p className="text-[#e62727]">
-                  {errors.selectedOption.message}
+                  {" "}
+                  {errors.selectedOption.message}{" "}
                 </p>
               )}
             </div>
@@ -193,11 +194,12 @@ export const RegisterForm = () => {
                 />
                 {errors.pesel && (
                   <p className="text-[#e62727]"> {errors.pesel.message}</p>
-                )}
+                )}{" "}
               </div>
               <div className={`flex flex-col ${selectedOption && "order-1"}`}>
                 <label className="mt-6">
-                {t("identity-card/passport-number")}
+                  {" "}
+                  {t("identity-card/passport-number")}{" "}
                 </label>
                 <input
                   type="text"
@@ -207,10 +209,9 @@ export const RegisterForm = () => {
                 />
                 {errors.document && (
                   <p className="text-[#e62727]"> {errors.document.message}</p>
-                )}
+                )}{" "}
               </div>
             </div>
-
             <input
               type="submit"
               className="w-full my-10 py-2 px-2 text-xl text-[#fff] bg-yellow-default rounded-md hover:cursor-pointer hover:bg-yellow-light"

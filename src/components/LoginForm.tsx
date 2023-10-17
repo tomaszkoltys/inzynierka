@@ -18,14 +18,9 @@ export const LoginForm = () => {
       .max(30)
       .regex(
         /^[A-Za-z0-9_]+$/,
-        "Pole może zawierać wyłącznie litery, cyfry lub znak '_' ",
-      )
-      .nonempty("Pole nie może być puste"),
-    password: z
-      .string()
-      .min(5, "Hasło musi mieć co najmniej 5 znaków")
-      .max(20)
-      .nonempty("Pole nie może być puste"),
+        "Pole może zawierać wyłącznie litery, cyfry lub znak '_' "
+      ),
+    password: z.string().min(5, "Hasło musi mieć co najmniej 5 znaków").max(20),
   });
 
   const {
@@ -43,7 +38,7 @@ export const LoginForm = () => {
       <div className="w-full md:w-[50%] h-form flex flex-col min-h-[600px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-3%]">
-          {t("logging")}
+            {t("logging")}
           </div>
           <form className="flex flex-col" onSubmit={handleSubmit(submitData)}>
             <label className="mt-6">{t("username")}*</label>
@@ -81,7 +76,7 @@ export const LoginForm = () => {
             </div>
             <div>
               <Link to="/register" className="border-b border-[#000] font-bold">
-              {t("register")}
+                {t("register")}
               </Link>
             </div>
           </div>
