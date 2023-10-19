@@ -1,27 +1,50 @@
 import { Dropdown } from "./Dropdown";
-import { voivodeshipList, districtList, serviceList } from "../data/data.ts";
 import { AiOutlineSearch } from "react-icons/ai";
 import { SingleOffer } from "./SingleOffer.tsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 
-type OfferProps = {
+export type OfferProps = {
   id: number;
   author: number;
   supporter: number;
-  country: number;
-  type: number;
+  county: number;
   description: string;
   photo: string;
   side: string;
   help_status: number;
+  type: number;
 };
 
-type HelpTypeProps = {
+export type UserProps = {
   id: number;
   name: string;
+  surname: string;
+  password: string;
+  email_address: string;
+  role: number;
+  identity_number: string;
+  status: number;
+  accepted: number;
 };
+
+export type HelpTypeProps = {
+  id: number;
+  name: string;
+  namePL: string;
+};
+
+export type VoivodeshipsProps = {
+  id: number;
+  name: string;
+}
+
+export type CountiesProps = {
+  id: number;
+  name: string;
+  voivodeship: number;
+}
 
 export const CurrentNeeds = () => {
   const { t } = useTranslation();
@@ -29,6 +52,16 @@ export const CurrentNeeds = () => {
   const [search, setSearch] = useState<string>("");
   const [helps, setHelps] = useState<OfferProps[]>([]);
   const [helpTypes, setHelpTypes] = useState<HelpTypeProps[]>([]);
+  const [users, setUsers] = useState<UserProps[]>([]);
+  const [voivodeships, setVoivodeships] = useState<VoivodeshipsProps[]>([]);
+  const [counties, setCounties] = useState<CountiesProps[]>([]);
+  const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(null);
+  const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<number | null>(null);
+  const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
+  const [selectedCountyId, setSelectedCountyId] = useState<number | null>(null);
+  const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
+  const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
+
 
   const userCoordinates = () => {
     if (navigator.geolocation) {
@@ -73,16 +106,63 @@ export const CurrentNeeds = () => {
       .get<HelpTypeProps[]>("http://localhost:8080/allhelptypes")
       .then((response) => setHelpTypes(response.data))
       .catch((error) => {
-        console.error("Error fetching /allhelpstypes:", error);
+        console.error("Error fetching /allhelptypes:", error);
+      });
+
+    axios
+      .get<UserProps[]>("http://localhost:8080/allusers")
+      .then((response) => setUsers(response.data))
+      .catch((error) => {
+        console.error("Error fetching /allusers:", error);
+      });
+
+    axios
+      .get<VoivodeshipsProps[]>("http://localhost:8080/allvoivodeships")
+      .then((response) => setVoivodeships(response.data))
+      .catch((error) => {
+        console.error("Error fetching /allvoivodeships:", error);
       });
   }, []);
 
-  const searchOffers = helps.filter((offer) => {
-    return search.toLowerCase() === ""
-      ? offer
-      : offer.description.toLowerCase().includes(search);
-  });
+  const handleVoivodeshipChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selected = event.target.value;
+    setSelectedVoivodeship(selected);
+    const selectedVoivodeshipId = voivodeships.find((voivodeship) => voivodeship.name === selected)?.id || null;
+    setSelectedVoivodeshipId(selectedVoivodeshipId);
 
+    if (selectedVoivodeshipId !== null) {
+      axios
+        .get<CountiesProps[]>(`http://localhost:8080/countiesbyvoivodeship?currentVoivodeship=${selectedVoivodeshipId}`)
+        .then((response) => setCounties(response.data))
+        .catch((error) => {
+          console.error("Error fetching counties:", error);
+        });
+    }
+  };
+
+  const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selected = event.target.value;
+    setSelectedHelpType(selected);
+    const selectedHelpTypeId = helpTypes.find((helpType) => helpType.namePL === selected)?.id || null;
+    setSelectedHelpTypeId(selectedHelpTypeId);
+  };
+
+  const handleCountyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selected = event.target.value;
+    setSelectedCounty(selected);
+    const selectedCountyId = counties.find((county) => county.name === selected)?.id || null;
+    setSelectedCountyId(selectedCountyId);
+  };
+
+  const searchOffers = helps.filter((offer) => {
+    return (
+      (search.toLowerCase() === "" || offer.description.toLowerCase().includes(search)) &&
+      (selectedHelpType === null || offer.type === selectedHelpTypeId) &&
+      (selectedCounty === null || offer.county === selectedCountyId)
+      
+    );
+  });
+  
   return (
     <div className="flex items-center justify-center">
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
@@ -91,7 +171,7 @@ export const CurrentNeeds = () => {
             {t("current-needs")}
           </div>
           <div className="mx-2 my-2">
-            <span className="border-b border-gray-300">{t("sorting")}</span>
+            <span className="border-b border-gray-300">{t("filters")}</span>
           </div>
           <div className="flex flex-col mx-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 mt-3 mb-12">
@@ -110,20 +190,26 @@ export const CurrentNeeds = () => {
                 <div className="mt-3">
                   <Dropdown
                     label={t("choose-type-of-help")}
-                    options={serviceList}
+                    options={helpTypes.map((helpType) => ({ value: helpType.namePL }))}
+                    onChange={handleTypeChange}
                   />
                 </div>
               </div>
-
               <div>
                 <div>
                   <Dropdown
                     label={t("choose-voivodeship")}
-                    options={voivodeshipList}
+                    options={voivodeships.map((voivodeship) => ({ value: voivodeship.name }))}
+                    onChange={handleVoivodeshipChange}
                   />
                 </div>
                 <div className="mt-3">
-                  <Dropdown label={t("choose-county")} options={districtList} />
+                  <Dropdown
+                    label={t("choose-county")}
+                    options={counties.map((county) => ({ value: county.name }))}
+                    disabled={!selectedVoivodeship}
+                    onChange={handleCountyChange}
+                  />
                 </div>
                 <div className="flex items-center text-[#000] mt-3">
                   <div className="flex items-center w-60 h-10 border border-gray-300 rounded-md outline-none pl-2">
@@ -145,7 +231,7 @@ export const CurrentNeeds = () => {
                 <p className="text-center font-medium">{t("no-needs-found")}</p>
               ) : (
                 searchOffers.map((offer: OfferProps) => (
-                  <SingleOffer key={offer.id} {...offer} />
+                  <SingleOffer key={offer.id} {...offer} users={users} helpTypes={helpTypes} />
                 ))
               )}
             </div>

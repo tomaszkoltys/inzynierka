@@ -14,6 +14,7 @@ export const Navbar = () => {
   };
   // Tymczasowy sposob na zmiane wyswietlanych zakladek
   const userType: string = "vol";
+  
   //const userType = 'ref';
 
   return (
