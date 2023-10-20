@@ -12,7 +12,7 @@ import java.util.List;
 public interface HelpRepository extends CrudRepository<Help, Integer> {
 
     @Query(value = "select * from help where side = :side", nativeQuery = true)
-    List<Help> findBySide(String side);
+    List<Help> findBySide(Integer side);
 
     @Query(value = "select * from help where side = :side and supporter = :supporter and help_status in (:help_status)", nativeQuery = true)
     List<Help> findBySideAndSupporterAndHelpStatus(int side, int supporter, List<Integer> help_status);

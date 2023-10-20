@@ -1,4 +1,6 @@
 package com.example.demo.controllers;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 import com.example.demo.entities.Help;
 import com.example.demo.repositories.HelpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,8 @@ public class HelpController {
 
     @PostMapping(value = "/addhelp", consumes = {"*/*"})
     public void addHelp(@RequestParam int county, @RequestParam String description,
-                          @RequestParam String photo, @RequestParam int side,
-                          @RequestParam int author, @RequestParam int type){
+                        @RequestParam String photo, @RequestParam int side,
+                        @RequestParam int author, @RequestParam int type){
 
         Help newHelp = new Help();
         newHelp.setCounty(county);
@@ -25,7 +27,6 @@ public class HelpController {
         newHelp.setAuthor(author);
         newHelp.setType(type);
         newHelp.setHelpStatus(1);
-
         helpRepository.save(newHelp);
     }
 
@@ -36,12 +37,12 @@ public class HelpController {
 
     @GetMapping(value = "/allhelpoffers")
     public @ResponseBody Iterable<Help> getAllHelpOffers(){
-        return helpRepository.findBySide("wolontariusz");
+        return helpRepository.findBySide(1);
     }
 
     @GetMapping(value = "/allhelprequests")
     public @ResponseBody Iterable<Help> getAllHelpRequests(){
-        return helpRepository.findBySide("uchodzca");
+        return helpRepository.findBySide(2);
     }
 
     @GetMapping (value ="/acceptedhelprequests")
