@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `inzynierka` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `inzynierka`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: inzynierka
@@ -76,14 +74,14 @@ DROP TABLE IF EXISTS `help`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `help` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `author` int DEFAULT NULL,
   `supporter` int DEFAULT NULL,
   `county` int DEFAULT NULL,
   `type` int DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL,
-  `side` varchar(50) DEFAULT NULL,
+  `side` int DEFAULT NULL,
   `help_status` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `author` (`author`),
@@ -96,7 +94,7 @@ CREATE TABLE `help` (
   CONSTRAINT `help_ibfk_3` FOREIGN KEY (`county`) REFERENCES `county` (`id`),
   CONSTRAINT `help_ibfk_4` FOREIGN KEY (`type`) REFERENCES `help_type` (`id`),
   CONSTRAINT `help_ibfk_5` FOREIGN KEY (`help_status`) REFERENCES `help_status` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +103,7 @@ CREATE TABLE `help` (
 
 LOCK TABLES `help` WRITE;
 /*!40000 ALTER TABLE `help` DISABLE KEYS */;
-INSERT INTO `help` VALUES (1,1,1,1,1,'Przyjmę makaron.','https://i.imgur.com/vU2ajjQ.jpg','1',1),(2,2,2,2,4,'Potrzebuję leków przeciwbólowych.','https://i.imgur.com/yaXNpE6.jpg','1',1),(3,4,3,3,2,'Potrzebuję zakwaterowania dla 1 osoby.','https://i.imgur.com/yV5OQht.jpg','1',1);
+INSERT INTO `help` VALUES (1,1,1,1,1,'Przyjmę makaron.','https://i.imgur.com/vU2ajjQ.jpg',2,1),(2,2,2,2,4,'Potrzebuję leków przeciwbólowych.','https://i.imgur.com/yaXNpE6.jpg',2,1),(3,4,3,3,2,'Potrzebuję zakwaterowania dla 1 osoby.','https://i.imgur.com/yV5OQht.jpg',2,1),(19,1,1,121,4,'Potrzebuję leków.','\"photo.jpg\"',2,1),(20,1,1,198,3,'Potrzebuję ubrań.','\"photo.jpg\"',2,1),(21,1,1,186,3,'Potrzebuję ubrań.','\"photo.jpg\"',2,1),(22,1,1,117,2,'Potrzebuję zakwaterowania dla 1 osoby.','\"photo.jpg\"',2,1),(23,1,1,117,2,'Potrzebuję zakwaterowania dla 1 osoby.','\"photo.jpg\"',2,1),(24,1,1,80,4,'Pomogę. Dam leki.','\"photo.jpg\"',1,1),(25,1,1,98,4,'Potrzebuję dużo leków.','\"photo.jpg\"',2,1),(26,1,1,98,4,'Potrzebuję dużo leków.','\"photo.jpg\"',2,1),(27,1,1,61,2,'Potrzebuję zakwaterowania dla 3 osób.','\"photo.jpg\"',2,1),(28,1,1,61,2,'Potrzebuję zakwaterowania dla 3 osób.','\"photo.jpg\"',2,1),(29,1,NULL,184,3,'Potrzebuję spodni.','\"photo.jpg\"',2,1);
 /*!40000 ALTER TABLE `help` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -251,4 +249,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-19 23:07:07
+-- Dump completed on 2023-10-20 23:08:59
