@@ -14,15 +14,19 @@
 - [x] UI strony przypominania hasła (3 etapy)
 - [x] UI strony ustawień, możliwość zapisania w localStorage preferencji powiadomień
 - [x] UI, walidacja strony zmiany hasła
-- [ ] dodać funkcjonalność dodania do strony z Aktualnymi potrzebami nowej oferty
-- [ ] dodać funkcjonalność sortowania po polach select(po województwie, powiecie, rodzaju pomocy)
-- [ ] dodać pobranie danych do strony Aktualne potrzeby z bazy zamiast z pliku test.json
+- [x] dodać funkcjonalność filtrowania po polach select(po województwie, powiecie, rodzaju pomocy)
+- [x] dodać pobranie danych do strony Aktualne potrzeby z bazy zamiast z pliku test.json
+- [x] dodać funkcjonalność dodania do strony z Aktualnymi potrzebami nowej oferty
+- [ ] poprawić dodawanie zdjęć do ofert pomocy/próśb o pomoc
 - [ ] dodać stronę Przyjęte potrzeby
 - [ ] dodać stronę Moje oferty pomocy
 
 3. Refugee
 
-- [ ] UI jest praktycznie taki sam jak dla Vol tylko trzeba bedzie w tym samym pliku dodać warunek czy jest obecnie zalogowany Vol czy Ref i na tej podstawie dostosować nazwę pola (np. zamiast Dodaj ofertę pomocy => Poproś o pomoc)
+- [x] Dodaj prośbę o pomoc
+- [x] Wszystkie oferty pomocy
+- [ ] Lista zaakceptowanych ofert pomocy
+- [ ] Moje prośby o pomoc
 
 4. Admin
 
