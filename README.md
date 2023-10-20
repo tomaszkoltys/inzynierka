@@ -7,7 +7,7 @@
 2. Moduły - uchodźca
 - [x] Dodaj prośbę o pomoc (poprawić dodawanie zdjęć)
 - [x] Wszystkie oferty pomocy
-- [ ] Lista zaakceptowanych ofert pomocy
+- [ ] Zaakceptowane oferty pomocy
 - [ ] Moje prośby o pomoc
 
 3. Moduły - admin
