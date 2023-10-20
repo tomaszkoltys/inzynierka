@@ -8,8 +8,10 @@ import { Settings } from "./pages/Settings";
 import { Remind } from "./pages/Remind";
 import { ChangePassword } from "./pages/ChangePassword";
 import { AddOffer } from "./pages/AddOffer";
+import { AddHelpRequest } from "./pages/AddHelpRequest";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
+import { AllHelps } from "./pages/AllHelpOffers";
 
 function App() {
   return (
@@ -22,7 +24,10 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/remind" element={<Remind />} />
         <Route path="/change_password" element={<ChangePassword />} />
-        <Route path="/add_offer" element={<AddOffer />} />
+        <Route path="/add_help_offer" element={<AddOffer />} />
+        <Route path="/add_help_request" element={<AddHelpRequest />} />
+        <Route path="/all_help_requests" element={<Main />} />
+        <Route path="/all_help_offers" element={<AllHelps />} />
         <Route path="/about" element={<About/>} />
         <Route path="/contact" element={<Contact/>} />
       </Routes>

@@ -1,4 +1,4 @@
-import { AddOfferForm } from "../components/AddOfferForm";
+import { AddOfferForm } from "../components/AddHelpOffer";
 
 export const AddOffer = () => {
   return (

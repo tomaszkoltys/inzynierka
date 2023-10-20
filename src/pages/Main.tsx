@@ -1,4 +1,4 @@
-import { CurrentNeeds } from "../components/CurrentNeeds";
+import { CurrentNeeds } from "../components/AllHelpRequests";
 
 export const Main = () => {
   return (

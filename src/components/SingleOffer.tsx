@@ -1,4 +1,4 @@
-import { OfferProps, UserProps, HelpTypeProps } from "./CurrentNeeds";
+import { OfferProps, UserProps, HelpTypeProps } from "./AllHelpRequests";
 
 console.clear()
 

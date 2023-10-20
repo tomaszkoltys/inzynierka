@@ -5,13 +5,13 @@
     "help": "Add help offer",
     "my-account": "My account",
     "add-offer": "Add help offer",
-    "current-needs": "Current needs",
-    "accepted-needs": "Accepted needs",
+    "all-help-requests": "All help requests",
+    "accepted-needs": "Accepted help requests",
     "my-help-offers": "My help offers",
-    "add-request": "Add a request for help",
-    "help-offers": "Help offers",
+    "add-request": "Add help request",
+    "help-offers": "All help offers",
     "accepted-help-offers": "Accepted help offers",
-    "my-needs": "My needs",
+    "my-needs": "My help requests",
     "log-in": "Log in",
     "register": "Register",
     "settings": "Settings",
@@ -43,5 +43,7 @@
     "volunteer": "Volunteer",
     "refugee": "Refugee",
     "pesel-number": "Pesel number",
-    "identity-card/passport-number": "Identity card/passport number"
+    "identity-card/passport-number": "Identity card/passport number",
+    "add-help-request": "Add help request",
+    "current-helps": "All help offers"
 }

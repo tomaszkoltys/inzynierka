@@ -15,8 +15,8 @@
 - [x] UI strony ustawień, możliwość zapisania w localStorage preferencji powiadomień
 - [x] UI, walidacja strony zmiany hasła
 - [ ] dodać funkcjonalność dodania do strony z Aktualnymi potrzebami nowej oferty
-- [x] dodać funkcjonalność filtrowania po polach select(po województwie, powiecie, rodzaju pomocy)
-- [x] dodać pobranie danych do strony Aktualne potrzeby z bazy zamiast z pliku test.json
+- [ ] dodać funkcjonalność sortowania po polach select(po województwie, powiecie, rodzaju pomocy)
+- [ ] dodać pobranie danych do strony Aktualne potrzeby z bazy zamiast z pliku test.json
 - [ ] dodać stronę Przyjęte potrzeby
 - [ ] dodać stronę Moje oferty pomocy
 

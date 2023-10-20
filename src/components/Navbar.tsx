@@ -73,42 +73,42 @@ export const Navbar = () => {
               >
                 {userType === "vol" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/add_offer">
+                    <Link to="/add_help_offer">
                       <div className="px-2 py-4">{t("add-offer")}</div>
                     </Link>
                   </li>
                 )}
                 {userType === "vol" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/">
-                      <div className="px-2 py-4">{t("current-needs")}</div>
+                    <Link to="/all_help_requests">
+                      <div className="px-2 py-4">{t("all-help-requests")}</div>
                     </Link>
                   </li>
                 )}
                 {userType === "vol" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/">
+                    <Link to="/accepted_help_requests">
                       <div className="px-2 py-4">{t("accepted-needs")}</div>
                     </Link>
                   </li>
                 )}
                 {userType === "vol" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/">
+                    <Link to="/my_help_offers">
                       <div className="px-2 py-4">{t("my-help-offers")}</div>
                     </Link>
                   </li>
                 )}
                 {userType === "ref" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/add-request">
+                    <Link to="/add_help_request">
                       <div className="px-2 py-4">{t("add-request")}</div>
                     </Link>
                   </li>
                 )}
                 {userType === "ref" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/help-offers">
+                    <Link to="/all_help_offers">
                       <div className="px-2 py-4">{t("help-offers")}</div>
                     </Link>
                   </li>
@@ -146,14 +146,14 @@ export const Navbar = () => {
         <div className="flex">
           <div className="text-[#fff] hidden justify-center items-center mr-4 sm:flex">
             {userType === "vol" && (
-              <Link to="add_offer">
+              <Link to="add_help_offer">
                 <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
                   {t("add-offer")}
                 </a>
               </Link>
             )}
             {userType === "ref" && (
-              <Link to="add_request">
+              <Link to="add_help_request">
                 <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
                   {t("add-request")}
                 </a>
@@ -232,7 +232,7 @@ export const Navbar = () => {
 
             <div className="text-[#fff] flex items-center mt-6 ml-2">
               {userType === "vol" && (
-                <Link to="add_offer">
+                <Link to="add_help_offer">
                   <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
                     {t("help")}
                   </a>

@@ -5,13 +5,13 @@
     "help": "Dodaj ofertę pomocy",
     "my-account": "Moje konto",
     "add-offer": "Dodaj ofertę pomocy",
-    "current-needs": "Aktualne potrzeby",
-    "accepted-needs": "Przyjęte potrzeby",
+    "all-help-requests": "Wszystkie prośby o pomoc",
+    "accepted-needs": "Przyjęte prośby o pomoc",
     "my-help-offers": "Moje oferty pomocy",
     "add-request": "Dodaj prośbę o pomoc",
-    "help-offers": "Oferty pomocy",
+    "help-offers": "Wszystkie oferty pomocy",
     "accepted-help-offers": "Przyjęte oferty pomocy",
-    "my-needs": "Moje potrzeby",
+    "my-needs": "Moje prośby o pomoc",
     "log-in": "Zaloguj się",
     "register": "Zarejestruj się",
     "settings": "Ustawienia",
@@ -43,5 +43,6 @@
     "volunteer": "Wolontariusz",
     "refugee": "Uchodźca",
     "pesel-number": "Numer PESEL",
-    "identity-card/passport-number": "Numer dowodu tożsamości/paszportu"
+    "identity-card/passport-number": "Numer dowodu tożsamości/paszportu",
+    "current-helps": "Wszystkie oferty pomocy"
 }
