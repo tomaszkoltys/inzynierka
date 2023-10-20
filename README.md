@@ -1,6 +1,6 @@
 1. Moduły - wolontariusz
 - [x] Dodaj ofertę pomocy (poprawić dodawanie zdjęć)
-- [x] Wszystkie oferty pomocy
+- [x] Wszystkie prośby o pomoc
 - [ ] Zaakceptowane prośby o pomoc
 - [ ] Moje oferty pomocy
 
