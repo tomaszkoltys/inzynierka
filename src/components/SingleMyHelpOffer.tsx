@@ -11,7 +11,7 @@ export const SingleMyHelpOffer = ({
   type,
   description,
   photo,
-  help_status,
+  helpStatus,
   users,
   helpTypes,
   statuses,
@@ -38,7 +38,7 @@ export const SingleMyHelpOffer = ({
     const selected = event.target.value;
     setSelectedStatusType(selected);
     const selectedStatusTypeId =
-      statuses.find((helpStatus) => helpStatus.name === selected)?.id || null;
+      statuses.find((helpStat) => helpStat.name === selected)?.id || null;
     setSelectedStatusTypeId(selectedStatusTypeId);
 
     axios
@@ -78,7 +78,7 @@ export const SingleMyHelpOffer = ({
         <div className="flex items-center justify-center flex-col mt-8 mb-12 gap-6">
           <Dropdown
             label={t("choose-status-of-help")}
-            options={statuses.map((helpStatus) => ({ value: helpStatus.name }))}
+            options={statuses.map((helpStat) => ({ value: helpStat.name }))}
             onChange={handleStatusChange}
           />
         </div>

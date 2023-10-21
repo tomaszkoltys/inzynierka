@@ -1,6 +1,6 @@
 import { OfferProps, UserProps, HelpTypeProps } from "./AllHelpRequests";
 
-console.clear()
+console.clear();
 
 export const SingleOffer = ({
   author,
