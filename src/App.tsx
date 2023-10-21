@@ -13,6 +13,7 @@ import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
 import { AllHelps } from "./pages/AllHelpOffers";
 import { MyOffers } from "./pages/MyOffers";
+import { AcceptedHelpRequests } from "./pages/AcceptedHelpRequests";
 
 function App() {
   return (
@@ -30,6 +31,10 @@ function App() {
         <Route path="/all_help_requests" element={<Main />} />
         <Route path="/all_help_offers" element={<AllHelps />} />
         <Route path="/my_help_offers" element={<MyOffers />} />
+        <Route
+          path="/accepted_help_requests"
+          element={<AcceptedHelpRequests />}
+        />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
