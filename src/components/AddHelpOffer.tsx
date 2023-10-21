@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { OfferProps, UserProps, HelpTypeProps, VoivodeshipsProps, CountiesProps } from "./AllHelpRequests.tsx";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const AddOfferForm = () => {
   const { t } = useTranslation();
@@ -20,8 +22,8 @@ export const AddOfferForm = () => {
   const [selectedCountyId, setSelectedCountyId] = useState<number | null>(null);
   const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
-  const [description, setDescription] = useState(""); // Dodaj ten stan
-
+  const [description, setDescription] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   useEffect(() => {
     axios
@@ -88,53 +90,54 @@ export const AddOfferForm = () => {
       alert("Wszystkie pola są wymagane.");
       return;
     }*/
-    
-    axios.post(`http://localhost:8080/addhelp?county=${selectedCountyId}&description=${description}&photo="photo.jpg"&side=1&author=1&type=${selectedHelpTypeId}`, {
+
+    axios.post(`http://localhost:8080/addhelp?county=${selectedCountyId}&description=${description}&photo=${imageFile?.name}&side=1&author=1&type=${selectedHelpTypeId}`, {
     })
-  .then((response) => {
-    // Obsłuż odpowiedź od serwera, np. wyświetl informację o sukcesie
-    console.log("Odpowiedź od serwera:", response.data);
-  })
-  .catch((error) => {
-    // Obsłuż błąd, np. wyświetl komunikat o błędzie
-    console.error("Błąd podczas wysyłania oferty:", error);
-  });
+      .then((response) => {
+        console.log("Odpowiedź od serwera:", response.data);
+        toast.success("Pomyślnie dodano ofertę pomocy!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+      .catch((error) => {
+        console.error("Błąd podczas wysyłania oferty:", error);
+      });
   };
-  
 
   return (
     <div className="flex items-center justify-center">
+      <ToastContainer />
       <div className="w-full md:w-[70%] h-form flex flex-col min-h-[700px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-2.5%]">
-          {t('add-offer')}
+            {t('add-offer')}
           </div>
           <div className="flex flex-col">
             <div className="flex flex-col mt-8 mb-12 gap-6">
-            <Dropdown
-                    label={t("choose-voivodeship")}
-                    options={voivodeships.map((voivodeship) => ({ value: voivodeship.name }))}
-                    onChange={handleVoivodeshipChange}
-                  />
               <Dropdown
-                    label={t("choose-county")}
-                    options={counties.map((county) => ({ value: county.name }))}
-                    disabled={!selectedVoivodeship}
-                    onChange={handleCountyChange}
-                  />
+                label={t("choose-voivodeship")}
+                options={voivodeships.map((voivodeship) => ({ value: voivodeship.name }))}
+                onChange={handleVoivodeshipChange}
+              />
               <Dropdown
-                    label={t("choose-type-of-help")}
-                    options={helpTypes.map((helpType) => ({ value: helpType.namePL }))}
-                    onChange={handleTypeChange}
-                  />
+                label={t("choose-county")}
+                options={counties.map((county) => ({ value: county.name }))}
+                disabled={!selectedVoivodeship}
+                onChange={handleCountyChange}
+              />
+              <Dropdown
+                label={t("choose-type-of-help")}
+                options={helpTypes.map((helpType) => ({ value: helpType.namePL }))}
+                onChange={handleTypeChange}
+              />
             </div>
             <div>
-            <textarea
-  placeholder={t("description")}
-  className="w-full h-[150px] p-2 border border-gray-300 text-[#000] rounded-md text-sm resize-none outline-none md:w-[40%]"
-  value={description} // Dodaj tę linię
-  onChange={(e) => setDescription(e.target.value)} // Dodaj tę linię
-/>
+              <textarea
+                placeholder={t("description")}
+                className="w-full h-[150px] p-2 border border-gray-300 text-[#000] rounded-md text-sm resize-none outline-none md:w-[40%]"
+                value={description} // Dodaj tę linię
+                onChange={(e) => setDescription(e.target.value)} // Dodaj tę linię
+              />
             </div>
             <div className="flex relative mb-10">
               <div className="flex items-center justify-center w-[80px] h-[80px] bg-gray-300 relative">
@@ -142,6 +145,13 @@ export const AddOfferForm = () => {
                   type="file"
                   accept="image/*"
                   className="absolute opacity-0 left-0 w-full h-full"
+                  onChange={(e) => {
+                    const files = e.target.files;
+                    if (files && files.length > 0) {
+                      const file = files[0];
+                      setImageFile(file);
+                    }
+                  }}
                 />
                 <AiOutlinePlus color="#fff" size={25} />
               </div>

@@ -15,11 +15,11 @@ export const AboutPage = () => {
                     </p>
                     <p>
                         <h1>Nasza praca</h1><br/>
-                        Działamy na wielu płaszczyznach, aby pomóc uchodźcom w odbudowie swojego życia. Nasze projekty obejmują dostarczanie niezbędnych artykułów pierwszej potrzeby, edukację, wsparcie psychologiczne oraz pomoc w integracji w nowym środowisku.
+                        Działamy na wielu płaszczyznach, aby pomóc uchodźcom w odbudowie swojego życia. Na naszej stronie możesz zapewnić wsparcie medyczne, żywienie, odzież oraz zakwaterowanie potrzebującym.
                     </p>
                     <p>
-                        <h1>Jak możesz pomóc</h1><br/>
-                        Twoja pomoc jest nieoceniona. Możesz wesprzeć naszą organizację, ofiarowując darowiznę, wolontariatem lub poprzez podzielenie się swoimi umiejętnościami. Razem możemy tworzyć lepsze jutro dla tych, którzy potrzebują naszej pomocy.
+                        <h1>Jak możesz pomóc?</h1><br/>
+                        Twoja pomoc jest nieoceniona. Możesz wesprzeć naszą organizację, dodając ofertę pomocy. Razem możemy tworzyć lepsze jutro.
                     </p>
                 </div>
             </div>
