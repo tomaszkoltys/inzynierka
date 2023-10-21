@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `inzynierka` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `inzynierka`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: inzynierka
@@ -94,7 +96,7 @@ CREATE TABLE `help` (
   CONSTRAINT `help_ibfk_3` FOREIGN KEY (`county`) REFERENCES `county` (`id`),
   CONSTRAINT `help_ibfk_4` FOREIGN KEY (`type`) REFERENCES `help_type` (`id`),
   CONSTRAINT `help_ibfk_5` FOREIGN KEY (`help_status`) REFERENCES `help_status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +105,7 @@ CREATE TABLE `help` (
 
 LOCK TABLES `help` WRITE;
 /*!40000 ALTER TABLE `help` DISABLE KEYS */;
-INSERT INTO `help` VALUES (1,1,1,1,1,'Przyjmę makaron.','https://i.imgur.com/vU2ajjQ.jpg',2,1),(2,2,2,2,4,'Potrzebuję leków przeciwbólowych.','https://i.imgur.com/yaXNpE6.jpg',2,1),(3,4,3,3,2,'Potrzebuję zakwaterowania dla 1 osoby.','https://i.imgur.com/yV5OQht.jpg',2,1),(19,1,1,121,4,'Potrzebuję leków.','\"photo.jpg\"',2,1),(20,1,1,198,3,'Potrzebuję ubrań.','\"photo.jpg\"',2,1),(21,1,1,186,3,'Potrzebuję ubrań.','\"photo.jpg\"',2,1),(22,1,1,117,2,'Potrzebuję zakwaterowania dla 1 osoby.','\"photo.jpg\"',2,1),(23,1,1,117,2,'Potrzebuję zakwaterowania dla 1 osoby.','\"photo.jpg\"',2,1),(24,1,1,80,4,'Pomogę. Dam leki.','\"photo.jpg\"',1,1),(25,1,1,98,4,'Potrzebuję dużo leków.','\"photo.jpg\"',2,1),(26,1,1,98,4,'Potrzebuję dużo leków.','\"photo.jpg\"',2,1),(27,1,1,61,2,'Potrzebuję zakwaterowania dla 3 osób.','\"photo.jpg\"',2,1),(28,1,1,61,2,'Potrzebuję zakwaterowania dla 3 osób.','\"photo.jpg\"',2,1),(29,1,NULL,184,3,'Potrzebuję spodni.','\"photo.jpg\"',2,1);
+INSERT INTO `help` VALUES (1,1,1,1,1,'Przyjmę makaron.','https://i.imgur.com/vU2ajjQ.jpg',2,1),(2,2,2,2,4,'Potrzebuję leków przeciwbólowych.','https://i.imgur.com/yaXNpE6.jpg',2,1),(3,4,3,3,2,'Potrzebuję zakwaterowania dla 1 osoby.','https://i.imgur.com/yV5OQht.jpg',2,1),(19,1,1,121,4,'Potrzebuję leków.','\"photo.jpg\"',2,1),(20,1,1,198,3,'Potrzebuję ubrań.','\"photo.jpg\"',2,1),(21,1,1,186,3,'Potrzebuję ubrań.','\"photo.jpg\"',2,1),(22,1,1,117,2,'Potrzebuję zakwaterowania dla 1 osoby.','\"photo.jpg\"',2,1),(23,1,1,117,2,'Potrzebuję zakwaterowania dla 1 osoby.','\"photo.jpg\"',2,1),(24,1,1,80,4,'Pomogę. Dam leki.','\"photo.jpg\"',1,1),(25,1,1,98,4,'Potrzebuję dużo leków.','\"photo.jpg\"',2,1),(26,1,1,98,4,'Potrzebuję dużo leków.','\"photo.jpg\"',2,1),(27,1,1,61,2,'Potrzebuję zakwaterowania dla 3 osób.','\"photo.jpg\"',2,1),(28,1,1,61,2,'Potrzebuję zakwaterowania dla 3 osób.','\"photo.jpg\"',2,1),(29,1,NULL,184,3,'Potrzebuję spodni.','\"photo.jpg\"',2,1),(30,1,NULL,34,3,'Ubranie. Obok zdjęcie.','\"asd\"',1,1),(31,1,NULL,120,4,'Oddam leki takie jak na zdjęciu.','jpg.jpg',1,1),(32,1,NULL,1,1,'\"OpisOpis\"','\"pp.pp\"',1,1),(33,1,NULL,1,1,'\"OpisOpis\"','\"pp.pp\"',1,1),(34,1,NULL,1,1,'\"OpisOpis\"','\"pp.pp\"',1,1),(35,1,NULL,187,4,'Leki.','jpg.jpg',1,1),(36,1,NULL,187,4,'Leki.','jpg.jpg',1,1),(37,1,NULL,187,4,'Leki.','jpg.jpg',1,1),(38,1,NULL,187,4,'Leki.','jpg.jpg',1,1),(39,1,NULL,187,4,'Leki.','jpg.jpg',1,1),(40,1,NULL,103,4,'ASd.','undefined',1,1),(41,1,NULL,313,3,'Potrzebuję ubrań.','\"photo.jpg\"',2,1);
 /*!40000 ALTER TABLE `help` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,9 +203,8 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   KEY `role` (`role`),
   KEY `user_ibfk_2` (`status`),
-  CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`id`),
   CONSTRAINT `user_ibfk_2` FOREIGN KEY (`status`) REFERENCES `account_status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +213,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Jan','Kowalski','jkowalski','password123','jankowalski@mail.com',1,'12345',1,1),(2,'Adam','Nowak','adamn','password456','adamnowak@o.pl',1,'67890',1,1),(3,'Alicja','Kowal','alakow','password789','alickakowalska@mail.pl',1,'54321',1,0),(4,'Tomasz','Kowalczyk','tkowalczyk','password000','tomaszkowalczyk@mail.pl',1,'123132',1,0);
+INSERT INTO `user` VALUES (1,'Jan','Kowalski','jkowalski','password123','jankowalski@mail.com',1,'12345',1,1),(2,'Adam','Nowak','adamn','password456','adamnowak@o.pl',1,'67890',1,1),(3,'Alicja','Kowal','alakow','password789','alickakowalska@mail.pl',1,'54321',1,0),(4,'Tomasz','Kowalczyk','tkowalczyk','password000','tomaszkowalczyk@mail.pl',1,'123132',1,0),(5,'\"Klaudiusz\"','\"Wierzbowski\"','\"kwierzbowski\"','\"password123\"','\"email@email.email\"',1,'1123123',1,1),(6,'\"Klaudiusz1\"','','\"kwierzbowski\"','\"password123\"','\"email@email.email\"',1,'1123123',1,1),(7,'Klaudiusz2','Wierzbowski2','\"kwierzbowski\"','\"password123\"','\"email@email.email\"',1,'1123123',1,1),(8,'Klaudiusz2','Wierzbowski2','\"kwierzbowski\"','\"password123\"','\"email@email.email\"',1,'1123123',1,1),(9,'undefined','Wierzbowski2','\"kwierzbowski\"','\"password123\"','\"email@email.email\"',1,'1123123',1,1),(10,'Kazimierz','Wierzbowski2','kwierzbowski','password123','email@email.email',1,'1123123',1,1),(11,'Kazimierz','Wierzbowski2','kwierzbowski','password123','email@email.email',1,'1123123',1,1),(12,'','Wierzbowski2','kwierzbowski','password123','email@email.email',1,'1123123',1,1),(13,'Adam','Wierzbowski2','kwierzbowski','password123','email@email.email',1,'1123123',1,1),(14,'Adam','Kowalski','adamkowalski','adamkowalski123','adam@kowalski.pl',1,'1123123',1,1),(15,'Adam','Kowalski','adamkowalski','adamkowalski123','adam@kowalski.pl',1,'1123123',1,1),(16,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(17,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(18,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(19,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(20,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(21,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(22,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(23,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(24,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(25,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(26,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(27,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(28,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'1',1,1),(29,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'1',1,1),(30,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(31,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(32,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(33,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(34,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(35,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(36,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(37,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(38,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(39,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(40,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(41,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(42,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(43,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(44,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(45,'Andrzej','Nowak','andrzejnowak','anowak123','a@nowak.pl',1,'XYZ123123',1,1),(46,'','','','','',1,'',1,1),(47,'','','','','',1,'',1,1),(48,'123','123123','123','123','123',1,'123',1,1),(49,'123','123123','123','123','123@123.pl',1,'123',1,1),(50,'1','1','1','1','1',1,'1',1,1),(51,'litery','litery','litery','litery','litery@litery.pl',1,'ABC312312',1,1),(52,'litery','litery','litery','litery','litery@litery.pl',1,'',1,1),(53,'abc','abc','abc','abcabc','abc@abc.pl',1,'',1,1),(54,'abc','abc','abc','abcabc','abc@abc.pl',1,'',1,1),(55,'abc','abc','abc','abcabc','abc@abc.pl',1,'',1,1),(56,'Jan','Kowalski','jjkowalski','j123123','j@kowalski.eu',1,'XYZ123123',1,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,4 +250,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-20 23:08:59
+-- Dump completed on 2023-10-21 21:49:06
