@@ -3,6 +3,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 type FormData = {
   firstName: string;
@@ -17,6 +21,7 @@ type FormData = {
 
 export const RegisterForm = () => {
   const { t } = useTranslation();
+  const [selectedOption, setSelectedOption] = useState<boolean>(false);
   const schema: ZodType<FormData> = z.object({
     firstName: z
       .string()
@@ -55,7 +60,7 @@ export const RegisterForm = () => {
       .string()
       .min(11, "Pole musi zawierac dokładnie 11 cyfr")
       .max(11)
-      .regex(/^\d{11}$/, "Pole mooże zawierać wyłącznie cyfry")
+      .regex(/^\d{11}$/, "Pole może zawierać wyłącznie cyfry")
       .optional()
       .or(z.literal("")),
     document: z
@@ -73,26 +78,52 @@ export const RegisterForm = () => {
       .refine((value) => ["volunteer", "refugee"].includes(value)),
   });
 
-  const {
-    register,
+  const { 
+    register, 
     handleSubmit,
-    formState: { errors },
+    watch,
+    formState: { errors }, 
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const [selectedOption, setSelectedOption] = useState<boolean>(false);
+  const onSubmit = async () => {
+    try {
+      const queryParameters = new URLSearchParams({
+        name: firstName,
+        surname: lastName,
+        username: username,
+        password: password,
+        email_address: email_address,
+        role: role,
+        identity_number: identity_number !== undefined ? identity_number : "",
+      }).toString();
 
-  const submitData = (data: FormData) => {
-    console.log("Wyslano", data);
+      const response = await axios.post(`http://localhost:8080/adduser?${queryParameters}`, {});
+      toast.success("Pomyślnie założono konto!", {
+        position: toast.POSITION.TOP_CENTER,
+      
+    })
+      console.log("Response from the server:", response.data);
+    } catch (error) {
+      console.error("Error while sending data:", error);
+    }
   };
+  const firstName = watch("firstName");
+  const lastName = watch("lastName");
+  const username = watch("name");
+  const password = watch("password");
+  const email_address = watch("email");
+  const role = watch("selectedOption") ? "1" : "2";
+  const identity_number = watch("document");
 
   return (
     <div className="flex flex-row-reverse">
+      <ToastContainer />
       <div className="w-full md:w-[50%] h-form flex flex-col min-h-[1200px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1.5%]">
             {t("registration")}
           </div>
-          <form className="flex flex-col" onSubmit={handleSubmit(submitData)}>
+          <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
             <label className="mt-6">{t("name")}*</label>
             <input
               type="text"

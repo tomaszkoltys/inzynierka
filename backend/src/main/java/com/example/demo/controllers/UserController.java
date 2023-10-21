@@ -1,4 +1,5 @@
 package com.example.demo.controllers;
+import com.example.demo.entities.Help;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,4 +60,24 @@ public class UserController {
         user.setRole(role);
         userRepository.save(user);
     }
+
+    @PostMapping(value = "/adduser", consumes = {"*/*"})
+    public void addUser(@RequestParam String name, @RequestParam String surname,
+                        @RequestParam String username, @RequestParam String password,
+                        @RequestParam String email_address, @RequestParam int role,
+                        @RequestParam String identity_number){
+
+        User newUser = new User();
+        newUser.setName(name);
+        newUser.setSurname(surname);
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+        newUser.setEmail_address(email_address);
+        newUser.setRole(role);
+        newUser.setIdentity_number(identity_number);
+        newUser.setStatus(1);
+        newUser.setAccepted(1);
+        userRepository.save(newUser);
+    }
+
 }

@@ -85,7 +85,7 @@ export const CurrentHelps = () => {
       .then((response) => {
         if (response.status === 200) {
           const result = response.data;
-          console.log(result);
+          console.log(response);
           setLocation(result.city);
         }
       })
