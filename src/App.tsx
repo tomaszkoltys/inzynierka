@@ -12,6 +12,7 @@ import { AddHelpRequest } from "./pages/AddHelpRequest";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
 import { AllHelps } from "./pages/AllHelpOffers";
+import { MyOffers } from "./pages/MyOffers";
 
 function App() {
   return (
@@ -28,8 +29,9 @@ function App() {
         <Route path="/add_help_request" element={<AddHelpRequest />} />
         <Route path="/all_help_requests" element={<Main />} />
         <Route path="/all_help_offers" element={<AllHelps />} />
-        <Route path="/about" element={<About/>} />
-        <Route path="/contact" element={<Contact/>} />
+        <Route path="/my_help_offers" element={<MyOffers />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
       <Footer />
     </>
