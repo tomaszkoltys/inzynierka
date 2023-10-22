@@ -9,6 +9,7 @@
   "accepted-needs": "Accepted help requests",
   "my-help-offers": "My help offers",
   "add-request": "Add help request",
+  "my-requests": "My requests",
   "help-offers": "All help offers",
   "accepted-help-offers": "Accepted help offers",
   "my-needs": "My help requests",
@@ -47,5 +48,7 @@
   "pesel-number": "Pesel number",
   "identity-card/passport-number": "Identity card/passport number",
   "add-help-request": "Add help request",
-  "current-helps": "All help offers"
+  "current-helps": "All help offers",
+  "in-progress": "In progress",
+  "uncomplited": "Uncomplited"
 }

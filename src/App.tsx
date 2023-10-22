@@ -14,6 +14,7 @@ import { Contact } from "./pages/Contact";
 import { AllHelps } from "./pages/AllHelpOffers";
 import { MyOffers } from "./pages/MyOffers";
 import { AcceptedHelpRequests } from "./pages/AcceptedHelpRequests";
+import { MyRequests } from "./pages/MyRequests";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           path="/accepted_help_requests"
           element={<AcceptedHelpRequests />}
         />
+        <Route path="/my_requests" element={<MyRequests />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
