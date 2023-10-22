@@ -1,4 +1,5 @@
 package com.example.demo.controllers;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import com.example.demo.entities.Help;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class HelpController {
@@ -77,10 +79,29 @@ public class HelpController {
         return helpRepository.findNonCompletedHelpRequestsOrOffers(description, help_type, voivodeship, county, side);
     }
 
-    @GetMapping (value = "/updatehelpstatus")
-    public void updateHelpStatus(@RequestParam int helpId){
-        helpRepository.updateHelpStatus(helpId);
+//    @GetMapping (value = "/updatehelpstatus")
+//    public void updateHelpStatus(@RequestParam int helpId){
+//        helpRepository.updateHelpStatus(helpId);
+//    }
+@PostMapping(value = "/updatehelpstatus")
+public ResponseEntity<?> updateHelpStatus(
+        @RequestParam int helpId,
+        @RequestParam int help_status
+) {
+    Optional<Help> optionalHelp = helpRepository.findById(helpId);
+
+    if (optionalHelp.isPresent()) {
+        Help help = optionalHelp.get();
+
+        // The rest of your code here
+        help.setHelpStatus(help_status);
+        helpRepository.save(help);
+        return new ResponseEntity<>("Help status updated successfully", HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>("Help offer not found", HttpStatus.NOT_FOUND);
     }
+
+}
 
 
 

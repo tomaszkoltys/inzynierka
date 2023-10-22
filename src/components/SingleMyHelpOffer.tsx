@@ -25,14 +25,15 @@ export const SingleMyHelpOffer = ({
     number | null
   >(null);
 
-  // Znajdź użytkownika na podstawie ID autora
   const authorUser = users.find((user) => {
     return user.id === author;
   });
 
-  // Znajdź odpowiednią nazwę typu pomocy na podstawie identyfikatora "type"
   const helpType = helpTypes.find((helpType) => helpType.id === type);
   const typeName = helpType ? helpType.namePL : "Nieznany typ pomocy";
+
+  const helpStat = statuses.find((helpStat) => helpStat.id === helpStatus);
+  const statusName = helpStat ? helpStat.name : "Nieznany status";
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = event.target.value;
@@ -53,6 +54,19 @@ export const SingleMyHelpOffer = ({
       });
   };
 
+  const setStatusColor = (statusName: string) => {
+    switch (statusName) {
+      case "In progress":
+        return "#fae96b";
+      case "Completed":
+        return "#22f526";
+      case "Uncompleted":
+        return "#f50a16";
+      default:
+        return "white";
+    }
+  };
+
   return (
     <div className="flex flex-col bg-yellow-light border border-yellow-light text-[#fff]">
       <div className="flex h-48">
@@ -65,7 +79,6 @@ export const SingleMyHelpOffer = ({
         </div>
       </div>
       <div className="flex items-center justify-center bg-yellow-dark">
-        {/* Sprawdź, czy znaleziono użytkownika, zanim dostaniesz się do jego właściwości */}
         {authorUser ? (
           <span className="text-[#fff] text-lg">
             {authorUser.name} {authorUser.surname}
@@ -74,8 +87,11 @@ export const SingleMyHelpOffer = ({
           <span className="text-[#fff] text-lg">Nieznany autor</span>
         )}
       </div>
-      <div className="w-full">
-        <div className="flex items-center justify-center flex-col mt-8 mb-12 gap-6">
+      <div className="w-full flex items-center justify-center flex-col">
+        <div className="flex w-full items-center justify-center mt-6">
+          <h2 style={{ color: setStatusColor(statusName) }}>{statusName}</h2>
+        </div>
+        <div className="w-full flex items-center justify-center flex-col my-6 gap-6">
           <Dropdown
             label={t("choose-status-of-help")}
             options={statuses.map((helpStat) => ({ value: helpStat.name }))}
