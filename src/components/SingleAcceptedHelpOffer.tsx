@@ -1,15 +1,21 @@
-import { OfferProps, UserProps, HelpTypeProps } from "./AllHelpRequests";
+import { OfferProps, UserProps, HelpTypeProps } from "./AllHelpOffers";
+import { StatusProps } from "./MyHelpOffers";
+import { t } from "i18next";
+import axios from "axios";
 
-console.clear();
-
-export const SingleOffer = ({
+export const SingleAcceptedHelpOffer = ({
   author,
   type,
   description,
   photo,
+  helpStatus,
   users,
   helpTypes,
-}: OfferProps & { users: UserProps[] } & { helpTypes: HelpTypeProps[] }) => {
+  statuses,
+}: OfferProps & { users: UserProps[] } & { helpTypes: HelpTypeProps[] } & {
+  statuses: StatusProps[];
+}) => {
+  console.log(helpStatus);
   // Znajdź użytkownika na podstawie ID autora
   const authorUser = users.find((user) => {
     return user.id === author;
@@ -18,6 +24,11 @@ export const SingleOffer = ({
   // Znajdź odpowiednią nazwę typu pomocy na podstawie identyfikatora "type"
   const helpType = helpTypes.find((helpType) => helpType.id === type);
   const typeName = helpType ? helpType.namePL : "Nieznany typ pomocy";
+
+  //znajdz nazwe statusu
+  const helpStat = statuses.find((helpStat) => helpStat.id === helpStatus);
+  console.log(helpStat);
+  const statusName = helpStat ? helpStat.name : "Nieznany status";
 
   return (
     <div className="flex flex-col bg-yellow-light border border-yellow-light text-[#fff]">
@@ -31,7 +42,6 @@ export const SingleOffer = ({
         </div>
       </div>
       <div className="flex items-center justify-center bg-yellow-dark">
-        {/* Sprawdź, czy znaleziono użytkownika, zanim dostaniesz się do jego właściwości */}
         {authorUser ? (
           <span className="text-[#fff] text-lg">
             {authorUser.name} {authorUser.surname}
@@ -39,6 +49,9 @@ export const SingleOffer = ({
         ) : (
           <span className="text-[#fff] text-lg">Nieznany autor</span>
         )}
+      </div>
+      <div className="w-full flex items-center justify-center py-2">
+        <div>{statusName}</div>
       </div>
     </div>
   );

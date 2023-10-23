@@ -1,9 +1,9 @@
-import { AcceptedRequests } from "../components/AcceptedRequests";
+import { AcceptedHelpRequestsList } from "../components/AcceptedHelpRequests";
 
 export const AcceptedHelpRequests = () => {
   return (
     <div className="p-container">
-      <AcceptedRequests />
+      <AcceptedHelpRequestsList />
     </div>
   );
 };

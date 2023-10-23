@@ -4,6 +4,8 @@ import { SingleOffer } from "./SingleOffer.tsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { SingleMyRequest } from "./SingleMyRequest.tsx";
+import { StatusProps } from "./MyHelpOffers.tsx";
 
 export type OfferProps = {
   id: number;
@@ -46,11 +48,11 @@ export type CountiesProps = {
   voivodeship: number;
 };
 
-export const CurrentNeeds = () => {
+export const MyHelpRequestsList = () => {
   const { t } = useTranslation();
-  const [location, setLocation] = useState<string>("");
   const [search, setSearch] = useState<string>("");
-  const [helps, setHelps] = useState<OfferProps[]>([]);
+  const [myHelps, setMyHelps] = useState<OfferProps[]>([]);
+  const [statuses, setStatuses] = useState<StatusProps[]>([]);
   const [helpTypes, setHelpTypes] = useState<HelpTypeProps[]>([]);
   const [users, setUsers] = useState<UserProps[]>([]);
   const [voivodeships, setVoivodeships] = useState<VoivodeshipsProps[]>([]);
@@ -67,44 +69,24 @@ export const CurrentNeeds = () => {
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(
     null
   );
+  const [inprogressOption, setInprogressOption] = useState<boolean>(false);
+  const [uncompletedOption, setUncompletedOption] = useState<boolean>(false);
 
-  const userCoordinates = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const bdcAPI = `https://api-bdc.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`;
-          getAPI(bdcAPI);
-        },
-        (err) => {
-          alert(err.message);
-        }
-      );
-    } else {
-      alert("Geolocation is not supported by this browser");
-    }
-  };
-
-  const getAPI = (bdcAPI: string) => {
-    axios
-      .get(bdcAPI)
-      .then((response) => {
-        if (response.status === 200) {
-          const result = response.data;
-          console.log(result);
-          setLocation(result.city);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
+  const user_id = 1;
 
   useEffect(() => {
     axios
-      .get<OfferProps[]>("http://localhost:8080/allhelprequests")
-      .then((response) => setHelps(response.data))
+      .get<OfferProps[]>(
+        `http://localhost:8080/myhelpoffers?currentUserId=${user_id}`
+      )
+      .then((response) => {
+        setMyHelps(response.data);
+      })
       .catch((error) => {
-        console.error("Error fetching /allhelps:", error);
+        console.error(
+          `Error fetching /myhelpoffers?currentUserId=${user_id}:`,
+          error
+        );
       });
 
     axios
@@ -119,6 +101,13 @@ export const CurrentNeeds = () => {
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Error fetching /allusers:", error);
+      });
+
+    axios
+      .get<HelpTypeProps[]>("http://localhost:8080/allhelpstatuses")
+      .then((response) => setStatuses(response.data))
+      .catch((error) => {
+        console.error("Error fetching /allhelptypes:", error);
       });
 
     axios
@@ -167,12 +156,18 @@ export const CurrentNeeds = () => {
     setSelectedCountyId(selectedCountyId);
   };
 
-  const searchOffers = helps.filter((offer) => {
+  const searchOffers = myHelps.filter((offer) => {
     return (
       (search.toLowerCase() === "" ||
         offer.description.toLowerCase().includes(search)) &&
       (selectedHelpType === null || offer.type === selectedHelpTypeId) &&
-      (selectedCounty === null || offer.county === selectedCountyId)
+      (selectedCounty === null || offer.county === selectedCountyId) &&
+      (inprogressOption === false ||
+        uncompletedOption === true ||
+        offer.helpStatus === 1) &&
+      (uncompletedOption === false ||
+        inprogressOption === true ||
+        offer.helpStatus === 3)
     );
   });
 
@@ -180,8 +175,8 @@ export const CurrentNeeds = () => {
     <div className="flex items-center justify-center">
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
-          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1.5%]">
-            {t("all-help-requests")}
+          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-0.5%]">
+            {t("my-help-requests")}
           </div>
           <div className="mx-2 my-2">
             <span className="border-b border-gray-300">{t("filters")}</span>
@@ -228,17 +223,32 @@ export const CurrentNeeds = () => {
                     onChange={handleCountyChange}
                   />
                 </div>
-                <div className="flex items-center text-[#000] mt-3">
-                  <div className="flex items-center w-60 h-10 border border-gray-300 rounded-md outline-none pl-2">
-                    {location}
-                  </div>
-                  <div
-                    className="bg-gray-200 text-sm px-2 h-[80%] flex justify-center items-center ml-6 font-medium rounded-sm hover:cursor-pointer"
-                    onClick={() => userCoordinates()}
-                  >
-                    {t("get-location")}
-                  </div>
-                </div>
+              </div>
+              <div className="flex mt-4 justify-between sm:justify-start">
+                <label
+                  className="flex items-center justify-center sm:mr-12"
+                  onClick={() => setInprogressOption(!inprogressOption)}
+                >
+                  <input
+                    type="checkbox"
+                    className="register-radiobutton"
+                    value="inprogress"
+                    checked={inprogressOption}
+                  />
+                  &nbsp;{t("in-progress")}{" "}
+                </label>
+                <label
+                  className="flex items-center justify-center"
+                  onClick={() => setUncompletedOption(!uncompletedOption)}
+                >
+                  <input
+                    type="checkbox"
+                    className="register-radiobutton"
+                    value="uncompleted"
+                    checked={uncompletedOption}
+                  />
+                  &nbsp;{t("uncompleted")}{" "}
+                </label>
               </div>
             </div>
           </div>
@@ -248,11 +258,12 @@ export const CurrentNeeds = () => {
                 <p className="text-center font-medium">{t("no-needs-found")}</p>
               ) : (
                 searchOffers.map((offer: OfferProps) => (
-                  <SingleOffer
+                  <SingleMyRequest
                     key={offer.id}
                     {...offer}
                     users={users}
                     helpTypes={helpTypes}
+                    statuses={statuses}
                   />
                 ))
               )}

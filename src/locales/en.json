@@ -9,10 +9,9 @@
   "accepted-needs": "Accepted help requests",
   "my-help-offers": "My help offers",
   "add-request": "Add help request",
-  "my-requests": "My requests",
   "help-offers": "All help offers",
   "accepted-help-offers": "Accepted help offers",
-  "my-needs": "My help requests",
+  "my-help-requests": "My help requests",
   "log-in": "Log in",
   "register": "Register",
   "settings": "Settings",
@@ -50,5 +49,6 @@
   "add-help-request": "Add help request",
   "current-helps": "All help offers",
   "in-progress": "In progress",
-  "uncomplited": "Uncomplited"
+  "uncompleted": "Completed",
+  "uncompleted": "Uncompleted"
 }

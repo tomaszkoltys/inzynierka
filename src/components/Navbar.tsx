@@ -115,7 +115,7 @@ export const Navbar = () => {
                 )}
                 {userType === "ref" && (
                   <li className="hover-bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/accepted-help-offers">
+                    <Link to="/accepted_help_offers">
                       <div className="px-2 py-4">
                         {t("accepted-help-offers")}
                       </div>
@@ -124,8 +124,8 @@ export const Navbar = () => {
                 )}
                 {userType === "ref" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/my-needs">
-                      <div className="px-2 py-4">{t("my-needs")}</div>
+                    <Link to="/my-help-requests">
+                      <div className="px-2 py-4">{t("my-help-requests")}</div>
                     </Link>
                   </li>
                 )}

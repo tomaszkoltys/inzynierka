@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineSearch } from "react-icons/ai";
 import { HelpTypeProps, OfferProps, UserProps } from "./AllHelpRequests";
-import { SingleMyHelpOffer } from "./SingleMyHelpOffer";
+import { SingleAcceptedHelpRequest } from "./SingleAcceptedHelpRequest";
 
 export type StatusProps = {
   id: number;
   name: string;
 };
 
-export const MyHelpOffersList = () => {
+export const AcceptedHelpRequestsList = () => {
   const { t } = useTranslation();
   const [search, setSearch] = useState<string>("");
   const [myHelps, setMyHelps] = useState<OfferProps[]>([]);
@@ -18,20 +18,20 @@ export const MyHelpOffersList = () => {
   const [statuses, setStatuses] = useState<StatusProps[]>([]);
   const [users, setUsers] = useState<UserProps[]>([]);
 
-  // W zakładce My help offers widoczne są oferty wystawione tylko przez aktualnie zalogowanego wolontariusza. Narazie ustawione na sztywno dla usera id 2. 
-  const user_id = 2;
+  //pobierz oferty pomocy, ktore zaakceptowal user o id = 1(wolontariusz)
+  const user_id = 1;
 
   useEffect(() => {
     axios
       .get<OfferProps[]>(
-        `http://localhost:8080/myhelpoffers?currentUserId=${user_id}`
+        `http://localhost:8080/acceptedhelprequests?currentUserId=${user_id}`
       )
       .then((response) => {
         setMyHelps(response.data);
       })
       .catch((error) => {
         console.error(
-          `Error fetching myrequests?currentUserId=${user_id}:`,
+          `Error fetching acceptedhelprequests?currentUserId=${user_id}:`,
           error
         );
       });
@@ -45,7 +45,9 @@ export const MyHelpOffersList = () => {
 
     axios
       .get<HelpTypeProps[]>("http://localhost:8080/allhelpstatuses")
-      .then((response) => setStatuses(response.data))
+      .then((response) => {
+        setStatuses(response.data);
+      })
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
       });
@@ -70,7 +72,7 @@ export const MyHelpOffersList = () => {
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1.5%]">
-            {t("my-help-offers")}
+            {t("accepted-needs")}
           </div>
           <div className="flex flex-col mx-8 mt-10 mb-12">
             <div className="flex justify-center items-center text-[#000] w-60 h-10 border border-gray-300 rounded-md">
@@ -91,7 +93,7 @@ export const MyHelpOffersList = () => {
                 <p className="text-center font-medium">{t("no-needs-found")}</p>
               ) : (
                 searchOffers.map((offer: OfferProps) => (
-                  <SingleMyHelpOffer
+                  <SingleAcceptedHelpRequest
                     key={offer.id}
                     {...offer}
                     users={users}

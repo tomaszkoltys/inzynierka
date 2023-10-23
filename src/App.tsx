@@ -12,9 +12,10 @@ import { AddHelpRequest } from "./pages/AddHelpRequest";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
 import { AllHelps } from "./pages/AllHelpOffers";
-import { MyOffers } from "./pages/MyOffers";
+import { MyHelpOffers } from "./pages/MyHelpOffers";
 import { AcceptedHelpRequests } from "./pages/AcceptedHelpRequests";
-import { MyRequests } from "./pages/MyRequests";
+import { MyHelpRequests } from "./pages/MyHelpRequests";
+import { AcceptedHelpOffersList } from "./components/AcceptedHelpOffers";
 
 function App() {
   return (
@@ -31,12 +32,10 @@ function App() {
         <Route path="/add_help_request" element={<AddHelpRequest />} />
         <Route path="/all_help_requests" element={<Main />} />
         <Route path="/all_help_offers" element={<AllHelps />} />
-        <Route path="/my_help_offers" element={<MyOffers />} />
-        <Route
-          path="/accepted_help_requests"
-          element={<AcceptedHelpRequests />}
-        />
-        <Route path="/my_requests" element={<MyRequests />} />
+        <Route path="/my_help_offers" element={<MyHelpOffers />} />
+        <Route path="/accepted_help_requests" element={<AcceptedHelpRequests />} /> 
+        <Route path="/accepted_help_offers" element={<AcceptedHelpOffersList />} /> 
+        <Route path="/my-help-requests" element={<MyHelpRequests />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
