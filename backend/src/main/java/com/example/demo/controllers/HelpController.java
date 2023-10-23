@@ -49,15 +49,21 @@ public class HelpController {
 
     @GetMapping (value ="/acceptedhelprequests")
     public @ResponseBody Iterable<Help> getAcceptedHelpRequests(@RequestParam int currentUserId){
-        return helpRepository.findBySideAndSupporterAndHelpStatus(1, currentUserId, List.of(1));
+        return helpRepository.findBySideAndSupporterAndHelpStatus(1, currentUserId, List.of(2, 3, 4));
     }
+
+    @GetMapping (value ="/acceptedhelpoffers")
+    public @ResponseBody Iterable<Help> getAcceptedHelpOffers(@RequestParam int currentUserId){
+        return helpRepository.findBySideAndSupporterAndHelpStatus(2, currentUserId, List.of(2, 3, 4));
+    }
+
     @GetMapping (value = "/myrequests")
     public @ResponseBody Iterable<Help> getMyHelpRequests(@RequestParam int currentUserId){
-        return helpRepository.findBySideAndAuthorAndHelpStatus(1, currentUserId, List.of(1,3));
+        return helpRepository.findBySideAndAuthorAndHelpStatus(2, currentUserId, List.of(1,3));
     }
     @GetMapping (value = "/myhelpoffers")
     public @ResponseBody Iterable<Help> getMyHelpOffers(@RequestParam int currentUserId){
-        return helpRepository.findBySideAndAuthorAndHelpStatus(2, currentUserId, List.of(1,3));
+        return helpRepository.findBySideAndAuthorAndHelpStatus(1, currentUserId, List.of(1,3));
     }
     @GetMapping (value = "/myhelprequestsandacceptedhelpoffers")
     public @ResponseBody Iterable<Help> getMyHelpRequestsAndAcceptedHelpOffers(@RequestParam int currentUserId, @RequestParam String description,
