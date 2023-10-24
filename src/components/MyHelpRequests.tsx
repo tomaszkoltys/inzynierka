@@ -57,22 +57,16 @@ export const MyHelpRequestsList = () => {
   const [users, setUsers] = useState<UserProps[]>([]);
   const [voivodeships, setVoivodeships] = useState<VoivodeshipsProps[]>([]);
   const [counties, setCounties] = useState<CountiesProps[]>([]);
-  const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(
-    null
-  );
-  const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<
-    number | null
-  >(null);
+  const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(null);
+  const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<number | null>(null);
   const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
   const [selectedCountyId, setSelectedCountyId] = useState<number | null>(null);
   const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
-  const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(
-    null
-  );
+  const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
   const [inprogressOption, setInprogressOption] = useState<boolean>(false);
   const [uncompletedOption, setUncompletedOption] = useState<boolean>(false);
 
-  const user_id = 1;
+  const user_id = 2;
 
   useEffect(() => {
     axios

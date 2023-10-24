@@ -181,7 +181,7 @@ export const CurrentNeeds = () => {
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1.5%]">
-            {t("current-needs")}
+            {t("all-help-requests")}
           </div>
           <div className="mx-2 my-2">
             <span className="border-b border-gray-300">{t("filters")}</span>
@@ -192,7 +192,7 @@ export const CurrentNeeds = () => {
                 <div className="flex justify-center items-center text-[#000] w-60 h-10 border border-gray-300 rounded-md">
                   <input
                     autoFocus
-                    placeholder={t("search-need")}
+                    placeholder={t("search-help-request")}
                     onChange={(e) => setSearch(e.target.value)}
                     className="w-full border-none outline-none ml-2 text-sm"
                   />

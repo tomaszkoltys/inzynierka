@@ -4,6 +4,8 @@ import { StatusProps } from "./MyHelpOffers";
 import { Dropdown } from "./Dropdown";
 import { t } from "i18next";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const SingleMyRequest = ({
   id,
@@ -18,12 +20,8 @@ export const SingleMyRequest = ({
 }: OfferProps & { users: UserProps[] } & { helpTypes: HelpTypeProps[] } & {
   statuses: StatusProps[];
 }) => {
-  const [selectedStatusType, setSelectedStatusType] = useState<string | null>(
-    null
-  );
-  const [selectedStatusTypeId, setSelectedStatusTypeId] = useState<
-    number | null
-  >(null);
+  const [selectedStatusType, setSelectedStatusType] = useState<string | null>(null);
+  const [selectedStatusTypeId, setSelectedStatusTypeId] = useState<number | null>(null);
 
   const authorUser = users.find((user) => {
     return user.id === author;
@@ -48,6 +46,9 @@ export const SingleMyRequest = ({
       )
       .then((response) => {
         console.log("Help status updated:", response.data);
+        toast.success("Pomyślnie zmieniono status pomocy!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       })
       .catch((error) => {
         console.error("Error updating help status:", error);
@@ -93,7 +94,7 @@ export const SingleMyRequest = ({
         </div>
         <div className="w-full flex items-center justify-center flex-col my-6 gap-6">
           <Dropdown
-            label={t("choose-status-of-help")}
+            label={t("choose-help-status")}
             options={statuses.map((helpStat) => ({ value: helpStat.name }))}
             onChange={handleStatusChange}
           />

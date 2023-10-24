@@ -76,7 +76,7 @@ export const MyHelpOffersList = () => {
             <div className="flex justify-center items-center text-[#000] w-60 h-10 border border-gray-300 rounded-md">
               <input
                 autoFocus
-                placeholder={t("search-need")}
+                placeholder={t("search-help-request")}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full border-none outline-none ml-2 text-sm"
               />

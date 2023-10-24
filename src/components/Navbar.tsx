@@ -13,7 +13,7 @@ export const Navbar = () => {
     i18n.changeLanguage(lng);
   };
   // Tymczasowy sposob na zmiane wyswietlanych zakladek
-  const userType: string = "vol";
+  const userType: string = "ref";
   
   //const userType = 'ref';
 
@@ -74,7 +74,7 @@ export const Navbar = () => {
                 {userType === "vol" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/add_help_offer">
-                      <div className="px-2 py-4">{t("add-offer")}</div>
+                      <div className="px-2 py-4">{t("add-help-offer")}</div>
                     </Link>
                   </li>
                 )}
@@ -88,7 +88,7 @@ export const Navbar = () => {
                 {userType === "vol" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/accepted_help_requests">
-                      <div className="px-2 py-4">{t("accepted-needs")}</div>
+                      <div className="px-2 py-4">{t("accepted-help-requests")}</div>
                     </Link>
                   </li>
                 )}
@@ -109,7 +109,7 @@ export const Navbar = () => {
                 {userType === "ref" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/all_help_offers">
-                      <div className="px-2 py-4">{t("help-offers")}</div>
+                      <div className="px-2 py-4">{t("all-help-offers")}</div>
                     </Link>
                   </li>
                 )}
@@ -148,7 +148,7 @@ export const Navbar = () => {
             {userType === "vol" && (
               <Link to="add_help_offer">
                 <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
-                  {t("add-offer")}
+                  {t("add-help-offer")}
                 </a>
               </Link>
             )}
@@ -234,7 +234,7 @@ export const Navbar = () => {
               {userType === "vol" && (
                 <Link to="add_help_offer">
                   <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
-                    {t("help")}
+                    {t("add-help-offer")}
                   </a>
                 </Link>
               )}

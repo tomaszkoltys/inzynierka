@@ -10,7 +10,7 @@ export const AddOfferForm = () => {
       <div className="w-full md:w-[70%] h-form flex flex-col min-h-[700px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-2.5%]">
-          {t('add-offer')}
+          {t('add-help-offer')}
           </div>
           <div className="flex flex-col">
             <div className="flex flex-col mt-8 mb-12 gap-6">
@@ -40,7 +40,7 @@ export const AddOfferForm = () => {
             <input
               type="submit"
               className="flex items-center justify-center py-2 px-2 bg-yellow-default rounded-md text-xl text-[#fff] hover:cursor-pointer hover:bg-yellow-light addOffer__btn w-full md:w-[40%]"
-              value={t('add-offer')}
+              value={t('add-help-offer')}
             />
           </div>
         </div>

@@ -156,7 +156,7 @@ export const AddHelpRequestForm = () => {
             <input
               type="submit"
               className="flex items-center justify-center py-2 px-2 bg-yellow-default rounded-md text-xl text-[#fff] hover:cursor-pointer hover:bg-yellow-light addOffer__btn w-full md:w-[40%]"
-              value={t('add-offer')}
+              value={t('add-help-offer')}
               onClick={handleSubmit}
             />
           </div>

@@ -93,7 +93,7 @@ export const SingleMyHelpOffer = ({
         </div>
         <div className="w-full flex items-center justify-center flex-col my-6 gap-6">
           <Dropdown
-            label={t("choose-status-of-help")}
+            label={t("choose-help-status")}
             options={statuses.map((helpStat) => ({ value: helpStat.name }))}
             onChange={handleStatusChange}
           />
