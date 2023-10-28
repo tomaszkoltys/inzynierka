@@ -1,9 +1,12 @@
 package com.example.demo.controllers;
 import com.example.demo.entities.Help;
+import com.example.demo.entities.HelpStatus;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.management.relation.Role;
 
 @RestController
 public class UserController {
@@ -45,7 +48,7 @@ public class UserController {
         userRepository.blockUser(userId);
     }
 
-    @GetMapping(value = "/edituser")
+    @PutMapping(value = "/edituser")
     public void editUser(@RequestParam int userId, @RequestParam String name,@RequestParam String surname, @RequestParam String username,
                          @RequestParam String email_address, @RequestParam String identity_number ,@RequestParam Integer status,
                          @RequestParam Integer accepted ,@RequestParam Integer role){

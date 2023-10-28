@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@SpringBootApplication()
+@SpringBootApplication
 @EnableJpaRepositories("com.example.demo.repositories")
 public class DemoApplication {
 
@@ -20,7 +20,11 @@ public class DemoApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**");
+				registry
+						.addMapping("/**")
+						.allowedOrigins("http://localhost:5173") // Zmieniono na konkretne źródło
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "ORIGINS") // Dodano obsługę DELETE
+						.allowCredentials(true);
 			}
 		};
 	}

@@ -20,6 +20,9 @@ public interface HelpRepository extends CrudRepository<Help, Integer> {
     @Query(value = "select * from help where side = :side and author = :author and help_status in (:help_status)", nativeQuery = true)
     List<Help> findBySideAndAuthorAndHelpStatus(int side, int author, List<Integer> help_status);
 
+    @Query(value = "select * from help where id = :id", nativeQuery = true)
+    List<Help> findHelpById(int id);
+
     @Query(value = """
             select * from help
             where help_side = :side

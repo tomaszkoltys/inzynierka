@@ -37,6 +37,26 @@ public class HelpController {
         return helpRepository.findAll();
     }
 
+    @GetMapping(value = "/findhelp")
+    public @ResponseBody Iterable<Help> getHelpById(@RequestParam int id){
+        return helpRepository.findHelpById(id);
+    }
+
+    @DeleteMapping("/deletehelp")
+    public ResponseEntity<String> deleteHelp(@RequestParam int id) {
+        // Sprawdź, czy oferta istnieje
+        Optional<Help> optionalHelp = helpRepository.findById(id);
+
+        if (optionalHelp.isPresent()) {
+            // Jeśli oferta istnieje, usuń ją
+            helpRepository.delete(optionalHelp.get());
+            return new ResponseEntity<>("Pomoc została pomyślnie usunięta.", HttpStatus.OK);
+        } else {
+            // Jeśli oferta o danym ID nie istnieje, zwróć błąd
+            return new ResponseEntity<>("Oferta o podanym ID nie istnieje.", HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping(value = "/allhelpoffers")
     public @ResponseBody Iterable<Help> getAllHelpOffers(){
         return helpRepository.findBySide(1);
@@ -59,11 +79,11 @@ public class HelpController {
 
     @GetMapping (value = "/myrequests")
     public @ResponseBody Iterable<Help> getMyHelpRequests(@RequestParam int currentUserId){
-        return helpRepository.findBySideAndAuthorAndHelpStatus(2, currentUserId, List.of(1,3));
+        return helpRepository.findBySideAndAuthorAndHelpStatus(2, currentUserId, List.of(1,2,3,4));
     }
     @GetMapping (value = "/myhelpoffers")
     public @ResponseBody Iterable<Help> getMyHelpOffers(@RequestParam int currentUserId){
-        return helpRepository.findBySideAndAuthorAndHelpStatus(1, currentUserId, List.of(1,3));
+        return helpRepository.findBySideAndAuthorAndHelpStatus(1, currentUserId, List.of(1,2,3,4));
     }
     @GetMapping (value = "/myhelprequestsandacceptedhelpoffers")
     public @ResponseBody Iterable<Help> getMyHelpRequestsAndAcceptedHelpOffers(@RequestParam int currentUserId, @RequestParam String description,
@@ -89,26 +109,57 @@ public class HelpController {
 //    public void updateHelpStatus(@RequestParam int helpId){
 //        helpRepository.updateHelpStatus(helpId);
 //    }
-@PostMapping(value = "/updatehelpstatus")
-public ResponseEntity<?> updateHelpStatus(
-        @RequestParam int helpId,
-        @RequestParam int help_status
-) {
-    Optional<Help> optionalHelp = helpRepository.findById(helpId);
+    @PostMapping(value = "/updatehelpstatus")
+    public ResponseEntity<?> updateHelpStatus(
+            @RequestParam int helpId,
+            @RequestParam int help_status
+    ) {
+        Optional<Help> optionalHelp = helpRepository.findById(helpId);
 
-    if (optionalHelp.isPresent()) {
-        Help help = optionalHelp.get();
+        if (optionalHelp.isPresent()) {
+            Help help = optionalHelp.get();
 
-        // The rest of your code here
-        help.setHelpStatus(help_status);
-        helpRepository.save(help);
-        return new ResponseEntity<>("Help status updated successfully", HttpStatus.OK);
-    } else {
-        return new ResponseEntity<>("Help offer not found", HttpStatus.NOT_FOUND);
+            // The rest of your code here
+            help.setHelpStatus(help_status);
+            helpRepository.save(help);
+            return new ResponseEntity<>("Help status updated successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Help offer not found", HttpStatus.NOT_FOUND);
+        }
+
     }
 
-}
+    @PutMapping(value = "/updatehelp")
+    public ResponseEntity<?> updateHelp(
+            @RequestParam int id, // Identyfikator edytowanej oferty
+            @RequestParam String description,
+            @RequestParam String photo,
+            @RequestParam int type// Dodaj inne pola, które chcesz zaktualizować
+    ) {
+        Optional<Help> optionalHelp = helpRepository.findById(id);
+
+        if (optionalHelp.isPresent()) {
+            Help help = optionalHelp.get();
+
+            // Aktualizuj pola oferty pomocy
+            help.setDescription(description);
+            help.setPhoto(photo);
+            help.setType(type);
+            // Inne aktualizacje
+
+            // Zapisz zaktualizowaną ofertę
+            helpRepository.save(help);
+
+            return new ResponseEntity<>("Pomoc zaktualizowana pomyślnie", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Oferta pomocy nie znaleziona", HttpStatus.NOT_FOUND);
+        }
+    }
 
 
+    @RequestMapping(method = RequestMethod.OPTIONS)
+    public ResponseEntity<?> handle() {
+        return ResponseEntity.ok().build();
+    }
 
 }
