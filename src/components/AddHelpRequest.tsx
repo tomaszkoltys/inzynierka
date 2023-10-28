@@ -9,29 +9,19 @@ import "react-toastify/dist/ReactToastify.css";
 
 export const AddHelpRequestForm = () => {
   const { t } = useTranslation();
-  const [location, setLocation] = useState<string>("");
-  const [search, setSearch] = useState<string>("");
-  const [helps, setHelps] = useState<OfferProps[]>([]);
   const [helpTypes, setHelpTypes] = useState<HelpTypeProps[]>([]);
   const [users, setUsers] = useState<UserProps[]>([]);
-  const [voivodeships, setVoivodeships] = useState<VoivodeshipsProps[]>([]);
   const [counties, setCounties] = useState<CountiesProps[]>([]);
-  const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(null);
-  const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<number | null>(null);
   const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
   const [selectedCountyId, setSelectedCountyId] = useState<number | null>(null);
+  const [voivodeships, setVoivodeships] = useState<VoivodeshipsProps[]>([]);
+  const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(null);
+  const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<number | null>(null);
   const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
   const [description, setDescription] = useState(""); // Dodaj ten stan
 
   useEffect(() => {
-    axios
-      .get<OfferProps[]>("http://localhost:8080/allhelps")
-      .then((response) => setHelps(response.data))
-      .catch((error) => {
-        console.error("Error fetching /allhelps:", error);
-      });
-
     axios
       .get<HelpTypeProps[]>("http://localhost:8080/allhelptypes")
       .then((response) => setHelpTypes(response.data))
@@ -93,14 +83,12 @@ export const AddHelpRequestForm = () => {
     axios.post(`http://localhost:8080/addhelp?county=${selectedCountyId}&description=${description}&photo="photo.jpg"&side=2&author=1&type=${selectedHelpTypeId}`, {
     })
       .then((response) => {
-        // Obsłuż odpowiedź od serwera, np. wyświetl informację o sukcesie
         console.log("Odpowiedź od serwera:", response.data);
         toast.success("Pomyślnie dodano prośbę o pomoc!", {
           position: toast.POSITION.TOP_CENTER,
         });
       })
       .catch((error) => {
-        // Obsłuż błąd, np. wyświetl komunikat o błędzie
         console.error("Błąd podczas wysyłania oferty:", error);
       });
   };
@@ -136,8 +124,8 @@ export const AddHelpRequestForm = () => {
               <textarea
                 placeholder={t("description")}
                 className="w-full h-[150px] p-2 border border-gray-300 text-[#000] rounded-md text-sm resize-none outline-none md:w-[40%]"
-                value={description} // Dodaj tę linię
-                onChange={(e) => setDescription(e.target.value)} // Dodaj tę linię
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
             <div className="flex relative mb-10">
@@ -156,7 +144,7 @@ export const AddHelpRequestForm = () => {
             <input
               type="submit"
               className="flex items-center justify-center py-2 px-2 bg-yellow-default rounded-md text-xl text-[#fff] hover:cursor-pointer hover:bg-yellow-light addOffer__btn w-full md:w-[40%]"
-              value={t('add-help-offer')}
+              value={t('add-help-request')}
               onClick={handleSubmit}
             />
           </div>

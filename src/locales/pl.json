@@ -44,8 +44,21 @@
   "refugee": "Uchodźca",
   "pesel-number": "Numer PESEL",
   "identity-card/passport-number": "Numer dowodu tożsamości/paszportu",
+  "identity-number": "Numer dowodu",
   "all-help-offers": "Wszystkie oferty pomocy",
   "in-progress": "W trakcie realizacji",
   "completed": "Zrealizowane",
-  "uncompleted": "Niezrealizowane"
+  "uncompleted": "Niezrealizowane",
+  "admin-help": "Panel administracyjny - oferty i prośby pomocy",
+  "edit": "Edytuj",
+  "delete": "Usuń",
+  "search": "Szukaj",
+  "cancel": "Anuluj",
+  "save": "Zapisz",
+  "admin-user": "Panel administracyjny - użytkownicy",
+  "role": "Rola",
+  "status": "Status",
+  "block": "Zablokuj",
+  "accepted": "Zaakceptowany",
+  "actions": "Akcje"
 }

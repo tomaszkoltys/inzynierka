@@ -15,7 +15,9 @@ import { AllHelps } from "./pages/AllHelpOffers";
 import { MyHelpOffers } from "./pages/MyHelpOffers";
 import { AcceptedHelpRequests } from "./pages/AcceptedHelpRequests";
 import { MyHelpRequests } from "./pages/MyHelpRequests";
-import { AcceptedHelpOffersList } from "./components/AcceptedHelpOffers";
+import { AcceptedHelpOffers } from "./pages/AcceptedHelpOffers";
+import { AdminHelp } from "./pages/AdminHelp";
+import  AdminUser  from "./components/AdminUser";
 
 function App() {
   return (
@@ -34,10 +36,12 @@ function App() {
         <Route path="/all_help_offers" element={<AllHelps />} />
         <Route path="/my_help_offers" element={<MyHelpOffers />} />
         <Route path="/accepted_help_requests" element={<AcceptedHelpRequests />} /> 
-        <Route path="/accepted_help_offers" element={<AcceptedHelpOffersList />} /> 
-        <Route path="/my-help-requests" element={<MyHelpRequests />} />
+        <Route path="/accepted_help_offers" element={<AcceptedHelpOffers />} /> 
+        <Route path="/my_help_requests" element={<MyHelpRequests />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/admin_help" element={<AdminHelp />} />
+        <Route path="/admin_user" element={<AdminUser />} />
       </Routes>
       <Footer />
     </>

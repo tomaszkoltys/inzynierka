@@ -44,9 +44,22 @@
   "refugee": "Refugee",
   "pesel-number": "Pesel number",
   "identity-card/passport-number": "Identity card/passport number",
+  "identity-card": "Identity number",
   "add-help-request": "Add help request",
   "all-help-offers": "All help offers",
   "in-progress": "In progress",
   "completed": "Completed",
-  "uncompleted": "Uncompleted"
+  "uncompleted": "Uncompleted",
+  "admin-help": "Admin - Help offers and requests",
+  "edit": "Edit",
+  "delete": "Delete",
+  "search": "Search",
+  "cancel": "Cancel",
+  "save": "Save",
+  "admin-user": "Admin - Users",
+  "role": "Role",
+  "status": "Status",
+  "block": "Block",
+  "accepted": "Accepted",
+  "actions": "Actions"
 }

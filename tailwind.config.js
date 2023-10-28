@@ -9,6 +9,11 @@ export default {
           default: "#E0B313",
           dark: "#CAAA37",
         },
+        blue: {
+          light: "#8AA9C7",
+          default: "#8AA9C7",
+          dark: "#8AA9C7",
+        }
       },
       screens: {
         xs: { max: "475px" },

@@ -13,9 +13,10 @@ export const Navbar = () => {
     i18n.changeLanguage(lng);
   };
   // Tymczasowy sposob na zmiane wyswietlanych zakladek
-  const userType: string = "ref";
+  const userType: string = "adm";
   
   //const userType = 'ref';
+  //const userType = 'adm';
 
   return (
     <div className="flex justify-between items-center h-24 w-full px-2 sm:px-8 text-black bg-[#fff] border-b border-gray-300 fixed z-30">
@@ -124,8 +125,22 @@ export const Navbar = () => {
                 )}
                 {userType === "ref" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/my-help-requests">
+                    <Link to="/my_help_requests">
                       <div className="px-2 py-4">{t("my-help-requests")}</div>
+                    </Link>
+                  </li>
+                )}
+                {(userType === "ref" || userType === "vol" || userType === "adm") && (
+                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                    <Link to="/admin_help">
+                      <div className="px-2 py-4">{t("admin-help")}</div>
+                    </Link>
+                  </li>
+                )}
+                {(userType === "ref" || userType === "vol" || userType === "adm") && (
+                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                    <Link to="/admin_user">
+                      <div className="px-2 py-4">{t("admin-user")}</div>
                     </Link>
                   </li>
                 )}
@@ -156,6 +171,13 @@ export const Navbar = () => {
               <Link to="add_help_request">
                 <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
                   {t("add-request")}
+                </a>
+              </Link>
+            )}
+            {userType === "adm" && (
+              <Link to="admin_help">
+                <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
+                  {t("admin-help")}
                 </a>
               </Link>
             )}

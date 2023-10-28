@@ -10,12 +10,10 @@ export const SingleOffer = ({
   users,
   helpTypes,
 }: OfferProps & { users: UserProps[] } & { helpTypes: HelpTypeProps[] }) => {
-  // Znajdź użytkownika na podstawie ID autora
   const authorUser = users.find((user) => {
     return user.id === author;
   });
 
-  // Znajdź odpowiednią nazwę typu pomocy na podstawie identyfikatora "type"
   const helpType = helpTypes.find((helpType) => helpType.id === type);
   const typeName = helpType ? helpType.namePL : "Nieznany typ pomocy";
 
@@ -31,7 +29,7 @@ export const SingleOffer = ({
         </div>
       </div>
       <div className="flex items-center justify-center bg-yellow-dark">
-        {/* Sprawdź, czy znaleziono użytkownika, zanim dostaniesz się do jego właściwości */}
+        {}
         {authorUser ? (
           <span className="text-[#fff] text-lg">
             {authorUser.name} {authorUser.surname}
