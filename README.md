@@ -4,6 +4,7 @@
 - [x] Wszystkie prośby o pomoc
 - [x] Zaakceptowane prośby o pomoc
 - [x] Moje oferty pomocy
+  - [ ] Trzeba dodać do bazy danych miasta i uwzględnić je w froncie
 
 2. Moduły - uchodźca
 
@@ -11,6 +12,7 @@
 - [x] Wszystkie oferty pomocy
 - [x] Zaakceptowane oferty pomocy
 - [x] Moje prośby o pomoc
+  - [ ] Trzeba dodać do bazy danych miasta i uwzględnić je w froncie
 
 3. Moduły - admin
 
