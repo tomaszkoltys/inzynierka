@@ -183,6 +183,30 @@ INSERT INTO `role` VALUES (1,'Refugee'),(2,'Volunteer'),(3,'Administrator');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `accepted`
+--
+
+DROP TABLE IF EXISTS `accepted`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `accepted` (
+  `id` int NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `accepted`
+--
+
+LOCK TABLES `accepted` WRITE;
+/*!40000 ALTER TABLE `accepted` DISABLE KEYS */;
+INSERT INTO `accepted` VALUES (1,'Unverified'),(2,'Verified');
+/*!40000 ALTER TABLE `accepted` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -202,6 +226,7 @@ CREATE TABLE `user` (
   `accepted` tinyint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `role` (`role`),
+  KEY `accepted` (`accepted`),
   KEY `user_ibfk_2` (`status`),
   CONSTRAINT `user_ibfk_2` FOREIGN KEY (`status`) REFERENCES `account_status` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
