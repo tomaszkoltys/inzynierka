@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { AiOutlineSearch } from "react-icons/ai";
 import AdminSingleUser from "./AdminSingleUser";
 import { Dropdown } from "./Dropdown.tsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export type UserProps = {
   id: number;
@@ -132,10 +134,12 @@ const AdminUser = () => {
                   <AdminSingleUser
                     key={user.id}
                     user={user}
+                    userRoles={userRoles}
                     onEdit={() => handleEditUser(user.id)}
                     onBlock={() => handleBlockUser(user.id)}
                   />
                 ))}
+                <ToastContainer />
               </tbody>
             </table>
           </div>

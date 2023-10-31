@@ -1,21 +1,24 @@
 import React, { useState } from "react";
-import { UserProps } from "./AdminUser";
+import { UserProps, UserRolesProps } from "./AdminUser";
 import "/dist/assets/index-d018f553.css";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 type AdminSingleUserProps = {
   user: UserProps;
+  userRoles: UserRolesProps[]
   onEdit: (userId: number, updatedUser: Partial<UserProps>) => void;
   onBlock: (userId: number) => void;
 };
 
-const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, onEdit, onBlock }) => {
+const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEdit, onBlock }) => {
   const isEven = user.id % 2 === 0;
   const rowClass = isEven ? "even" : "odd";
   const { t } = useTranslation();
 
   const [isEditing, setIsEditing] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(false)
   const [editedUser, setEditedUser] = useState({ ...user });
 
   const handleSave = () => {
@@ -25,11 +28,17 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, onEdit, onBlock
         onEdit(user.id, editedUser);
         setIsEditing(false);
         console.log(response);
+        toast.success("Pomyślnie zaktualizowano użytkownika!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       })
       .catch((error) => {
         console.error("Error saving user:", error);
         // Obsłuż błąd zapisu
         console.error(error);
+        toast.error("Błąd podczas aktualizowania użytkownika!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       });
   };
 
@@ -39,9 +48,50 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, onEdit, onBlock
     setIsEditing(false);
   };
 
+  const handleBlock = () => {
+    axios
+    .put(`http://localhost:8080/edituser?userId=${user.id}&name=${editedUser.name}&surname=${editedUser.surname}&username=${editedUser.username}&email_address=${editedUser.email_address}&identity_number=${editedUser.identity_number}&status=2&accepted=${editedUser.accepted}&role=${editedUser.role}`)
+      .then((response) => {
+        onBlock(user.id);
+        setIsBlocked(true)
+        console.log(response);
+        toast.success("Pomyślnie zablokowano użytkownika!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+      .catch((error) => {
+        console.error("Error during blocking user:", error);
+        console.error(error);
+        toast.success("Błąd podczas próby zablokowania użytkownika!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      });
+  };
+
+  const handleUnblock = () => {
+    axios
+    .put(`http://localhost:8080/edituser?userId=${user.id}&name=${editedUser.name}&surname=${editedUser.surname}&username=${editedUser.username}&email_address=${editedUser.email_address}&identity_number=${editedUser.identity_number}&status=1&accepted=${editedUser.accepted}&role=${editedUser.role}`)
+      .then((response) => {
+        onBlock(user.id);
+        setIsBlocked(false)
+        console.log(response);
+        toast.success("Pomyślnie odblokowano użytkownika!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+      .catch((error) => {
+        console.error("Error during unblocking user:", error);
+        console.error(error);
+        toast.success("Błąd podczas próby odblokowania użytkownika!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      });
+  };
+
+
   return (
     <tr className={rowClass}>
-      <td>{user.id}</td>
+      <td className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.id}</td>
       <td>
         {isEditing ? (
           <input
@@ -51,7 +101,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, onEdit, onBlock
             onChange={(e) => setEditedUser({ ...editedUser, name: e.target.value })}
           />
         ) : (
-          user.name
+          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.name}</span>
         )}
       </td>
       <td>
@@ -63,7 +113,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, onEdit, onBlock
             onChange={(e) => setEditedUser({ ...editedUser, surname: e.target.value })}
           />
         ) : (
-          user.surname
+          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.surname}</span>
         )}
       </td>
       <td>
@@ -75,7 +125,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, onEdit, onBlock
             onChange={(e) => setEditedUser({ ...editedUser, username: e.target.value })}
           />
         ) : (
-          user.username
+          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.username}</span>
         )}
       </td>
       <td>
@@ -87,21 +137,26 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, onEdit, onBlock
             onChange={(e) => setEditedUser({ ...editedUser, email_address: e.target.value })}
           />
         ) : (
-          user.email_address
+          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.email_address}</span>
         )}
       </td>
       <td>
         {isEditing ? (
-          <input
-          type="text"
-          className="w-full border-none outline-none ml-2 text-sm"
-            value={editedUser.role}
-            onChange={(e) => setEditedUser({ ...editedUser, role: Number(e.target.value) })}
-          >
-            {/* Tutaj możesz dodać opcje roli */}
-          </input>
+          <select
+          value={editedUser.role}
+          onChange={(e) => setEditedUser({ ...editedUser, role: Number(e.target.value) })}
+          className="p-2 border border-gray-300 rounded-md text-[#000] text-sm outline-none focus:border focus:border-[#000] md:w-[90%]"
+        >
+          {userRoles.map((userRole) => (
+            <option key={userRole.id} value={userRole.id} style={{ color: "black" }}>
+              {userRole.name}
+            </option>
+          ))}
+        </select>
         ) : (
-          user.role.toString()
+          userRoles.map((userRole) => (
+            editedUser.role === userRole.id ? <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{userRole.name}</span> : ""
+          ))
         )}
       </td>
       <td>
@@ -113,7 +168,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, onEdit, onBlock
             onChange={(e) => setEditedUser({ ...editedUser, identity_number: e.target.value })}
           />
         ) : (
-          user.identity_number
+          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.identity_number}</span>
         )}
       </td>
       <td>
@@ -127,7 +182,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, onEdit, onBlock
             {/* Tutaj możesz dodać opcje statusu */}
           </input>
         ) : (
-          user.status.toString()
+          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.status === 1 ? "unblocked" : "blocked"}</span>
         )}
       </td>
       <td>
@@ -141,7 +196,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, onEdit, onBlock
             {/* Tutaj możesz dodać opcje statusu */}
           </input>
         ) : (
-          user.accepted
+          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.accepted}</span>
         )}
       </td>
       <td>
@@ -169,10 +224,10 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, onEdit, onBlock
               {t("edit")}
             </button>
             <button
-              className="bg-red-500 text-white px-4 py-2 mx-2"
-              onClick={() => onBlock(user.id)}
+              className={`${user.status === 1 ? "bg-red-500 text-white": "bg-green-500 text-white"} px-4 py-2 mx-2`}
+              onClick={user.status === 1 ? handleBlock : handleUnblock}
             >
-              {t("block")}
+              {user.status === 1 ? t("block") : t("unblock")}
             </button>
           </>
         )}
