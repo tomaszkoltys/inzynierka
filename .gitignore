@@ -1,0 +1,6 @@
+.idea
+
+backend/bin
+backend/build
+
+frontend/node_modules
