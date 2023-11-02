@@ -3,15 +3,19 @@ import com.example.demo.entities.Help;
 import com.example.demo.entities.HelpStatus;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.Role;
 
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/user")
 public class UserController {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
   /*  @PostMapping(value = "/addrating")
     public void addRating(@RequestParam int ratedUserId, @RequestParam int rating){
@@ -58,7 +62,7 @@ public class UserController {
         user.setUsername(username);
         user.setEmail_address(email_address);
         user.setIdentity_number(identity_number);
-        user.setStatus(status);
+        user.setAccount_status(status);
         user.setAccepted(accepted);
         user.setRole(role);
         userRepository.save(user);
@@ -78,7 +82,7 @@ public class UserController {
         newUser.setEmail_address(email_address);
         newUser.setRole(role);
         newUser.setIdentity_number(identity_number);
-        newUser.setStatus(1);
+        newUser.setAccount_status(1);
         newUser.setAccepted(1);
         userRepository.save(newUser);
     }

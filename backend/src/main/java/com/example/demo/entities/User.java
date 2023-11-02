@@ -1,6 +1,6 @@
 package com.example.demo.entities;
 
-import jakarta.annotation.Nullable;
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,14 +15,22 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Nonnull
     private String name;
+    @Nonnull
     private String surname;
+    @Nonnull
     private String username;
+    @Nonnull
     private String password;
+    @Nonnull
     private String email_address;
+    @Nonnull
     private int role;
+    @Nonnull
     private String identity_number;
-    private int status;
+    @Nonnull
+    private int account_status;
     private int accepted;
     //private float average_rating;
     //private int rating_count;

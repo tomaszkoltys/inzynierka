@@ -3,12 +3,10 @@ import com.example.demo.entities.County;
 import com.example.demo.entities.Voivodeship;
 import com.example.demo.repositories.CountyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/v1/county")
 public class CountyController {
 
     @Autowired
