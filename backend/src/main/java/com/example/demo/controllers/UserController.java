@@ -1,12 +1,10 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entities.User;
+import com.example.demo.helper.SecurityHelper;
 import com.example.demo.repositories.UserRepository;
-import com.google.common.hash.Hashing;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequiredArgsConstructor
@@ -75,7 +73,7 @@ public class UserController {
         newUser.setName(name);
         newUser.setSurname(surname);
         newUser.setUsername(username);
-        newUser.setPassword(hashPassword(password));
+        newUser.setPassword(SecurityHelper.hashPassword(password));
         newUser.setEmail_address(email_address);
         newUser.setRole(role);
         newUser.setIdentity_number(identity_number);
@@ -84,12 +82,6 @@ public class UserController {
         newUser.setRating_count(0);
         newUser.setAverage_rating(0);
         userRepository.save(newUser);
-    }
-
-    private String hashPassword(String password) {
-        return Hashing.sha256()
-                .hashString(password, StandardCharsets.UTF_8)
-                .toString();
     }
 
 }

@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.config.JwtUtils;
-import com.example.demo.config.SecurityHelper;
+import com.example.demo.helper.SecurityHelper;
 import com.example.demo.dto.AuthenticationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class AuthController {
     @PostMapping("/authenticate")
     public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest request) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+                new UsernamePasswordAuthenticationToken(request.getUsername(), SecurityHelper.hashPassword(request.getPassword()))
         );
         final UserDetails userDetails = securityHelper.findUserByUsername(request.getUsername());
         if (userDetails != null) {
