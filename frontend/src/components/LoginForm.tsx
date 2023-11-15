@@ -1,18 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, Router } from "react-router-dom";
 import { z, ZodType } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 type FormData = {
-  name: string;
+  username: string;
   password: string;
 };
 
 export const LoginForm = () => {
   const { t } = useTranslation();
   const schema: ZodType<FormData> = z.object({
-    name: z
+    username: z
       .string()
       .min(3, "Nazwa użytkownika musi mieć co najmniej 3 znaki")
       .max(30)
@@ -29,16 +31,37 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const submitData = (data: FormData) => {
-    console.log("Wyslano", data);
+  const submitData = async (data: FormData) => {
+    try {
+      const response = await axios({
+        method: 'post',
+        url: 'http://localhost:8080/api/v1/auth/authenticate',
+        data: JSON.stringify(data),
+        headers: {
+          'Content-Type': "application/json"
+        }
+      })
+      // .then((response) => response.data)
+      // .then((data: any) => {
+      //   sessionStorage.setItem('jwt-token', data['jwt-token'])
+      // })
+
+      sessionStorage.setItem('jwt-token', response.data['jwt-token'])
+      toast.success("Pomyślnie zalogowano!", {
+        position: toast.POSITION.TOP_CENTER,
+      })
+    } catch (error) {
+      console.error("Error while sending data:", error);
+    }
   };
 
   return (
     <div className="flex flex-row-reverse">
+      <ToastContainer />
       <div className="w-full md:w-[50%] h-form flex flex-col min-h-[600px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-3%]">
-            {t("logging")}
+            {t("Log in")}
           </div>
           <form className="flex flex-col" onSubmit={handleSubmit(submitData)}>
             <label className="mt-6">{t("username")}*</label>
@@ -46,10 +69,10 @@ export const LoginForm = () => {
               type="text"
               className="text-base py-3 px-2 bg-[#E1E1E1]"
               maxLength={30}
-              {...register("name")}
+              {...register("username")}
             />
-            {errors.name && (
-              <p className="text-[#e62727]"> {errors.name.message}</p>
+            {errors.username && (
+              <p className="text-[#e62727]"> {errors.username.message}</p>
             )}
             <label className="mt-6">{t("password")}*</label>
             <input
@@ -71,7 +94,7 @@ export const LoginForm = () => {
           <div className="flex flex-col gap-2">
             <div>
               <Link to="/remind" className="border-b border-[#000] font-medium">
-                {t("remind-password")}
+                {t("forgot-password")}
               </Link>
             </div>
             <div>

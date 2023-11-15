@@ -35,7 +35,7 @@
   "logging": "Logowanie",
   "username": "Nazwa użytkownika",
   "password": "Hasło",
-  "remind-password": "Przypomnij hasło",
+  "forgot-password": "Przypomnij hasło",
   "registration": "Rejestracja",
   "name": "Imię",
   "surname": "Nazwisko",

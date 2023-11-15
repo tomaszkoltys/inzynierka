@@ -97,12 +97,17 @@ export const RegisterForm = () => {
         identity_number: identity_number !== undefined ? identity_number : "",
       }).toString();
 
-      const response = await axios.post(`http://localhost:8080/adduser?${queryParameters}`, {});
+      const response = await axios({
+        method: 'post',
+        url: `http://localhost:8080/api/v1/user/register?${queryParameters}`,
+        headers: {
+          'Content-Type': "application/json"
+        }
+      })
       toast.success("Pomyślnie założono konto!", {
         position: toast.POSITION.TOP_CENTER,
       
     })
-      console.log("Response from the server:", response.data);
     } catch (error) {
       console.error("Error while sending data:", error);
     }
