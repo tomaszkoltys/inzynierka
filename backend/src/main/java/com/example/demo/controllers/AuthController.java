@@ -29,7 +29,7 @@ public class AuthController {
         );
         final UserDetails userDetails = securityHelper.findUserByUsername(request.getUsername());
         if (userDetails != null) {
-            return ResponseEntity.ok(jwtUtils.generateToken(userDetails));
+            return ResponseEntity.ok(jwtUtils.generateTokenResponse(userDetails));
         }
         return ResponseEntity.status(400).body("Error has occured");
     }
