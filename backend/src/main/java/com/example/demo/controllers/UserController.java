@@ -1,15 +1,12 @@
 package com.example.demo.controllers;
-import com.example.demo.entities.Help;
-import com.example.demo.entities.HelpStatus;
+
 import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
+import com.google.common.hash.Hashing;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.relation.Role;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,7 +14,7 @@ import javax.management.relation.Role;
 public class UserController {
     private final UserRepository userRepository;
 
-  /*  @PostMapping(value = "/addrating")
+    @PostMapping(value = "/addrating")
     public void addRating(@RequestParam int ratedUserId, @RequestParam int rating){
         User ratedUser = userRepository.findUser(ratedUserId).orElse(null);
         int newRatingCount = ratedUser.getRating_count() + 1;
@@ -28,7 +25,7 @@ public class UserController {
     @GetMapping(value = "/getrating")
     public float getRating(@RequestParam int ratedUserId){
         return userRepository.findUser(ratedUserId).orElse(null).getAverage_rating();
-    }*/
+    }
 
     @GetMapping(value = "/getallusers")
     public @ResponseBody Iterable<User> getAllUsers(@RequestParam String name, @RequestParam String username, @RequestParam String email_address,
@@ -68,8 +65,8 @@ public class UserController {
         userRepository.save(user);
     }
 
-    @PostMapping(value = "/adduser", consumes = {"*/*"})
-    public void addUser(@RequestParam String name, @RequestParam String surname,
+    @PostMapping(value = "/register", consumes = {"*/*"})
+    public void registerUser(@RequestParam String name, @RequestParam String surname,
                         @RequestParam String username, @RequestParam String password,
                         @RequestParam String email_address, @RequestParam int role,
                         @RequestParam String identity_number){
@@ -78,13 +75,21 @@ public class UserController {
         newUser.setName(name);
         newUser.setSurname(surname);
         newUser.setUsername(username);
-        newUser.setPassword(password);
+        newUser.setPassword(hashPassword(password));
         newUser.setEmail_address(email_address);
         newUser.setRole(role);
         newUser.setIdentity_number(identity_number);
         newUser.setAccount_status(1);
         newUser.setAccepted(1);
+        newUser.setRating_count(0);
+        newUser.setAverage_rating(0);
         userRepository.save(newUser);
+    }
+
+    private String hashPassword(String password) {
+        return Hashing.sha256()
+                .hashString(password, StandardCharsets.UTF_8)
+                .toString();
     }
 
 }

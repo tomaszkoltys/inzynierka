@@ -32,7 +32,7 @@ public class User {
     @Nonnull
     private int account_status;
     private int accepted;
-    //private float average_rating;
-    //private int rating_count;
+    private float average_rating;
+    private int rating_count;
 }
 
