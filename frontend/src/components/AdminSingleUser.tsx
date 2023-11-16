@@ -21,25 +21,32 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEd
   const [isBlocked, setIsBlocked] = useState(false)
   const [editedUser, setEditedUser] = useState({ ...user });
 
+
   const handleSave = () => {
-    axios
-    .put(`http://localhost:8080/edituser?userId=${user.id}&name=${editedUser.name}&surname=${editedUser.surname}&username=${editedUser.username}&email_address=${editedUser.email_address}&identity_number=${editedUser.identity_number}&status=${editedUser.status}&accepted=${editedUser.accepted}&role=${editedUser.role}`)
-      .then((response) => {
-        onEdit(user.id, editedUser);
-        setIsEditing(false);
-        console.log(response);
-        toast.success("Pomyślnie zaktualizowano użytkownika!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      })
-      .catch((error) => {
-        console.error("Error saving user:", error);
-        // Obsłuż błąd zapisu
-        console.error(error);
-        toast.error("Błąd podczas aktualizowania użytkownika!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+    axios({
+      method: 'put',
+      url: `http://localhost:8080/api/v1/user/edituser?userId=${user.id}&name=${editedUser.name}&surname=${editedUser.surname}&username=${editedUser.username}&email_address=${editedUser.email_address}&identity_number=${editedUser.identity_number}&status=${editedUser.status}&accepted=${editedUser.accepted}&role=${editedUser.role}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
+    .then((response) => {
+      onEdit(user.id, editedUser);
+      setIsEditing(false);
+      console.log(response);
+      toast.success("Pomyślnie zaktualizowano użytkownika!", {
+        position: toast.POSITION.TOP_CENTER,
       });
+    })
+    .catch((error) => {
+      console.error("Error saving user:", error);
+      // Obsłuż błąd zapisu
+      console.error(error);
+      toast.error("Błąd podczas aktualizowania użytkownika!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    });
   };
 
   const handleCancel = () => {
@@ -48,44 +55,58 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEd
     setIsEditing(false);
   };
 
+
   const handleBlock = () => {
-    axios
-    .put(`http://localhost:8080/edituser?userId=${user.id}&name=${editedUser.name}&surname=${editedUser.surname}&username=${editedUser.username}&email_address=${editedUser.email_address}&identity_number=${editedUser.identity_number}&status=2&accepted=${editedUser.accepted}&role=${editedUser.role}`)
-      .then((response) => {
-        onBlock(user.id);
-        setIsBlocked(true)
-        console.log(response);
-        toast.success("Pomyślnie zablokowano użytkownika!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      })
-      .catch((error) => {
-        console.error("Error during blocking user:", error);
-        console.error(error);
-        toast.success("Błąd podczas próby zablokowania użytkownika!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+    axios({
+      method: 'put',
+      url: `http://localhost:8080/api/v1/user/edituser?userId=${user.id}&name=${editedUser.name}&surname=${editedUser.surname}&username=${editedUser.username}&email_address=${editedUser.email_address}&identity_number=${editedUser.identity_number}&status=2&accepted=${editedUser.accepted}&role=${editedUser.role}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
+    .then((response) => {
+      onBlock(user.id);
+      setIsBlocked(true)
+      console.log(response);
+      toast.success("Pomyślnie zablokowano użytkownika!", {
+        position: toast.POSITION.TOP_CENTER,
       });
+    })
+    .catch((error) => {
+      console.error("Error during blocking user:", error);
+      console.error(error);
+      toast.success("Błąd podczas próby zablokowania użytkownika!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    });
   };
 
+
   const handleUnblock = () => {
-    axios
-    .put(`http://localhost:8080/edituser?userId=${user.id}&name=${editedUser.name}&surname=${editedUser.surname}&username=${editedUser.username}&email_address=${editedUser.email_address}&identity_number=${editedUser.identity_number}&status=1&accepted=${editedUser.accepted}&role=${editedUser.role}`)
-      .then((response) => {
-        onBlock(user.id);
-        setIsBlocked(false)
-        console.log(response);
-        toast.success("Pomyślnie odblokowano użytkownika!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      })
-      .catch((error) => {
-        console.error("Error during unblocking user:", error);
-        console.error(error);
-        toast.success("Błąd podczas próby odblokowania użytkownika!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+    axios({
+      method: 'put',
+      url: `http://localhost:8080/api/v1/user/edituser?userId=${user.id}&name=${editedUser.name}&surname=${editedUser.surname}&username=${editedUser.username}&email_address=${editedUser.email_address}&identity_number=${editedUser.identity_number}&status=1&accepted=${editedUser.accepted}&role=${editedUser.role}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
+    .then((response) => {
+      onBlock(user.id);
+      setIsBlocked(false)
+      console.log(response);
+      toast.success("Pomyślnie odblokowano użytkownika!", {
+        position: toast.POSITION.TOP_CENTER,
       });
+    })
+    .catch((error) => {
+      console.error("Error during unblocking user:", error);
+      console.error(error);
+      toast.success("Błąd podczas próby odblokowania użytkownika!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    });
   };
 
 
