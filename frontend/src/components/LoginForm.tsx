@@ -58,10 +58,10 @@ export const LoginForm = () => {
         }
       })
       setLoggedInUser(data.username); // Ustawia zalogowanego użytkownika
-      setLoggedInUserRole("ref"); // Ustawia rolę zalogowanego użytkownika
+      setLoggedInUserRole("vol"); // Ustawia rolę zalogowanego użytkownika
       sessionStorage.setItem('jwt-token', response.data['jwt-token'])
       localStorage.setItem('loggedInUser', data.username);
-      localStorage.setItem('loggedInUserRole', "ref"); // Zapisuje rolę zalogowanego użytkownika w localStorage
+      localStorage.setItem('loggedInUserRole', "vol"); // Zapisuje rolę zalogowanego użytkownika w localStorage
       toast.success("Pomyślnie zalogowano!", {
         position: toast.POSITION.TOP_CENTER,
       })

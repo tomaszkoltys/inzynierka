@@ -23,7 +23,7 @@ export const AcceptedHelpOffersList = () => {
 
   useEffect(() => {
     axios({
-      method: 'post',
+      method: 'get',
       url: `http://localhost:8080/api/v1/help/acceptedhelpoffers?currentUserId=${user_id}`,
       headers: {
         'Content-Type': 'application/json',

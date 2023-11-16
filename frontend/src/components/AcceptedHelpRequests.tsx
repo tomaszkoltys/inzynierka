@@ -18,12 +18,12 @@ export const AcceptedHelpRequestsList = () => {
   const [statuses, setStatuses] = useState<StatusProps[]>([]);
   const [users, setUsers] = useState<UserProps[]>([]);
 
-  //pobierz oferty pomocy, ktore zaakceptowal user o id = 1(wolontariusz)
+  //pobierz prośby o pomoc, ktore zaakceptowal user o id = 1(wolontariusz)
   const user_id = 1;
 
   useEffect(() => {
     axios({
-      method: 'post',
+      method: 'get',
       url: `http://localhost:8080/api/v1/help/acceptedhelprequests?currentUserId=${user_id}`,
       headers: {
         'Content-Type': 'application/json',
