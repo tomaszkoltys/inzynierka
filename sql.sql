@@ -183,30 +183,6 @@ INSERT INTO `role` VALUES (1,'Refugee'),(2,'Volunteer'),(3,'Administrator');
 UNLOCK TABLES;
 
 --
--- Table structure for table `accepted`
---
-
-DROP TABLE IF EXISTS `accepted`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `accepted` (
-  `id` int NOT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `accepted`
---
-
-LOCK TABLES `accepted` WRITE;
-/*!40000 ALTER TABLE `accepted` DISABLE KEYS */;
-INSERT INTO `accepted` VALUES (1,'Unverified'),(2,'Verified');
-/*!40000 ALTER TABLE `accepted` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `user`
 --
 
@@ -218,18 +194,20 @@ CREATE TABLE `user` (
   `name` varchar(50) DEFAULT NULL,
   `surname` varchar(50) DEFAULT NULL,
   `username` varchar(50) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL,
+  `password` varchar(64) DEFAULT NULL,
   `email_address` varchar(50) DEFAULT NULL,
   `role` int DEFAULT NULL,
   `identity_number` varchar(50) DEFAULT NULL,
-  `status` int DEFAULT NULL,
+  `account_status` int DEFAULT NULL,
   `accepted` tinyint DEFAULT NULL,
+  `rating_count` int DEFAULT NULL,
+  `average_rating` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `role` (`role`),
-  KEY `accepted` (`accepted`),
-  KEY `user_ibfk_2` (`status`),
-  CONSTRAINT `user_ibfk_2` FOREIGN KEY (`status`) REFERENCES `account_status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `account_status` (`account_status`),
+  CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`id`),
+  CONSTRAINT `user_ibfk_2` FOREIGN KEY (`account_status`) REFERENCES `account_status` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +216,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Jan','Kowalski2','jkowalski123','password123','jkowalski@gmail.com',1,'322',1,0),(2,'Adam','Nowak','adamn','password456','adamnowak@o.pl',1,'67890',1,1),(3,'Alicja','Kowal','alakow','password789','alickakowalska@mail.pl',1,'54321',1,0),(4,'Tomasz','Kowalczyk','tkowalczyk','password000','tomaszkowalczyk@mail.pl',1,'123132',1,0),(5,'Tomek','Kowalski2','jkowalski123','\"password123\"','jkowalski@gmail.com',1,'32',1,1),(6,'Klaudiusz','Wierzbowski','kwierzbowskii','\"password123\"','kwierzbowski@mail.pl',1,'32',1,1),(7,'Klaudiusz2','Wierzbowski2','\"kwierzbowski\"','\"password123\"','\"email@email.email\"',1,'1123123',1,1),(8,'Klaudiusz2','Wierzbowski2','\"kwierzbowski\"','\"password123\"','\"email@email.email\"',1,'1123123',1,1),(9,'undefined','Wierzbowski2','\"kwierzbowski\"','\"password123\"','\"email@email.email\"',1,'1123123',1,1),(10,'Kazimierz','Wierzbowski2','kwierzbowski','password123','email@email.email',1,'1123123',1,1),(11,'Kazimierz','Wierzbowski2','kwierzbowski','password123','email@email.email',1,'1123123',1,1),(12,'','Wierzbowski2','kwierzbowski','password123','email@email.email',1,'1123123',1,1),(13,'Adam','Wierzbowski2','kwierzbowski','password123','email@email.email',1,'1123123',1,1),(14,'Adam','Kowalski','adamkowalski','adamkowalski123','adam@kowalski.pl',1,'1123123',1,1),(15,'Adam','Kowalski','adamkowalski','adamkowalski123','adam@kowalski.pl',1,'1123123',1,1),(16,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(17,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(18,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(19,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(20,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(21,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(22,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(23,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(24,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(25,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(26,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(27,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'123',1,1),(28,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'1',1,1),(29,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'1',1,1),(30,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(31,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(32,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(33,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(34,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(35,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(36,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(37,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(38,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(39,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(40,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(41,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(42,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(43,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(44,'Adam','Kowalski','adamkowalski1','adamkowalski123','ada1m@kowalski.pl',1,'XYZ123123',1,1),(45,'Andrzej','Nowak','andrzejnowak','anowak123','a@nowak.pl',1,'XYZ123123',1,1),(46,'','','','','',1,'',1,1),(47,'','','','','',1,'',1,1),(48,'123','123123','123','123','123',1,'123',1,1),(49,'123','123123','123','123','123@123.pl',1,'123',1,1),(50,'1','1','1','1','1',1,'1',1,1),(51,'litery','litery','litery','litery','litery@litery.pl',1,'ABC312312',1,1),(52,'litery','litery','litery','litery','litery@litery.pl',1,'',1,1),(53,'abc','abc','abc','abcabc','abc@abc.pl',1,'',1,1),(54,'abc','abc','abc','abcabc','abc@abc.pl',1,'',1,1),(55,'abc','abc','abc','abcabc','abc@abc.pl',1,'',1,1),(56,'Jan','Kowalski','jjkowalski','j123123','j@kowalski.eu',1,'XYZ123123',1,1);
+INSERT INTO `user` VALUES (6,'Aleksandra','Wojcik','olavv','575fed10280549b8177cdf0274fa104d5df49690c1c871727af990327031c3b4','ola@wojcik.pl',1,'',2,1,0,0),(7,'Aleksandra','Wojcik','test','ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae','w.ola10@interia.pl',1,'XD1234567',1,1,0,0),(8,'Wiktoria','Wiktoria','wiktoria','2d473299d563d12f061fde645764b9ee93475bf7ca7216c2277224544ff73712','wiktoria@mail.pl',3,'AK2972615',1,1,0,0),(9,'aleksandra','aleksandra','aleksandra','85932645925c3455b11b6f7da4c87f4a063e0f128e2a6ff9bc58e6d65a648757','aleksandra@aleksa.pl',1,'ZE1231232',1,1,0,0),(10,'Wiktoria','Wiktoria','wiktoria','2d473299d563d12f061fde645764b9ee93475bf7ca7216c2277224544ff73712','wiktoria@mail.pl',1,'XYZ000000',1,1,0,0),(11,'aleksandra','aleksandra','aleksandra','85932645925c3455b11b6f7da4c87f4a063e0f128e2a6ff9bc58e6d65a648757','aleksandra@aleksa.pl',1,'XYZ123123',2,1,0,0),(12,'testt','testt','testt','822e54d37dd37d83776ed8aac05e4578e8b201d8f3fa366bdc60b75228bc835f','test@test.tes',1,'XYZ123122',1,1,0,0),(13,'admin','admin','admin','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','admin@admin.pl',1,'XXX111111',1,1,0,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,4 +253,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-28 23:26:45
+-- Dump completed on 2023-11-16 19:10:03

@@ -96,30 +96,55 @@ export const AdminHelpList = () => {
       });
   };
 
-  useEffect(() => {
-    axios
-      .get<OfferProps[]>("http://localhost:8080/allhelps")
-      .then((response) => setHelps(response.data))
-      .catch((error) => {
-        console.error("Error fetching /allhelps:", error);
-      });
 
-    axios
-      .get<HelpTypeProps[]>("http://localhost:8080/allhelptypes")
-      .then((response) => setHelpTypes(response.data))
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/help/allhelps',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
+    .then((response) => setHelps(response.data))
+    .catch((error) => {
+      console.error("Error fetching /allhelps:", error);
+    });
+
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
+    .then((response) => setHelpTypes(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
       });
 
-    axios
-      .get<UserProps[]>("http://localhost:8080/allusers")
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/user/allusers',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Error fetching /allusers:", error);
       });
 
-    axios
-      .get<VoivodeshipsProps[]>("http://localhost:8080/allvoivodeships")
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
       .then((response) => setVoivodeships(response.data))
       .catch((error) => {
         console.error("Error fetching /allvoivodeships:", error);
@@ -136,15 +161,21 @@ export const AdminHelpList = () => {
       null;
     setSelectedVoivodeshipId(selectedVoivodeshipId);
 
+
+
     if (selectedVoivodeshipId !== null) {
-      axios
-        .get<CountiesProps[]>(
-          `http://localhost:8080/countiesbyvoivodeship?currentVoivodeship=${selectedVoivodeshipId}`
-        )
-        .then((response) => setCounties(response.data))
-        .catch((error) => {
-          console.error("Error fetching counties:", error);
-        });
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/api/v1/county/countiesbyvoivodeship?currentVoivodeship=${selectedVoivodeshipId}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
+      .then((response) => setCounties(response.data))
+          .catch((error) => {
+            console.error("Error fetching counties:", error);
+          });
     }
   };
 
