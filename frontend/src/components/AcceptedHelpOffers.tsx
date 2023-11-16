@@ -22,10 +22,14 @@ export const AcceptedHelpOffersList = () => {
   const user_id = 1;
 
   useEffect(() => {
-    axios
-      .get<OfferProps[]>(
-        `http://localhost:8080/acceptedhelpoffers?currentUserId=${user_id}`
-      )
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/api/v1/help/acceptedhelpoffers?currentUserId=${user_id}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => {
         setMyHelps(response.data);
       })
@@ -36,15 +40,27 @@ export const AcceptedHelpOffersList = () => {
         );
       });
 
-    axios
-      .get<HelpTypeProps[]>("http://localhost:8080/allhelptypes")
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
       .then((response) => setHelpTypes(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
       });
 
-    axios
-      .get<HelpTypeProps[]>("http://localhost:8080/allhelpstatuses")
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/help-status/allhelpstatuses',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
       .then((response) => {
         setStatuses(response.data);
       })
@@ -52,8 +68,14 @@ export const AcceptedHelpOffersList = () => {
         console.error("Error fetching /allhelptypes:", error);
       });
 
-    axios
-      .get<UserProps[]>("http://localhost:8080/allusers")
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/user/allusers',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Error fetching /allusers:", error);

@@ -16,6 +16,4 @@ public class CountyController {
     public @ResponseBody Iterable<County> findByVoivodeship(@RequestParam int currentVoivodeship){
         return countyRepository.findByVoivodeship(currentVoivodeship);
     }
-
-
 }

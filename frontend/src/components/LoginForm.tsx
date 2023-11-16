@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
 
 type FormData = {
   username: string;
@@ -12,7 +14,21 @@ type FormData = {
 };
 
 export const LoginForm = () => {
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('loggedInUser');
+    const storedUserRole = localStorage.getItem('loggedInUserRole');
+    if (storedUser) {
+      setLoggedInUser(storedUser);
+      setLoggedInUserRole(storedUserRole);
+    }
+  }, []);
+
+  const navigate = useNavigate();
+  const [loggedInUser, setLoggedInUser] = useState<null | string>(null);
+  const [loggedInUserRole, setLoggedInUserRole] = useState<null | string>(null);
   const { t } = useTranslation();
+
   const schema: ZodType<FormData> = z.object({
     username: z
       .string()
@@ -41,18 +57,24 @@ export const LoginForm = () => {
           'Content-Type': "application/json"
         }
       })
-      // .then((response) => response.data)
-      // .then((data: any) => {
-      //   sessionStorage.setItem('jwt-token', data['jwt-token'])
-      // })
-
+      setLoggedInUser(data.username); // Ustawia zalogowanego użytkownika
+      setLoggedInUserRole("vol"); // Ustawia rolę zalogowanego użytkownika
       sessionStorage.setItem('jwt-token', response.data['jwt-token'])
+      localStorage.setItem('loggedInUser', data.username);
+      localStorage.setItem('loggedInUserRole', "vol"); // Zapisuje rolę zalogowanego użytkownika w localStorage
       toast.success("Pomyślnie zalogowano!", {
         position: toast.POSITION.TOP_CENTER,
       })
+      // Zapisz informacje o zalogowanym użytkowniku w localStorage
+
+      // Przekieruj użytkownika na odpowiednią stronę po zalogowaniu
+      
+      navigate('/all_help_requests');
+      window.location.reload();
+      
     } catch (error) {
       console.error("Error while sending data:", error);
-    }
+    }    
   };
 
   return (
@@ -84,7 +106,7 @@ export const LoginForm = () => {
             {errors.password && (
               <p className="text-[#e62727]"> {errors.password.message}</p>
             )}
-
+            
             <input
               type="submit"
               className="w-full my-10 py-2 px-2 text-xl text-[#fff] bg-yellow-default rounded-md hover:cursor-pointer hover:bg-yellow-light"
@@ -94,6 +116,7 @@ export const LoginForm = () => {
           <div className="flex flex-col gap-2">
             <div>
               <Link to="/remind" className="border-b border-[#000] font-medium">
+                
                 {t("forgot-password")}
               </Link>
             </div>

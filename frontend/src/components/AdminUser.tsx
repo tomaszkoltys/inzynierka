@@ -33,20 +33,35 @@ const AdminUser = () => {
   const [users, setUsers] = useState<UserProps[]>([]);
 
   useEffect(() => {
-    axios
-      .get<UserProps[]>("http://localhost:8080/allusers")
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/user/allusers',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Error fetching /allusers:", error);
       });
 
-    axios
-      .get<UserRolesProps[]>("http://localhost:8080/alluserroles")
-      .then((response) => setUserRoles(response.data))
-      .catch((error) => {
-        console.error("Error fetching /alluserroles:", error);
-      });
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/role/alluserroles',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
+        .then((response) => setUserRoles(response.data))
+        .catch((error) => {
+          console.error("Error fetching /allusers:", error);
+        });
+    
+
   }, []);
+  
 
   const handleUserRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = event.target.value;

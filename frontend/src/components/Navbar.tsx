@@ -3,20 +3,38 @@ import { SlArrowDown } from "react-icons/sl";
 import { TfiWorld, TfiMenu, TfiClose } from "react-icons/tfi";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import i18n from "../services/i18next";
 
 export const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
+  const [loggedInUser, setLoggedInUser] = useState<null | string>(null);
+  const [loggedInUserRole, setLoggedInUserRole] = useState<null | string>(null);
   const { t } = useTranslation();
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
   };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('loggedInUser');
+    const storedUserRole = localStorage.getItem('loggedInUserRole');
+    if (storedUser) {
+      setLoggedInUser(storedUser);
+      setLoggedInUserRole(storedUserRole);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    // Wyczyszczenie tokena z localStorage
+    localStorage.removeItem('jwt-token');
+    localStorage.removeItem('loggedInUser');
+    setLoggedInUser(null);
+    setLoggedInUserRole(null);
+    window.location.href = '/login';
+  };
+
   // Tymczasowy sposob na zmiane wyswietlanych zakladek
-  const userType: string = "adm";
-  
-  //const userType = 'ref';
-  //const userType = 'adm';
+  // Teraz mozna to zmienic w LoginForm.tsx
 
   return (
     <div className="flex justify-between items-center h-24 w-full px-2 sm:px-8 text-black bg-[#fff] border-b border-gray-300 fixed z-30">
@@ -28,16 +46,14 @@ export const Navbar = () => {
           <TfiWorld className="mr-2" size={15} />
           &nbsp;Language&nbsp;
           <SlArrowDown
-            className={`ml-2 group-hover:rotate-180 group-hover:transition duration-100 ${
-              toggleMenu ? "rotate-180" : ""
-            }`}
+            className={`ml-2 group-hover:rotate-180 group-hover:transition duration-100 ${toggleMenu ? "rotate-180" : ""
+              }`}
             size={15}
           />
         </div>
         <ul
-          className={`${
-            toggleMenu ? "block" : "hidden"
-          } group-hover:block bg-yellow-light absolute w-full text-[#fff] text-sm`}
+          className={`${toggleMenu ? "block" : "hidden"
+            } group-hover:block bg-yellow-light absolute w-full text-[#fff] text-sm`}
         >
           <li
             className="p-2 hover:bg-yellow-dark hover:cursor-pointer"
@@ -72,49 +88,49 @@ export const Navbar = () => {
               <ul
                 className={`hidden group-hover:block bg-yellow-light absolute w-full text-[#fff] text-sm z-10`}
               >
-                {userType === "vol" && (
+                {loggedInUserRole === "vol" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/add_help_offer">
                       <div className="px-2 py-4">{t("add-help-offer")}</div>
                     </Link>
                   </li>
                 )}
-                {userType === "vol" && (
+                {loggedInUserRole === "vol" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/all_help_requests">
                       <div className="px-2 py-4">{t("all-help-requests")}</div>
                     </Link>
                   </li>
                 )}
-                {userType === "vol" && (
+                {loggedInUserRole === "vol" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/accepted_help_requests">
                       <div className="px-2 py-4">{t("accepted-help-requests")}</div>
                     </Link>
                   </li>
                 )}
-                {userType === "vol" && (
+                {loggedInUserRole === "vol" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/my_help_offers">
                       <div className="px-2 py-4">{t("my-help-offers")}</div>
                     </Link>
                   </li>
                 )}
-                {userType === "ref" && (
+                {loggedInUserRole === "ref" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/add_help_request">
                       <div className="px-2 py-4">{t("add-request")}</div>
                     </Link>
                   </li>
                 )}
-                {userType === "ref" && (
+                {loggedInUserRole === "ref" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/all_help_offers">
                       <div className="px-2 py-4">{t("all-help-offers")}</div>
                     </Link>
                   </li>
                 )}
-                {userType === "ref" && (
+                {loggedInUserRole === "ref" && (
                   <li className="hover-bg-yellow-dark hover:cursor-pointer">
                     <Link to="/accepted_help_offers">
                       <div className="px-2 py-4">
@@ -123,21 +139,21 @@ export const Navbar = () => {
                     </Link>
                   </li>
                 )}
-                {userType === "ref" && (
+                {loggedInUserRole === "ref" && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/my_help_requests">
                       <div className="px-2 py-4">{t("my-help-requests")}</div>
                     </Link>
                   </li>
                 )}
-                {(userType === "ref" || userType === "vol" || userType === "adm") && (
+                {(loggedInUserRole === "adm") && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/admin_help">
                       <div className="px-2 py-4">{t("admin-help")}</div>
                     </Link>
                   </li>
                 )}
-                {(userType === "ref" || userType === "vol" || userType === "adm") && (
+                {(loggedInUserRole === "adm") && (
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/admin_user">
                       <div className="px-2 py-4">{t("admin-user")}</div>
@@ -160,21 +176,21 @@ export const Navbar = () => {
         </ul>
         <div className="flex">
           <div className="text-[#fff] hidden justify-center items-center mr-4 sm:flex">
-            {userType === "vol" && (
+            {loggedInUserRole === "vol" && (
               <Link to="add_help_offer">
                 <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
                   {t("add-help-offer")}
                 </a>
               </Link>
             )}
-            {userType === "ref" && (
+            {loggedInUserRole === "ref" && (
               <Link to="add_help_request">
                 <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
                   {t("add-request")}
                 </a>
               </Link>
             )}
-            {userType === "adm" && (
+            {loggedInUserRole === "adm" && (
               <Link to="admin_help">
                 <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
                   {t("admin-help")}
@@ -183,30 +199,53 @@ export const Navbar = () => {
             )}
           </div>
           <div className="group relative">
-            <div className="flex hover:cursor-pointer">
-              {t("my-account")}&nbsp;
-              <VscTriangleDown
-                className="group-hover:rotate-180 group-hover:transition duration-100"
-                size={15}
-              />
-            </div>
-            <ul className="hidden group-hover:block bg-yellow-light absolute w-full text-[#fff] text-sm z-20">
+
+            {loggedInUser ? (
+              <><div className="flex hover:cursor-pointer">
+                {loggedInUser}&nbsp;
+                <VscTriangleDown
+                  className="group-hover:rotate-180 group-hover:transition duration-100"
+                  size={15}
+                />
+              </div>
+              <ul className="hidden group-hover:block bg-yellow-light absolute w-full text-[#fff] text-sm z-20">
               <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                <Link to="/login">
-                  <div className="px-2 py-4">{t("log-in")}</div>
-                </Link>
-              </li>
-              <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                <Link to="/register">
-                  <div className="px-2 py-4">{t("register")}</div>
-                </Link>
-              </li>
-              <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                <Link to="/settings">
-                  <div className="px-2 py-4">{t("settings")}</div>
-                </Link>
-              </li>
-            </ul>
+                    <Link to="/settings">
+                      <div className="px-2 py-4">{t("settings")}</div>
+                    </Link>
+                  </li>
+                  <li className="hover:bg-yellow-dark hover:cursor-pointer" onClick={handleLogout}>
+                    <Link to="/login">
+                      <div className="px-2 py-4">{t("log-out")}</div>
+                    </Link>
+                  </li>
+                </ul>
+              </>
+            ) : (
+              <><div className="flex hover:cursor-pointer">
+                {t("my-account")}&nbsp;
+                <VscTriangleDown
+                  className="group-hover:rotate-180 group-hover:transition duration-100"
+                  size={15} />
+              </div>
+                <ul className="hidden group-hover:block bg-yellow-light absolute w-full text-[#fff] text-sm z-20">
+                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                    <Link to="/login">
+                      <div className="px-2 py-4">{t("log-in")}</div>
+                    </Link>
+                  </li>
+                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                    <Link to="/register">
+                      <div className="px-2 py-4">{t("register")}</div>
+                    </Link>
+                  </li>
+                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                    <Link to="/settings">
+                      <div className="px-2 py-4">{t("settings")}</div>
+                    </Link>
+                  </li>
+                </ul></>
+            )}
           </div>
           <div
             className={`flex lg:hidden ml-6 ${toggleMenu && "switch"}`}
@@ -253,7 +292,7 @@ export const Navbar = () => {
             </li>
 
             <div className="text-[#fff] flex items-center mt-6 ml-2">
-              {userType === "vol" && (
+              {loggedInUserRole === "vol" && (
                 <Link to="add_help_offer">
                   <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
                     {t("add-help-offer")}
@@ -264,6 +303,7 @@ export const Navbar = () => {
           </ul>
         </div>
       </div>
+
     </div>
   );
 };

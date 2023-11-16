@@ -3,13 +3,37 @@ import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
-
+import i18n from "../services/i18next";
 
 export const SettingsWindowVol = () => {
   const { t } = useTranslation();
   const [isNewNotifications, setIsNewNotifications] = useState<boolean>(false);
   const [isAcceptedNotifications, setIsAcceptedNotifications] =
     useState<boolean>(false);
+  const [toggleMenu, setToggleMenu] = useState<boolean>(false);
+  const [loggedInUser, setLoggedInUser] = useState<null | string>(null);
+  const [loggedInUserRole, setLoggedInUserRole] = useState<null | string>(null);
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('loggedInUser');
+    const storedUserRole = localStorage.getItem('loggedInUserRole');
+    if (storedUser) {
+      setLoggedInUser(storedUser);
+      setLoggedInUserRole(storedUserRole);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    // Wyczyszczenie tokena z localStorage
+    localStorage.removeItem('jwt-token');
+    localStorage.removeItem('loggedInUser');
+    setLoggedInUser(null);
+    setLoggedInUserRole(null);
+    window.location.href = '/login';
+  };
 
   const handleNewNotificationsChange = () => {
     const updatedValue = !isNewNotifications;
@@ -96,7 +120,7 @@ export const SettingsWindowVol = () => {
                   </div>
                 </Link>
                 <Link to="/">
-                  <div className="flex items-center justify-center py-2 px-2 bg-[#E07513] rounded-md text-xl text-[#fff] hover:cursor-pointer hover:bg-[#eb923e]">
+                  <div className="flex items-center justify-center py-2 px-2 bg-[#E07513] rounded-md text-xl text-[#fff] hover:cursor-pointer hover:bg-[#eb923e]" onClick={handleLogout}>
                     {t("log-out")}
                   </div>
                 </Link>
