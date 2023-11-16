@@ -182,7 +182,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEd
             {/* Tutaj możesz dodać opcje statusu */}
           </input>
         ) : (
-          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.status === 1 ? "unblocked" : "blocked"}</span>
+          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.status === 1 ? "Blocked" : "Unblocked"}</span>
         )}
       </td>
       <td>

@@ -17,13 +17,16 @@ export const LoginForm = () => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('loggedInUser');
+    const storedUserRole = localStorage.getItem('loggedInUserRole');
     if (storedUser) {
       setLoggedInUser(storedUser);
+      setLoggedInUserRole(storedUserRole);
     }
   }, []);
 
   const navigate = useNavigate();
   const [loggedInUser, setLoggedInUser] = useState<null | string>(null);
+  const [loggedInUserRole, setLoggedInUserRole] = useState<null | string>(null);
   const { t } = useTranslation();
 
   const schema: ZodType<FormData> = z.object({
@@ -55,25 +58,23 @@ export const LoginForm = () => {
         }
       })
       setLoggedInUser(data.username); // Ustawia zalogowanego użytkownika
+      setLoggedInUserRole("ref"); // Ustawia rolę zalogowanego użytkownika
       sessionStorage.setItem('jwt-token', response.data['jwt-token'])
       localStorage.setItem('loggedInUser', data.username);
-      console.log(response.data)
-      console.log(data.username)
-      console.log(loggedInUser)
+      localStorage.setItem('loggedInUserRole', "ref"); // Zapisuje rolę zalogowanego użytkownika w localStorage
       toast.success("Pomyślnie zalogowano!", {
         position: toast.POSITION.TOP_CENTER,
       })
       // Zapisz informacje o zalogowanym użytkowniku w localStorage
 
       // Przekieruj użytkownika na odpowiednią stronę po zalogowaniu
+      
       navigate('/all_help_requests');
       window.location.reload();
       
     } catch (error) {
       console.error("Error while sending data:", error);
-    }
-    
-    
+    }    
   };
 
   return (
