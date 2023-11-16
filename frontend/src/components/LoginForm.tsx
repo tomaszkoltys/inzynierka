@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 type FormData = {
   username: string;
@@ -12,6 +13,7 @@ type FormData = {
 };
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const schema: ZodType<FormData> = z.object({
     username: z
@@ -47,9 +49,11 @@ export const LoginForm = () => {
       // })
 
       sessionStorage.setItem('jwt-token', response.data['jwt-token'])
+      console.log(response.data)
       toast.success("Pomyślnie zalogowano!", {
         position: toast.POSITION.TOP_CENTER,
       })
+      navigate('/all_help_requests');
     } catch (error) {
       console.error("Error while sending data:", error);
     }
