@@ -20,24 +20,40 @@ export const AddHelpRequestForm = () => {
   const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
   const [description, setDescription] = useState(""); // Dodaj ten stan
-
+  
   useEffect(() => {
-    axios
-      .get<HelpTypeProps[]>("http://localhost:8080/allhelptypes")
-      .then((response) => setHelpTypes(response.data))
-      .catch((error) => {
-        console.error("Error fetching /allhelptypes:", error);
-      });
-
-    axios
-      .get<UserProps[]>("http://localhost:8080/allusers")
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
+    .then((response) => setHelpTypes(response.data))
+    .catch((error) => {
+      console.error("Error fetching /allhelptypes:", error);
+    });
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/user/allusers',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Error fetching /allusers:", error);
       });
-
-    axios
-      .get<VoivodeshipsProps[]>("http://localhost:8080/allvoivodeships")
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
       .then((response) => setVoivodeships(response.data))
       .catch((error) => {
         console.error("Error fetching /allvoivodeships:", error);
@@ -51,8 +67,14 @@ export const AddHelpRequestForm = () => {
     setSelectedVoivodeshipId(selectedVoivodeshipId);
 
     if (selectedVoivodeshipId !== null) {
-      axios
-        .get<CountiesProps[]>(`http://localhost:8080/countiesbyvoivodeship?currentVoivodeship=${selectedVoivodeshipId}`)
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/api/v1/county/countiesbyvoivodeship?currentVoivodeship=${selectedVoivodeshipId}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
         .then((response) => setCounties(response.data))
         .catch((error) => {
           console.error("Error fetching counties:", error);
@@ -80,7 +102,13 @@ export const AddHelpRequestForm = () => {
       return;
     }*/
 
-    axios.post(`http://localhost:8080/addhelp?county=${selectedCountyId}&description=${description}&photo="photo.jpg"&side=2&author=1&type=${selectedHelpTypeId}`, {
+    axios({
+      method: 'post',
+      url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo="photo.jpg"&side=2&author=1&type=${selectedHelpTypeId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
     })
       .then((response) => {
         console.log("Odpowiedź od serwera:", response.data);

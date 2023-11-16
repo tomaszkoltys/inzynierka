@@ -99,30 +99,55 @@ export const CurrentNeeds = () => {
       });
   };
 
+
   useEffect(() => {
-    axios
-      .get<OfferProps[]>("http://localhost:8080/allhelprequests")
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/help/allhelprequests',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setHelps(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelps:", error);
       });
 
-    axios
-      .get<HelpTypeProps[]>("http://localhost:8080/allhelptypes")
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
       .then((response) => setHelpTypes(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
       });
 
-    axios
-      .get<UserProps[]>("http://localhost:8080/allusers")
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/user/allusers',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Error fetching /allusers:", error);
       });
 
-    axios
-      .get<VoivodeshipsProps[]>("http://localhost:8080/allvoivodeships")
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
       .then((response) => setVoivodeships(response.data))
       .catch((error) => {
         console.error("Error fetching /allvoivodeships:", error);
@@ -140,10 +165,15 @@ export const CurrentNeeds = () => {
     setSelectedVoivodeshipId(selectedVoivodeshipId);
 
     if (selectedVoivodeshipId !== null) {
-      axios
-        .get<CountiesProps[]>(
-          `http://localhost:8080/countiesbyvoivodeship?currentVoivodeship=${selectedVoivodeshipId}`
-        )
+      
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/api/v1/county/countiesbyvoivodeship?currentVoivodeship=${selectedVoivodeshipId}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
         .then((response) => setCounties(response.data))
         .catch((error) => {
           console.error("Error fetching counties:", error);

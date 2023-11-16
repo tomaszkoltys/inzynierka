@@ -59,21 +59,27 @@ export const SingleAdminHelp = ({
   };
 
   const handleDeleteClick = () => {
-    axios
-      .delete(`http://localhost:8080/deletehelp?id=${id}`)
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success("Pomyślnie usunięto pomoc!", {
-            position: toast.POSITION.TOP_CENTER,
-          });
-        }
-      })
-      .catch((error) => {
-        toast.error("Błąd podczas usuwania pomocy.", {
+    axios({
+      method: 'delete',
+      url: `http://localhost:8080/api/v1/help/deletehelp?id=${id}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        toast.success("Pomyślnie usunięto pomoc!", {
           position: toast.POSITION.TOP_CENTER,
         });
-        console.error(error);
+      }
+    })
+    .catch((error) => {
+      toast.error("Błąd podczas usuwania pomocy.", {
+        position: toast.POSITION.TOP_CENTER,
       });
+      console.error(error);
+    });
   };
 
   return (

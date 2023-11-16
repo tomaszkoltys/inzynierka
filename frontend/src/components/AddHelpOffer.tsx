@@ -25,30 +25,55 @@ export const AddOfferForm = () => {
   const [description, setDescription] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
 
+
   useEffect(() => {
-    axios
-      .get<OfferProps[]>("http://localhost:8080/allhelps")
+    axios({
+    method: 'get',
+    url: 'http://localhost:8080/api/v1/help/allhelps',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+    }
+  })
       .then((response) => setHelps(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelps:", error);
       });
 
-    axios
-      .get<HelpTypeProps[]>("http://localhost:8080/allhelptypes")
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
       .then((response) => setHelpTypes(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
       });
 
-    axios
-      .get<UserProps[]>("http://localhost:8080/allusers")
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/user/allusers',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Error fetching /allusers:", error);
       });
 
-    axios
-      .get<VoivodeshipsProps[]>("http://localhost:8080/allvoivodeships")
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
       .then((response) => setVoivodeships(response.data))
       .catch((error) => {
         console.error("Error fetching /allvoivodeships:", error);
@@ -62,8 +87,14 @@ export const AddOfferForm = () => {
     setSelectedVoivodeshipId(selectedVoivodeshipId);
 
     if (selectedVoivodeshipId !== null) {
-      axios
-        .get<CountiesProps[]>(`http://localhost:8080/countiesbyvoivodeship?currentVoivodeship=${selectedVoivodeshipId}`)
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/api/v1/county/countiesbyvoivodeship?currentVoivodeship=${selectedVoivodeshipId}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
         .then((response) => setCounties(response.data))
         .catch((error) => {
           console.error("Error fetching counties:", error);
@@ -91,7 +122,13 @@ export const AddOfferForm = () => {
       return;
     }*/
 
-    axios.post(`http://localhost:8080/addhelp?county=${selectedCountyId}&description=${description}&photo=${imageFile?.name}&side=1&author=1&type=${selectedHelpTypeId}`, {
+     axios({
+      method: 'post',
+      url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo="photo.jpg"&side=2&author=1&type=${selectedHelpTypeId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
     })
       .then((response) => {
         console.log("Odpowiedź od serwera:", response.data);

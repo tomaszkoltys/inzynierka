@@ -39,11 +39,14 @@ export const SingleMyRequest = ({
     const selectedStatusTypeId =
       statuses.find((helpStat) => helpStat.name === selected)?.id || null;
     setSelectedStatusTypeId(selectedStatusTypeId);
-
-    axios
-      .post(
-        `http://localhost:8080/updatehelpstatus?helpId=${id}&help_status=${selectedStatusTypeId}`
-      )
+    axios({
+      method: 'post',
+      url: `http://localhost:8080/api/v1/help-status/updatehelpstatus?helpId=${id}&help_status=${selectedStatusTypeId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => {
         console.log("Help status updated:", response.data);
         toast.success("Pomyślnie zmieniono status pomocy!", {
