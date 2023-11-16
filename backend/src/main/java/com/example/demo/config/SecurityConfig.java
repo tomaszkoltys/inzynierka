@@ -78,7 +78,7 @@ public class SecurityConfig {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                return securityHelper.findUserByUsername(username);
+                return securityHelper.findUserByUsername(username).userDetails();
             }
         };
     }

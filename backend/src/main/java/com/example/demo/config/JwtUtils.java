@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import com.example.demo.dto.UserDetailsDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -38,11 +39,17 @@ public class JwtUtils {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateTokenResponse(UserDetails userDetails) {
+    public String generateTokenResponse(UserDetailsDTO userDetails) {
         var sb = new StringBuilder();
-        sb.append("{ \"jwt-token\": \"");
-        sb.append(generateToken(userDetails));
-        sb.append("\" }");
+        sb.append("{\n\"jwt-token\": \"");
+        sb.append(generateToken(userDetails.userDetails()));
+        sb.append("\",\n");
+        sb.append("\"user-id\": ");
+        sb.append(userDetails.userId());
+        sb.append(",\n");
+        sb.append("\"user-role\": [");
+        userDetails.userDetails().getAuthorities().forEach(grantedAuthority -> sb.append("\""+grantedAuthority.toString()+"\""));
+        sb.append("]\n}");
         return sb.toString();
     }
 

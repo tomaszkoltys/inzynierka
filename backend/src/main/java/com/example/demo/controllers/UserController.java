@@ -6,6 +6,8 @@ import com.example.demo.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpResponse;
+
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
@@ -83,6 +85,30 @@ public class UserController {
         newUser.setRating_count(0);
         newUser.setAverage_rating(0);
         userRepository.save(newUser);
+    }
+
+    @PostMapping(value = "/editpassword")
+    public void registerUser(@RequestParam int userId,
+                                     @RequestParam String oldPassword,
+                                     @RequestParam String newPassword){
+
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (user != null && SecurityHelper.hashPassword(oldPassword).equals(user.getPassword())) {
+            user.setPassword(SecurityHelper.hashPassword(newPassword));
+            userRepository.save(user);
+        }
+    }
+
+    @PostMapping(value = "/deleteuser")
+    public void registerUser(@RequestParam int userId,
+                             @RequestParam String password){
+
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (user != null && SecurityHelper.hashPassword(password).equals(user.getPassword())) {
+            userRepository.delete(user);
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.demo.helper;
 
+import com.example.demo.dto.UserDetailsDTO;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
 import com.google.common.hash.Hashing;
@@ -18,19 +19,19 @@ public class SecurityHelper {
 
     private final UserRepository userRepository;
 
-    public UserDetails findUserByUsername(String username) {
+    public UserDetailsDTO findUserByUsername(String username) {
         var userFromDb = userRepository.findByUsername(username).orElse(null);
         return convertToUserDetails(userFromDb);
     }
 
-    private UserDetails convertToUserDetails(User user) {
+    private UserDetailsDTO convertToUserDetails(User user) {
         if (user == null) {
             throw new UsernameNotFoundException("No user with given username was found");
         }
-        return new org.springframework.security.core.userdetails.User(
+        return new UserDetailsDTO(user.getId(), new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                user.getRole() == 1 ? Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN")) : Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"))
+                user.getRole() == 1 ? Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN")) : Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")))
         );
     }
 

@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.config.JwtUtils;
+import com.example.demo.dto.UserDetailsDTO;
 import com.example.demo.helper.SecurityHelper;
 import com.example.demo.dto.AuthenticationRequest;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class AuthController {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), SecurityHelper.hashPassword(request.getPassword()))
         );
-        final UserDetails userDetails = securityHelper.findUserByUsername(request.getUsername());
+        final UserDetailsDTO userDetails = securityHelper.findUserByUsername(request.getUsername());
         if (userDetails != null) {
             return ResponseEntity.ok(jwtUtils.generateTokenResponse(userDetails));
         }
