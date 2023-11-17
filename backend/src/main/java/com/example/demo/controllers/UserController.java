@@ -101,12 +101,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/deleteuser")
-    public void registerUser(@RequestParam int userId,
-                             @RequestParam String password){
+    public void registerUser(@RequestParam int userId){
 
         User user = userRepository.findById(userId).orElse(null);
 
-        if (user != null && SecurityHelper.hashPassword(password).equals(user.getPassword())) {
+        if (user != null) {
             userRepository.delete(user);
         }
     }

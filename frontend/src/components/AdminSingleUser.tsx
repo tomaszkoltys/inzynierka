@@ -110,6 +110,26 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
     });
   };
 
+  const deleteUser = () => {
+    axios({
+      method: 'post',
+      url: `http://localhost:8080/api/v1/user/deleteuser?userId=${user.id}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
+      .then((response) => {
+        console.log("Odpowiedź od serwera:", response.data);
+        toast.success("Pomyślnie usunięto użytkownika!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+      .catch((error) => {
+        console.error("Błąd podczas usuwania użytkownika:", error);
+      });
+  };
+
   return (
     <tr className={rowClass}>
       <td className={`${user.account_status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.id}</td>
@@ -244,17 +264,18 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
         ) : (
           <>
             <button
-              className="bg-yellow-default text-white px-4 py-2 mx-2"
+              className="bg-yellow-default text-white px-4 py-1 mx-2"
               onClick={() => setIsEditing(true)}
             >
               {t("edit")}
             </button>
             <button
-              className={`${user.account_status === 1 ? "bg-red-500 text-white": "bg-green-500 text-white"} px-4 py-2 mx-2`}
+              className={`${user.account_status === 1 ? "bg-red-500 text-white": "bg-green-500 text-white"} px-4 py-1 mx-2`}
               onClick={user.account_status === 1 ? handleBlock : handleUnblock}
             >
               {user.account_status === 1 ? t("block") : t("unblock")}
             </button>
+            <button className="bg-red-600 text-white px-4 py-1 mx-2 mt-1" onClick={deleteUser}>Delete</button>
           </>
         )}
       </td>
