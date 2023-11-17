@@ -28,11 +28,19 @@ public class SecurityHelper {
         if (user == null) {
             throw new UsernameNotFoundException("No user with given username was found");
         }
+
+        var userDetailsAuthority = switch (user.getRole()) {
+            case 1 -> Collections.singleton(new SimpleGrantedAuthority("ROLE_REFUGEE"));
+            case 2 -> Collections.singleton(new SimpleGrantedAuthority("ROLE_VOLUNTEER"));
+            case 3 -> Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            default -> throw new IllegalStateException("Unexpected value: " + user.getRole());
+        };
+
         return new UserDetailsDTO(user.getId(), new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                user.getRole() == 1 ? Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN")) : Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")))
-        );
+                userDetailsAuthority
+        ));
     }
 
     public static String hashPassword(String password) {

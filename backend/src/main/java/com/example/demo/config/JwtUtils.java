@@ -47,9 +47,9 @@ public class JwtUtils {
         sb.append("\"user-id\": ");
         sb.append(userDetails.userId());
         sb.append(",\n");
-        sb.append("\"user-role\": [");
+        sb.append("\"user-role\": ");
         userDetails.userDetails().getAuthorities().forEach(grantedAuthority -> sb.append("\""+grantedAuthority.toString()+"\""));
-        sb.append("]\n}");
+        sb.append("\n}");
         return sb.toString();
     }
 
