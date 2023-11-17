@@ -8,11 +8,12 @@ import { toast } from "react-toastify";
 type AdminSingleUserProps = {
   user: UserProps;
   userRoles: UserRolesProps[]
+  accountStatuses: UserRolesProps[]
   onEdit: (userId: number, updatedUser: Partial<UserProps>) => void;
   onBlock: (userId: number) => void;
 };
 
-const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEdit, onBlock }) => {
+const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, accountStatuses, onEdit, onBlock }) => {
   const isEven = user.id % 2 === 0;
   const rowClass = isEven ? "even" : "odd";
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEd
   const handleSave = () => {
     axios({
       method: 'put',
-      url: `http://localhost:8080/api/v1/user/edituser?userId=${user.id}&name=${editedUser.name}&surname=${editedUser.surname}&username=${editedUser.username}&email_address=${editedUser.email_address}&identity_number=${editedUser.identity_number}&status=${editedUser.status}&accepted=${editedUser.accepted}&role=${editedUser.role}`,
+      url: `http://localhost:8080/api/v1/user/edituser?userId=${user.id}&name=${editedUser.name}&surname=${editedUser.surname}&username=${editedUser.username}&email_address=${editedUser.email_address}&identity_number=${editedUser.identity_number}&status=${editedUser.account_status}&accepted=${editedUser.accepted}&role=${editedUser.role}`,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
@@ -109,10 +110,29 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEd
     });
   };
 
+  const deleteUser = () => {
+    axios({
+      method: 'post',
+      url: `http://localhost:8080/api/v1/user/deleteuser?userId=${user.id}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
+      .then((response) => {
+        console.log("Odpowiedź od serwera:", response.data);
+        toast.success("Pomyślnie usunięto użytkownika!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+      .catch((error) => {
+        console.error("Błąd podczas usuwania użytkownika:", error);
+      });
+  };
 
   return (
     <tr className={rowClass}>
-      <td className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.id}</td>
+      <td className={`${user.account_status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.id}</td>
       <td>
         {isEditing ? (
           <input
@@ -122,7 +142,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEd
             onChange={(e) => setEditedUser({ ...editedUser, name: e.target.value })}
           />
         ) : (
-          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.name}</span>
+          <span className={`${user.account_status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.name}</span>
         )}
       </td>
       <td>
@@ -134,7 +154,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEd
             onChange={(e) => setEditedUser({ ...editedUser, surname: e.target.value })}
           />
         ) : (
-          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.surname}</span>
+          <span className={`${user.account_status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.surname}</span>
         )}
       </td>
       <td>
@@ -146,7 +166,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEd
             onChange={(e) => setEditedUser({ ...editedUser, username: e.target.value })}
           />
         ) : (
-          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.username}</span>
+          <span className={`${user.account_status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.username}</span>
         )}
       </td>
       <td>
@@ -158,7 +178,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEd
             onChange={(e) => setEditedUser({ ...editedUser, email_address: e.target.value })}
           />
         ) : (
-          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.email_address}</span>
+          <span className={`${user.account_status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.email_address}</span>
         )}
       </td>
       <td>
@@ -176,7 +196,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEd
         </select>
         ) : (
           userRoles.map((userRole) => (
-            editedUser.role === userRole.id ? <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{userRole.name}</span> : ""
+            editedUser.role === userRole.id ? <span className={`${user.account_status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{userRole.name}</span> : ""
           ))
         )}
       </td>
@@ -189,21 +209,26 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEd
             onChange={(e) => setEditedUser({ ...editedUser, identity_number: e.target.value })}
           />
         ) : (
-          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.identity_number}</span>
+          <span className={`${user.account_status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.identity_number}</span>
         )}
       </td>
       <td>
         {isEditing ? (
-          <input
-          type="text"
-          className="w-full border-none outline-none ml-2 text-sm"
-            value={editedUser.status}
-            onChange={(e) => setEditedUser({ ...editedUser, status: Number(e.target.value) })}
+          <select
+          value={editedUser.account_status}
+          onChange={(e) => setEditedUser({ ...editedUser, account_status: Number(e.target.value) })}
+          className="p-2 border border-gray-300 rounded-md text-[#000] text-sm outline-none focus:border focus:border-[#000] md:w-[90%]"
           >
-            {/* Tutaj możesz dodać opcje statusu */}
-          </input>
+            {accountStatuses.map((accountStatus) => (
+              <option key={accountStatus.id} value={accountStatus.id} style={{ color: "black"}}>
+                {accountStatus.name}
+              </option>
+            ))}
+          </select>
         ) : (
-          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.status === 1 ? "Blocked" : "Unblocked"}</span>
+          accountStatuses.map((accountStatus) => (
+            editedUser.account_status === accountStatus.id ? <span className={`${user.account_status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{accountStatus.name}</span> : ""
+          ))
         )}
       </td>
       <td>
@@ -217,7 +242,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEd
             {/* Tutaj możesz dodać opcje statusu */}
           </input>
         ) : (
-          <span className={`${user.status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.accepted}</span>
+          <span className={`${user.account_status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.accepted}</span>
         )}
       </td>
       <td>
@@ -239,17 +264,18 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, onEd
         ) : (
           <>
             <button
-              className="bg-yellow-default text-white px-4 py-2 mx-2"
+              className="bg-yellow-default text-white px-4 py-1 mx-2"
               onClick={() => setIsEditing(true)}
             >
               {t("edit")}
             </button>
             <button
-              className={`${user.status === 1 ? "bg-red-500 text-white": "bg-green-500 text-white"} px-4 py-2 mx-2`}
-              onClick={user.status === 1 ? handleBlock : handleUnblock}
+              className={`${user.account_status === 1 ? "bg-red-500 text-white": "bg-green-500 text-white"} px-4 py-1 mx-2`}
+              onClick={user.account_status === 1 ? handleBlock : handleUnblock}
             >
-              {user.status === 1 ? t("block") : t("unblock")}
+              {user.account_status === 1 ? t("block") : t("unblock")}
             </button>
+            <button className="bg-red-600 text-white px-4 py-1 mx-2 mt-1" onClick={deleteUser}>Delete</button>
           </>
         )}
       </td>

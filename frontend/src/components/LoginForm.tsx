@@ -15,19 +15,25 @@ type FormData = {
 
 export const LoginForm = () => {
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem('loggedInUser');
-    const storedUserRole = localStorage.getItem('loggedInUserRole');
-    if (storedUser) {
-      setLoggedInUser(storedUser);
-      setLoggedInUserRole(storedUserRole);
-    }
-  }, []);
-
   const navigate = useNavigate();
   const [loggedInUser, setLoggedInUser] = useState<null | string>(null);
   const [loggedInUserRole, setLoggedInUserRole] = useState<null | string>(null);
+  const [loggedInUserPassword, setLoggedInUserPassword] = useState<null | string>(null);
   const { t } = useTranslation();
+
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('loggedInUser');
+    const storedUserRole = localStorage.getItem('loggedInUserRole');
+    const storedUserPassword = localStorage.getItem('loggedInUserPassword');
+    if (storedUser) {
+      setLoggedInUser(storedUser);
+      setLoggedInUserRole(storedUserRole);
+      setLoggedInUserPassword(storedUserPassword)
+    }
+  }, []);
+
+  
 
   const schema: ZodType<FormData> = z.object({
     username: z
@@ -58,18 +64,23 @@ export const LoginForm = () => {
         }
       })
       setLoggedInUser(data.username); // Ustawia zalogowanego użytkownika
+      setLoggedInUserPassword(data.password); // Ustawia haslo użytkownika
       setLoggedInUserRole("vol"); // Ustawia rolę zalogowanego użytkownika
       sessionStorage.setItem('jwt-token', response.data['jwt-token'])
+      sessionStorage.setItem('user-id', response.data['user-id'])
+      sessionStorage.setItem('user-role', response.data['user-role'])
       localStorage.setItem('loggedInUser', data.username);
       localStorage.setItem('loggedInUserRole', "vol"); // Zapisuje rolę zalogowanego użytkownika w localStorage
+      localStorage.setItem('loggedInUserPassword', data.password); // Zapisuje haslo zalogowanego użytkownika w localStorage
       toast.success("Pomyślnie zalogowano!", {
         position: toast.POSITION.TOP_CENTER,
       })
       // Zapisz informacje o zalogowanym użytkowniku w localStorage
-
-      // Przekieruj użytkownika na odpowiednią stronę po zalogowaniu
-      
-      navigate('/all_help_requests');
+      const current_user_role = sessionStorage.getItem('user-role')
+      //Przekieruj użytkownika na odpowiednią stronę po zalogowaniu
+      if(current_user_role === "ROLE_USER") navigate('/all_help_offers');
+      if(current_user_role === "ROLE_USER") navigate('/all_help_requests');
+      if(current_user_role === "ROLE_ADMIN") navigate('/admin_help');
       window.location.reload();
       
     } catch (error) {

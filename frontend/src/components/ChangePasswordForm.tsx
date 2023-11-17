@@ -2,20 +2,34 @@ import { Link } from "react-router-dom";
 import { z, ZodType } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 
 type FormData = {
-  password__old: string;
-  password__new: string;
+  oldPassword: string;
+  newPassword: string;
 };
 export const ChangePasswordForm = () => {
+  const [loggedInUserPassword, setLoggedInUserPassword] = useState<null | string>(null);
+
+  useEffect(() => {
+    const storedUserPassword = localStorage.getItem('loggedInUserPassword');
+    if (storedUserPassword) {
+      setLoggedInUserPassword(storedUserPassword)
+    }
+  }, []);
+
+  const currentUser_id = sessionStorage.getItem('user-id')
+
   const schema: ZodType<FormData> = z
     .object({
-      password__old: z
+      oldPassword: z
         .string()
         .min(5, "Hasło musi mieć co najmniej 5 znaków")
         .max(20)
         .nonempty("Pole nie może być puste"),
-      password__new: z
+      newPassword: z
         .string()
         .min(5, "Hasło musi mieć co najmniej 5 znaków")
         .max(20)
@@ -25,9 +39,13 @@ export const ChangePasswordForm = () => {
         )
         .nonempty("Pole nie może być puste"),
     })
-    .refine((data) => data.password__old !== data.password__new, {
+    .refine((data) => data.oldPassword !== data.newPassword, {
       message: "Nowe hasło nie może być takie samo jak stare",
-      path: ["password__new"],
+      path: ["newPassword"],
+    })
+    .refine((data) => data.oldPassword === loggedInUserPassword, {
+      message: "Stare hasło nie jest poprawne",
+      path: ["oldPassword"],
     });
 
   const {
@@ -36,12 +54,35 @@ export const ChangePasswordForm = () => {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const submitData = (data: FormData) => {
-    console.log("Wyslano", data);
+  const submitData = async (data: FormData) => {
+    axios({
+      method: 'post',
+      url: `http://localhost:8080/api/v1/user/editpassword?userId=${currentUser_id}&oldPassword=${data.oldPassword}&newPassword=${data.newPassword}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
+      .then((response) => {
+        console.log("Password changed:", response.data);
+        toast.success("Pomyślnie zmieniono hasło!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+      .catch((error) => {
+        console.log("Error", error)
+        toast.success("Zmiana hasła niepowiodła się!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      });
+
+
+  
   };
 
   return (
     <div className="flex flex-row-reverse">
+      <ToastContainer />
       <div className="w-full md:w-[50%] h-form flex flex-col min-h-[600px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-3%]">
@@ -53,20 +94,20 @@ export const ChangePasswordForm = () => {
               type="text"
               className="text-base py-3 px-2 bg-[#E1E1E1]"
               maxLength={20}
-              {...register("password__old")}
+              {...register("oldPassword")}
             />
-            {errors.password__old && (
-              <p className="text-[#e62727]"> {errors.password__old.message}</p>
+            {errors.oldPassword && (
+              <p className="text-[#e62727]"> {errors.oldPassword.message}</p>
             )}
             <label className="mt-6">Nowe hasło*</label>
             <input
               type="password"
               className="text-base py-3 px-2 bg-[#E1E1E1]"
               maxLength={20}
-              {...register("password__new")}
+              {...register("newPassword")}
             />
-            {errors.password__new && (
-              <p className="text-[#e62727]"> {errors.password__new.message}</p>
+            {errors.newPassword && (
+              <p className="text-[#e62727]"> {errors.newPassword.message}</p>
             )}
 
             <input
