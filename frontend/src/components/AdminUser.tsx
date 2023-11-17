@@ -16,7 +16,7 @@ export type UserProps = {
   email_address: string;
   role: number;
   identity_number: string;
-  status: number;
+  account_status: number;
   accepted: number;
 };
 
@@ -31,6 +31,7 @@ const AdminUser = () => {
   const [userRoles, setUserRoles] = useState<UserRolesProps[]>([]);
   const [userRolesId, setUserRolesId] = useState<number | null>(null);
   const [users, setUsers] = useState<UserProps[]>([]);
+  const [accountStatuses, setAccountStatuses] = useState<UserRolesProps[]>([])
 
   useEffect(() => {
     axios({
@@ -58,6 +59,19 @@ const AdminUser = () => {
         .catch((error) => {
           console.error("Error fetching /allusers:", error);
         });
+
+        axios({
+          method: 'get',
+          url: 'http://localhost:8080/api/v1/role/allaccountstatuses',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+          }
+        })
+          .then((response) => setAccountStatuses(response.data))
+          .catch((error) => {
+            console.error("Error fetching /allaccountstatuses:", error);
+          });
     
 
   }, []);
@@ -150,6 +164,7 @@ const AdminUser = () => {
                     key={user.id}
                     user={user}
                     userRoles={userRoles}
+                    accountStatuses={accountStatuses}
                     onEdit={() => handleEditUser(user.id)}
                     onBlock={() => handleBlockUser(user.id)}
                   />
