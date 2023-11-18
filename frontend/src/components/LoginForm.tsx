@@ -74,13 +74,13 @@ export const LoginForm = () => {
       localStorage.setItem('loggedInUserPassword', data.password); // Zapisuje haslo zalogowanego użytkownika w localStorage
       toast.success("Pomyślnie zalogowano!", {
         position: toast.POSITION.TOP_CENTER,
-      })
+      }) 
       // Zapisz informacje o zalogowanym użytkowniku w localStorage
-      const current_user_role = sessionStorage.getItem('user-role')
+      const currentUser_role = sessionStorage.getItem('user-role')
       //Przekieruj użytkownika na odpowiednią stronę po zalogowaniu
-      if(current_user_role === "ROLE_USER") navigate('/all_help_offers');
-      if(current_user_role === "ROLE_USER") navigate('/all_help_requests');
-      if(current_user_role === "ROLE_ADMIN") navigate('/admin_help');
+      if(currentUser_role === "ROLE_REFUGEE") navigate('/all_help_offers');
+      if(currentUser_role === "ROLE_VOLUNTEER") navigate('/all_help_requests');
+      if(currentUser_role === "ROLE_ADMIN") navigate('/admin_help');
       window.location.reload();
       
     } catch (error) {

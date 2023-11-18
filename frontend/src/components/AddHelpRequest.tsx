@@ -97,14 +97,10 @@ export const AddHelpRequestForm = () => {
   };
 
   const handleSubmit = () => {
-    /*if (!selectedCountyId || !selectedHelpTypeId || !description || !photo) {
-      alert("Wszystkie pola są wymagane.");
-      return;
-    }*/
-
+    const currentUser_id = sessionStorage.getItem('user-id')
     axios({
       method: 'post',
-      url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo="photo.jpg"&side=2&author=1&type=${selectedHelpTypeId}`,
+      url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo="photo.jpg"&side=2&author=${currentUser_id}&type=${selectedHelpTypeId}`,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`

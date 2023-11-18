@@ -66,12 +66,12 @@ export const MyHelpRequestsList = () => {
   const [inprogressOption, setInprogressOption] = useState<boolean>(false);
   const [uncompletedOption, setUncompletedOption] = useState<boolean>(false);
 
-  const user_id = 2;
+  const currentUser_id = sessionStorage.getItem('user-id')
 
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/v1/help/myhelpoffers?currentUserId=${user_id}`,
+      url: `http://localhost:8080/api/v1/help/myrequests?currentUserId=${currentUser_id}`,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
@@ -82,7 +82,7 @@ export const MyHelpRequestsList = () => {
       })
       .catch((error) => {
         console.error(
-          `Error fetching /myhelpoffers?currentUserId=${user_id}:`,
+          `Error fetching /myhelpoffers?currentUserId=${currentUser_id}:`,
           error
         );
       });

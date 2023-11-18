@@ -18,13 +18,12 @@ export const MyHelpOffersList = () => {
   const [statuses, setStatuses] = useState<StatusProps[]>([]);
   const [users, setUsers] = useState<UserProps[]>([]);
 
-  // W zakładce My help offers widoczne są oferty wystawione tylko przez aktualnie zalogowanego wolontariusza. Narazie ustawione na sztywno dla usera id 2. 
-  const user_id = 2;
+  const currentUser_id = sessionStorage.getItem('user-id')
 
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/v1/help/myhelpoffers?currentUserId=${user_id}`,
+      url: `http://localhost:8080/api/v1/help/myhelpoffers?currentUserId=${currentUser_id}`,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
@@ -35,7 +34,7 @@ export const MyHelpOffersList = () => {
       })
       .catch((error) => {
         console.error(
-          `Error fetching myrequests?currentUserId=${user_id}:`,
+          `Error fetching myrequests?currentUserId=${currentUser_id}:`,
           error
         );
       });

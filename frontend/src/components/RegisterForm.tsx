@@ -21,7 +21,7 @@ type FormData = {
 
 export const RegisterForm = () => {
   const { t } = useTranslation();
-  const [selectedOption, setSelectedOption] = useState<boolean>(false);
+  const [selectedOption, setSelectedOption] = useState<number>(2);
   const schema: ZodType<FormData> = z.object({
     firstName: z
       .string()
@@ -93,7 +93,7 @@ export const RegisterForm = () => {
         username: username,
         password: password,
         email_address: email_address,
-        role: role,
+        role: role.toString(),
         identity_number: identity_number !== undefined ? identity_number : "",
       }).toString();
 
@@ -117,7 +117,7 @@ export const RegisterForm = () => {
   const username = watch("name");
   const password = watch("password");
   const email_address = watch("email");
-  const role = watch("selectedOption") ? "1" : "2";
+  const role = watch("selectedOption") === "volunteer" ? 2 : 1;
   const identity_number = watch("document");
 
   return (
@@ -182,26 +182,26 @@ export const RegisterForm = () => {
             <div className="mt-16 mb-4 gap-24 lg:gap-36 flex flex-row items-center justify-center mx-auto xs:flex-col xs:gap-6 xs:items-start">
               <label
                 className="flex items-center justify-center"
-                onClick={() => setSelectedOption(false)}
+                onClick={() => setSelectedOption(2)}
               >
                 <input
                   type="radio"
                   className="register-radiobutton"
                   value="volunteer"
-                  checked={selectedOption === false}
+                  checked={selectedOption === 2}
                   {...register("selectedOption")}
                 />
                 &nbsp;{t("volunteer")}{" "}
               </label>
               <label
                 className="flex items-center justify-center"
-                onClick={() => setSelectedOption(true)}
+                onClick={() => setSelectedOption(1)}
               >
                 <input
                   type="radio"
                   className="register-radiobutton"
                   value="refugee"
-                  checked={selectedOption === true}
+                  checked={selectedOption === 1}
                   {...register("selectedOption")}
                 />
                 &nbsp;{t("refugee")}{" "}
