@@ -26,8 +26,10 @@ export const Navbar = () => {
 
   const handleLogout = () => {
     // Wyczyszczenie tokena z localStorage
-    localStorage.removeItem('jwt-token');
+    sessionStorage.removeItem('jwt-token');
     localStorage.removeItem('loggedInUser');
+    sessionStorage.removeItem('user-id');
+    sessionStorage.removeItem('user-role');
     setLoggedInUser(null);
     setLoggedInUserRole(null);
     window.location.href = '/login';
