@@ -204,7 +204,7 @@ export const Navbar = () => {
           <div className="group relative">
 
             {loggedInUser ? (
-              <><div className="flex hover:cursor-pointer">
+              <><div className="flex hover:cursor-pointer px-4">
                 {loggedInUser}&nbsp;
                 <VscTriangleDown
                   className="group-hover:rotate-180 group-hover:transition duration-100"

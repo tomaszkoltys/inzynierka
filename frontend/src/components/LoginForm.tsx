@@ -85,6 +85,9 @@ export const LoginForm = () => {
       
     } catch (error) {
       console.error("Error while sending data:", error);
+      toast.error("Logowanie nie powiodło się.", {
+        position: toast.POSITION.TOP_CENTER,
+      }) 
     }    
   };
 

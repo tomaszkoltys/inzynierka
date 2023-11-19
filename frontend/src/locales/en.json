@@ -15,6 +15,7 @@
   "settings": "Settings",
   "filters": "Filters",
   "search-help-request": "Search help request",
+  "search-help-offer": "Search help offer",
   "choose-voivodeship": "Choose voivodeship",
   "choose-county": "Choose county",
   "choose-type-of-help": "Choose type of help",
@@ -44,7 +45,7 @@
   "refugee": "Refugee",
   "pesel-number": "Pesel number",
   "identity-card/passport-number": "Identity card/passport number",
-  "identity-card": "Identity number",
+  "identity-number": "Identity number",
   "add-help-request": "Add help request",
   "all-help-offers": "All help offers",
   "in-progress": "In progress",
@@ -60,6 +61,7 @@
   "role": "Role",
   "status": "Status",
   "block": "Block",
+  "unblock": "Unblock",
   "accepted": "Accepted",
   "actions": "Actions"
 }

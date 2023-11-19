@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { OfferProps, UserProps, HelpTypeProps } from "./AllHelpRequests";
-import { Dropdown } from "./Dropdown";
 import { StatusProps } from "./MyHelpOffers";
+import { Dropdown } from "./Dropdown";
 import { t } from "i18next";
 import axios from "axios";
 
@@ -41,7 +41,6 @@ export const SingleMyHelpOffer = ({
     const selectedStatusTypeId =
       statuses.find((helpStat) => helpStat.name === selected)?.id || null;
     setSelectedStatusTypeId(selectedStatusTypeId);
-
     axios({
       method: 'post',
       url: `http://localhost:8080/api/v1/help/updatehelpstatus?helpId=${id}&help_status=${selectedStatusTypeId}`,

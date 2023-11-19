@@ -15,6 +15,7 @@
   "settings": "Ustawienia",
   "filters": "Filtrowanie",
   "search-help-request": "Wyszukaj prośbę o pomoc",
+  "search-help-offer": "Wyszukaj ofertę o pomoc",
   "choose-voivodeship": "Wybierz województwo",
   "choose-county": "Wybierz powiat",
   "choose-type-of-help": "Wybierz rodzaj pomocy",
@@ -59,6 +60,7 @@
   "role": "Rola",
   "status": "Status",
   "block": "Zablokuj",
+  "unblock": "Odblokuj",
   "accepted": "Zaakceptowany",
   "actions": "Akcje"
 }
