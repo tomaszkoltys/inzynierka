@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `inzynierka` /*!40100 DEFAULT CHARACTER SET utf8m
 USE `inzynierka`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
--- Host: localhost    Database: inzynierka
+-- Host: 127.0.0.1    Database: inzynierka
 -- ------------------------------------------------------
 -- Server version	8.0.34
 
@@ -96,7 +96,7 @@ CREATE TABLE `help` (
   CONSTRAINT `help_ibfk_3` FOREIGN KEY (`county`) REFERENCES `county` (`id`),
   CONSTRAINT `help_ibfk_4` FOREIGN KEY (`type`) REFERENCES `help_type` (`id`),
   CONSTRAINT `help_ibfk_5` FOREIGN KEY (`help_status`) REFERENCES `help_status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +105,7 @@ CREATE TABLE `help` (
 
 LOCK TABLES `help` WRITE;
 /*!40000 ALTER TABLE `help` DISABLE KEYS */;
-INSERT INTO `help` VALUES (50,34,NULL,1,2,'I need a room for two nights.','https://i.imgur.com/yV5OQht.jpg',2,1),(51,35,NULL,54,4,'Potrzebuję leki przeciwbólowe dla syna.','https://i.imgur.com/yaXNpE6.jpg',2,1),(52,36,NULL,138,1,'I will accept any pasta!','https://i.imgur.com/vU2ajjQ.jpg',2,1),(53,37,NULL,1,4,'Oddam leki przeciwzapalne widoczne na zdjęciu.','https://images.pexels.com/photos/161449/medical-tablets-pills-drug-161449.jpeg?auto=compress',1,1),(54,38,NULL,54,3,'I will give away clothes for an adult.','https://images.pexels.com/photos/3735641/pexels-photo-3735641.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',1,1),(55,39,NULL,138,5,'I offer help in organizing a visit to a psychologist.','\"photo.jpg\"',1,1);
+INSERT INTO `help` VALUES (50,34,37,1,2,'I need a room for three nights.','https://i.imgur.com/yV5OQht.jpg',2,2),(51,35,NULL,54,4,'Potrzebuję leki przeciwbólowe dla syna.','https://i.imgur.com/yaXNpE6.jpg',2,1),(52,36,NULL,138,1,'I will accept any pasta!','https://i.imgur.com/vU2ajjQ.jpg',2,2),(53,37,36,1,4,'Oddam leki przeciwzapalne widoczne na zdjęciu.','https://images.pexels.com/photos/161449/medical-tablets-pills-drug-161449.jpeg?auto=compress',1,2),(54,38,36,54,3,'I will give away clothes for an adult.','https://images.pexels.com/photos/3735641/pexels-photo-3735641.jpeg?auto=compress',1,2),(55,39,36,138,5,'I offer help in organizing a visit to a psychologist.','https://images.pexels.com/photos/161449/medical-tablets-pills-drug-161449.jpeg?auto=compress',1,2),(56,37,NULL,142,1,'Oddam 6 kg ryżu i 4 kg makaronu.','https://i.imgur.com/vU2ajjQ.jpg',1,1),(57,41,37,101,1,'Chcę jedzenie.','https://i.imgur.com/vU2ajjQ.jpg',2,3),(58,37,41,199,3,'Oddam ubrania dziecięce.','https://images.pexels.com/photos/3735641/pexels-photo-3735641.jpeg?auto=compress',1,2),(59,37,NULL,206,4,'Oddam leki przeciwbólowe.','https://images.pexels.com/photos/161449/medical-tablets-pills-drug-161449.jpeg?auto=compress',1,1);
 /*!40000 ALTER TABLE `help` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +207,7 @@ CREATE TABLE `user` (
   KEY `account_status` (`account_status`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`id`),
   CONSTRAINT `user_ibfk_2` FOREIGN KEY (`account_status`) REFERENCES `account_status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -216,7 +216,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (6,'Aleksandra','Wojcik','olavv','575fed10280549b8177cdf0274fa104d5df49690c1c871727af990327031c3b4','ola@wojcik.pl',2,'',1,1,0,0),(7,'Aleksandra','Wojcik','test','ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae','w.ola10@interia.pl',1,'XD1234567',1,1,0,0),(8,'Wiktoria','Wiktoria','wiktoria','2d473299d563d12f061fde645764b9ee93475bf7ca7216c2277224544ff73712','wiktoria@mail.pl',3,'AK2972615',1,1,0,0),(9,'aleksandra','aleksandra','aleksandra','85932645925c3455b11b6f7da4c87f4a063e0f128e2a6ff9bc58e6d65a648757','aleksandra@aleksa.pl',1,'ZE1231232',1,1,0,0),(10,'Wiktoria','Wiktoria','wiktoria','2d473299d563d12f061fde645764b9ee93475bf7ca7216c2277224544ff73712','wiktoria@mail.pl',1,'XYZ000000',1,1,0,0),(11,'aleksandra','aleksandra','aleksandra','85932645925c3455b11b6f7da4c87f4a063e0f128e2a6ff9bc58e6d65a648757','aleksandra@aleksa.pl',1,'XYZ123123',2,1,0,0),(13,'admin','admin','admin','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','admin@admin.pl',3,'XXX111111',1,1,0,0),(34,'Sofia','Rodriguez','sofrod','eff5543e051d32c65ac3761c96a1e9e65d0512f1e469851a3d77b3c55454bd76','Sofia42@gmail.com',1,'JK4884848',1,1,0,0),(35,'Andrei','Ivanov','andiva','a5f15218089065432d992e53323545fed0d9cb3bb0660db6f1592f70bd04609f','Andrei1313@gmail.com',1,'GG4899488',1,1,0,0),(36,'Muhammad','Khan','muhkha','11c5d116ad0e56d6381075bbda6e8c628afdb771f491eef8ac4cdaaf052c5a65','MuhammadK5@gmail.com',1,'AR9409409',1,1,0,0),(37,'Katarzyna','Nowak','katnow','b38145332b50380625facc9b95e4133b536c45caf4b3df8326e7d6890d4a27a9','katarzynow@gmail.com',2,'BJ4891149',1,1,0,0),(38,'Mateusz','Kowalski','matkow','f74b64de96bb0c659933db1c3fbb45a2e42f26146fc5550888b8826694b48bd8','matkowalski@wp.pl',2,'BJ8418040',1,1,0,0),(39,'Jakub','Adamczyk','jakada','421b3118e95698483a5a39e250573f1d19e3b0165dc1bb8a086660c015bcbc1b','adamczykj@wp.pl',2,'NK8341884',1,1,0,0);
+INSERT INTO `user` VALUES (6,'Aleksandra','Wojcik','olavv','575fed10280549b8177cdf0274fa104d5df49690c1c871727af990327031c3b4','ola@wojcik.pl',2,'',2,1,0,0),(7,'Aleksandra','Wojcik','test','ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae','w.ola10@interia.pl',1,'XD1234567',1,1,0,0),(8,'Wiktoria','Wiktoria','wiktoria','2d473299d563d12f061fde645764b9ee93475bf7ca7216c2277224544ff73712','wiktoria@mail.pl',3,'AK2972615',1,1,0,0),(9,'aleksandra','aleksandra','aleksandra','85932645925c3455b11b6f7da4c87f4a063e0f128e2a6ff9bc58e6d65a648757','aleksandra@aleksa.pl',1,'ZE1231232',1,1,0,0),(10,'Wiktoria','Wiktoria','wiktoria','2d473299d563d12f061fde645764b9ee93475bf7ca7216c2277224544ff73712','wiktoria@mail.pl',1,'XYZ000000',1,1,0,0),(11,'aleksandra','aleksandra','aleksandra','85932645925c3455b11b6f7da4c87f4a063e0f128e2a6ff9bc58e6d65a648757','aleksandra@aleksa.pl',1,'XYZ123123',1,1,0,0),(13,'admin','admin','admin','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','admin@admin.pl',3,'XXX111111',1,1,0,0),(34,'Sofia','Rodriguez','sofrod','eff5543e051d32c65ac3761c96a1e9e65d0512f1e469851a3d77b3c55454bd76','Sofia42@gmail.com',1,'JK4884848',1,1,0,0),(35,'Andrei','Ivanov','andiva','a5f15218089065432d992e53323545fed0d9cb3bb0660db6f1592f70bd04609f','Andrei1313@gmail.com',1,'GG4899488',1,1,0,0),(36,'Muhammad','Khan','muhkha','11c5d116ad0e56d6381075bbda6e8c628afdb771f491eef8ac4cdaaf052c5a65','MuhammadK5@gmail.com',1,'AR9409409',1,1,0,0),(37,'Katarzyna','Nowak','katnow','b38145332b50380625facc9b95e4133b536c45caf4b3df8326e7d6890d4a27a9','katarzynow@gmail.com',2,'BJ4891149',1,1,0,0),(38,'Mateusz','Kowalski','matkow','f74b64de96bb0c659933db1c3fbb45a2e42f26146fc5550888b8826694b48bd8','matkowalski@wp.pl',2,'BJ8418040',1,1,0,0),(39,'Jakub','Adamczyk','jakada','421b3118e95698483a5a39e250573f1d19e3b0165dc1bb8a086660c015bcbc1b','adamczykj@wp.pl',2,'NK8341884',1,1,0,0),(41,'Jakub','Nowak','jakub','1a67cddc45360c1964d5a01421b027f884934c6b07ad7a0547ae9cd5ad0b4fc3','jakub@gmail.com',1,'XYZ123235',1,1,0,0),(42,'Jakub','Kowalski','jakubkowalski','1a67cddc45360c1964d5a01421b027f884934c6b07ad7a0547ae9cd5ad0b4fc3','jakub@wp.pl',1,'',1,1,0,0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,4 +253,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-18 18:41:12
+-- Dump completed on 2023-11-20 10:00:15
