@@ -1,12 +1,14 @@
+import axios from "axios";
 import { OfferProps, UserProps, HelpTypeProps } from "./AllHelpRequests";
 import { useState } from "react";
-import { FaHandsHelping } from "react-icons/fa"; // Importujemy ikonę przy użyciu react-icons
+import { FaHandsHelping } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 console.clear();
 
 export const SingleOffer = ({
+  id,
   author,
   type,
   description,
@@ -16,10 +18,27 @@ export const SingleOffer = ({
 }: OfferProps & { users: UserProps[] } & { helpTypes: HelpTypeProps[] }) => {
   const [isAccepted, setIsAccepted] = useState(false);
 
-  const handleAcceptClick = () => {
-    // Czekamy aż Ola doda zapytanie /accepthelp
-    setIsAccepted(true);
-    notifyAcceptedHelp(); // Wyślij komunikat Toast po przyjęciu pomocy
+  const handleAcceptClick = async () => {
+    axios({
+      method: 'put',
+      url: `http://localhost:8080/api/v1/help/accepthelp?id=${id}&supporter=${sessionStorage.getItem('user-id')}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        notifyAcceptedHelp();
+        setIsAccepted(true);
+      }
+    })
+    .catch((error) => {
+      toast.error("Błąd podczas aktualizacji pomocy.", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      console.error(error);
+    });
   };
 
   const notifyAcceptedHelp = () => {

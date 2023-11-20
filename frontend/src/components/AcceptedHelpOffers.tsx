@@ -18,13 +18,10 @@ export const AcceptedHelpOffersList = () => {
   const [statuses, setStatuses] = useState<StatusProps[]>([]);
   const [users, setUsers] = useState<UserProps[]>([]);
 
-  //pobierz oferty pomocy, ktore zaakceptowal user o ponizszym id (uchodzca)
-  const user_id = 36;
-
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/v1/help/acceptedhelpoffers?currentUserId=${user_id}`,
+      url: `http://localhost:8080/api/v1/help/acceptedhelpoffers?currentUserId=${sessionStorage.getItem('user-id')}`,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
@@ -35,7 +32,7 @@ export const AcceptedHelpOffersList = () => {
       })
       .catch((error) => {
         console.error(
-          `Error fetching acceptedhelpoffers?currentUserId=${user_id}:`,
+          `Error fetching acceptedhelpoffers?currentUserId=${sessionStorage.getItem('user-id')}:`,
           error
         );
       });

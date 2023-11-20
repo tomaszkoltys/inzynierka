@@ -4,6 +4,10 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { TbPencilCancel, TbPencil } from "react-icons/tb";
+import { MdDeleteOutline } from "react-icons/md";
+import { AiOutlineSave } from "react-icons/ai";
+
 
 export const SingleAdminHelp = ({
   author,
@@ -143,25 +147,25 @@ export const SingleAdminHelp = ({
         <div>
           {isEditing ?
             (
-              <button onClick={handleSaveClick} className="bg-[#8AA9C7] text-white px-4 py-2 mx-2">
-                {t("save")}
+              <button onClick={handleSaveClick} className="bg-green-500 text-white px-4 py-2 mx-2">
+                <AiOutlineSave /> 
               </button>
             ) :
             (
               <button onClick={handleEditClick} className="bg-[#8AA9C7] text-white px-4 py-2 mx-2">
-                {t("edit")}
+                <TbPencil/>
               </button>
             )
           }
           {isEditing ?
             (
               <button onClick={handleCancelClick} className="bg-[#7F7F7F] text-white px-4 py-2 mx-2">
-                {t("cancel")}
+                <TbPencilCancel />
               </button>
             ) :
             (
               <button onClick={handleDeleteClick} className="bg-red-500 text-white px-4 py-2 mx-2">
-                {t("delete")}
+                <MdDeleteOutline />
               </button>
             )
           }
