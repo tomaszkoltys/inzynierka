@@ -132,23 +132,20 @@ public class HelpController {
 
     @PutMapping(value = "/updatehelp")
     public ResponseEntity<?> updateHelp(
-            @RequestParam int id, // Identyfikator edytowanej oferty
+            @RequestParam int id,
             @RequestParam String description,
             @RequestParam String photo,
-            @RequestParam int type// Dodaj inne pola, które chcesz zaktualizować
+            @RequestParam int type
     ) {
         Optional<Help> optionalHelp = helpRepository.findById(id);
 
         if (optionalHelp.isPresent()) {
             Help help = optionalHelp.get();
 
-            // Aktualizuj pola oferty pomocy
             help.setDescription(description);
             help.setPhoto(photo);
             help.setType(type);
-            // Inne aktualizacje
 
-            // Zapisz zaktualizowaną ofertę
             helpRepository.save(help);
 
             return new ResponseEntity<>("Pomoc zaktualizowana pomyślnie", HttpStatus.OK);
