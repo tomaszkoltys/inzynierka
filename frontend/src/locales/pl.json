@@ -15,6 +15,7 @@
   "settings": "Ustawienia",
   "filters": "Filtrowanie",
   "search-help-request": "Wyszukaj prośbę o pomoc",
+  "search-help-offer": "Wyszukaj ofertę o pomoc",
   "choose-voivodeship": "Wybierz województwo",
   "choose-county": "Wybierz powiat",
   "choose-type-of-help": "Wybierz rodzaj pomocy",
@@ -24,6 +25,7 @@
   "no-needs-found": "Nie znaleziono potrzeb.",
   "description": "Opis.",
   "add-photos": "Dodaj zdjęcia",
+  "add-new-user": "Dodaj użytkownika",
   "footer": "System wspomagania organizowania pomocy dla uchodźców",
   "notifications": "Powiadomienia",
   "about-new-needs": "O nowych potrzebach",
@@ -55,10 +57,13 @@
   "search": "Szukaj",
   "cancel": "Anuluj",
   "save": "Zapisz",
+  "hide": "Ukryj",
   "admin-user": "Panel administracyjny - użytkownicy",
   "role": "Rola",
   "status": "Status",
   "block": "Zablokuj",
+  "unblock": "Odblokuj",
   "accepted": "Zaakceptowany",
-  "actions": "Akcje"
+  "actions": "Akcje",
+  "image-link": "Podaj link do zdjęcia"
 }

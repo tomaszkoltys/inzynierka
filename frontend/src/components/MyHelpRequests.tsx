@@ -65,13 +65,14 @@ export const MyHelpRequestsList = () => {
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
   const [inprogressOption, setInprogressOption] = useState<boolean>(false);
   const [uncompletedOption, setUncompletedOption] = useState<boolean>(false);
+  const [completedOption, setCompletedOption] = useState<boolean>(false);
 
-  const user_id = 2;
+  const currentUser_id = sessionStorage.getItem('user-id')
 
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/v1/help/myhelpoffers?currentUserId=${user_id}`,
+      url: `http://localhost:8080/api/v1/help/myrequests?currentUserId=${currentUser_id}`,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
@@ -82,58 +83,58 @@ export const MyHelpRequestsList = () => {
       })
       .catch((error) => {
         console.error(
-          `Error fetching /myhelpoffers?currentUserId=${user_id}:`,
+          `Error fetching /myhelpoffers?currentUserId=${currentUser_id}:`,
           error
         );
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setHelpTypes(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/user/allusers',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/user/allusers',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Error fetching /allusers:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/help-status/allhelpstatuses',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/help-status/allhelpstatuses',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setStatuses(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setVoivodeships(response.data))
       .catch((error) => {
         console.error("Error fetching /allvoivodeships:", error);
@@ -190,10 +191,16 @@ export const MyHelpRequestsList = () => {
       (selectedCounty === null || offer.county === selectedCountyId) &&
       (inprogressOption === false ||
         uncompletedOption === true ||
+        completedOption === true ||
         offer.helpStatus === 1) &&
       (uncompletedOption === false ||
         inprogressOption === true ||
-        offer.helpStatus === 3)
+        completedOption === true ||
+        offer.helpStatus === 2) &&
+        (completedOption === false ||
+          inprogressOption === true ||
+          uncompletedOption === true ||
+          offer.helpStatus === 3)
     );
   });
 
@@ -213,7 +220,7 @@ export const MyHelpRequestsList = () => {
                 <div className="flex justify-center items-center text-[#000] w-60 h-10 border border-gray-300 rounded-md">
                   <input
                     autoFocus
-                    placeholder={t("search-need")}
+                    placeholder={t("search-help-offer")}
                     onChange={(e) => setSearch(e.target.value)}
                     className="w-full border-none outline-none ml-2 text-sm"
                   />
@@ -252,7 +259,7 @@ export const MyHelpRequestsList = () => {
               </div>
               <div className="flex mt-4 justify-between sm:justify-start">
                 <label
-                  className="flex items-center justify-center sm:mr-12"
+                  className="flex items-center justify-center"
                   onClick={() => setInprogressOption(!inprogressOption)}
                 >
                   <input
@@ -262,6 +269,18 @@ export const MyHelpRequestsList = () => {
                     checked={inprogressOption}
                   />
                   &nbsp;{t("in-progress")}{" "}
+                </label>
+                <label
+                  className="flex items-center justify-center mx-16"
+                  onClick={() => setCompletedOption(!completedOption)}
+                >
+                  <input
+                    type="checkbox"
+                    className="register-radiobutton"
+                    value="completed"
+                    checked={completedOption}
+                  />
+                  &nbsp;{t("completed")}{" "}
                 </label>
                 <label
                   className="flex items-center justify-center"

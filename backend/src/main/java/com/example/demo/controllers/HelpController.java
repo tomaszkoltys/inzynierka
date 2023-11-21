@@ -60,22 +60,22 @@ public class HelpController {
 
     @GetMapping(value = "/allhelpoffers")
     public @ResponseBody Iterable<Help> getAllHelpOffers(){
-        return helpRepository.findBySide(1);
+        return helpRepository.findBySideAndSupporterAndHelpStatus(1, null, List.of(1,2,3,4));
     }
 
     @GetMapping(value = "/allhelprequests")
     public @ResponseBody Iterable<Help> getAllHelpRequests(){
-        return helpRepository.findBySide(2);
+        return helpRepository.findBySideAndSupporterAndHelpStatus(2, null, List.of(1,2,3,4));
     }
 
     @GetMapping (value ="/acceptedhelprequests")
     public @ResponseBody Iterable<Help> getAcceptedHelpRequests(@RequestParam int currentUserId){
-        return helpRepository.findBySideAndSupporterAndHelpStatus(1, currentUserId, List.of(2, 3, 4));
+        return helpRepository.findBySideAndSupporterAndHelpStatus(2, currentUserId, List.of(2, 3, 4));
     }
 
     @GetMapping (value ="/acceptedhelpoffers")
     public @ResponseBody Iterable<Help> getAcceptedHelpOffers(@RequestParam int currentUserId){
-        return helpRepository.findBySideAndSupporterAndHelpStatus(2, currentUserId, List.of(2, 3, 4));
+        return helpRepository.findBySideAndSupporterAndHelpStatus(1, currentUserId, List.of(2, 3, 4));
     }
 
     @GetMapping (value = "/myrequests")
@@ -154,6 +154,26 @@ public class HelpController {
         }
     }
 
+    @PutMapping(value = "/accepthelp")
+    public ResponseEntity<?> acceptHelp(
+            @RequestParam int id, // Identyfikator akceptowanej oferty
+            @RequestParam int supporter
+    ) {
+        Optional<Help> optionalHelp = helpRepository.findById(id);
+
+        if (optionalHelp.isPresent()) {
+            Help help = optionalHelp.get();
+
+            // Aktualizuj pola oferty pomocy
+            help.setHelpStatus(2); // Ustawienie statusu oferty na "W trakcie realizacji"
+            help.setSupporter(supporter);
+            helpRepository.save(help);
+
+            return new ResponseEntity<>("Pomoc zaakceptowana pomyślnie", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Oferta pomocy nie znaleziona", HttpStatus.NOT_FOUND);
+        }
+    }
 
     @RequestMapping(method = RequestMethod.OPTIONS)
     public ResponseEntity<?> handle() {

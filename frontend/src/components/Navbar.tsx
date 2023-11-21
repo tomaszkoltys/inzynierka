@@ -26,15 +26,16 @@ export const Navbar = () => {
 
   const handleLogout = () => {
     // Wyczyszczenie tokena z localStorage
-    localStorage.removeItem('jwt-token');
+    sessionStorage.removeItem('jwt-token');
     localStorage.removeItem('loggedInUser');
+    sessionStorage.removeItem('user-id');
+    sessionStorage.removeItem('user-role');
     setLoggedInUser(null);
     setLoggedInUserRole(null);
     window.location.href = '/login';
   };
 
-  // Tymczasowy sposob na zmiane wyswietlanych zakladek
-  // Teraz mozna to zmienic w LoginForm.tsx
+  const currentUser_role = sessionStorage.getItem('user-role')
 
   return (
     <div className="flex justify-between items-center h-24 w-full px-2 sm:px-8 text-black bg-[#fff] border-b border-gray-300 fixed z-30">
@@ -71,98 +72,101 @@ export const Navbar = () => {
       </div>
       <div className="flex justify-between items-center gap-52">
         <ul className="hidden lg:flex">
-          <li>
-            <div className="group relative">
-              <div className="border-b hover:cursor-pointer">
-                <Link
-                  to="/"
-                  className="cursor-pointer flex justify-center items-center"
+          {loggedInUser && (
+              <li>
+              <div className="group relative">
+                
+                <div className="border-b hover:cursor-pointer">
+                  <Link
+                    to="/settings"
+                    className="cursor-pointer flex justify-center items-center"
+                  >
+                    {t("main-page")}&nbsp;
+                    <SlArrowDown
+                      className="ml-14 group-hover:rotate-180 group-hover:transition duration-100"
+                      size={15}
+                    />
+                  </Link>
+                </div>
+                <ul
+                  className={`hidden group-hover:block bg-yellow-light absolute w-full text-[#fff] text-sm z-10`}
                 >
-                  {t("main-page")}&nbsp;
-                  <SlArrowDown
-                    className="ml-14 group-hover:rotate-180 group-hover:transition duration-100"
-                    size={15}
-                  />
-                </Link>
+                  {currentUser_role === "ROLE_VOLUNTEER" && (
+                    <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                      <Link to="/add_help_offer">
+                        <div className="px-2 py-4">{t("add-help-offer")}</div>
+                      </Link>
+                    </li>
+                  )}
+                  {currentUser_role === "ROLE_VOLUNTEER" && (
+                    <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                      <Link to="/all_help_requests">
+                        <div className="px-2 py-4">{t("all-help-requests")}</div>
+                      </Link>
+                    </li>
+                  )}
+                  {currentUser_role === "ROLE_VOLUNTEER" && (
+                    <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                      <Link to="/accepted_help_requests">
+                        <div className="px-2 py-4">{t("accepted-help-requests")}</div>
+                      </Link>
+                    </li>
+                  )}
+                  {currentUser_role === "ROLE_VOLUNTEER" && (
+                    <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                      <Link to="/my_help_offers">
+                        <div className="px-2 py-4">{t("my-help-offers")}</div>
+                      </Link>
+                    </li>
+                  )}
+                  {currentUser_role === "ROLE_REFUGEE" && (
+                    <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                      <Link to="/add_help_request">
+                        <div className="px-2 py-4">{t("add-request")}</div>
+                      </Link>
+                    </li>
+                  )}
+                  {currentUser_role === "ROLE_REFUGEE" && (
+                    <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                      <Link to="/all_help_offers">
+                        <div className="px-2 py-4">{t("all-help-offers")}</div>
+                      </Link>
+                    </li>
+                  )}
+                  {currentUser_role === "ROLE_REFUGEE" && (
+                    <li className="hover-bg-yellow-dark hover:cursor-pointer">
+                      <Link to="/accepted_help_offers">
+                        <div className="px-2 py-4">
+                          {t("accepted-help-offers")}
+                        </div>
+                      </Link>
+                    </li>
+                  )}
+                  {currentUser_role === "ROLE_REFUGEE" && (
+                    <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                      <Link to="/my_help_requests">
+                        <div className="px-2 py-4">{t("my-help-requests")}</div>
+                      </Link>
+                    </li>
+                  )}
+                  {(currentUser_role === "ROLE_ADMIN") && (
+                    <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                      <Link to="/admin_help">
+                        <div className="px-2 py-4">{t("admin-help")}</div>
+                      </Link>
+                    </li>
+                  )}
+                  {(currentUser_role === "ROLE_ADMIN") && (
+                    <li className="hover:bg-yellow-dark hover:cursor-pointer">
+                      <Link to="/admin_user">
+                        <div className="px-2 py-4">{t("admin-user")}</div>
+                      </Link>
+                    </li>
+                  )}
+                </ul>
               </div>
-              <ul
-                className={`hidden group-hover:block bg-yellow-light absolute w-full text-[#fff] text-sm z-10`}
-              >
-                {loggedInUserRole === "vol" && (
-                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/add_help_offer">
-                      <div className="px-2 py-4">{t("add-help-offer")}</div>
-                    </Link>
-                  </li>
-                )}
-                {loggedInUserRole === "vol" && (
-                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/all_help_requests">
-                      <div className="px-2 py-4">{t("all-help-requests")}</div>
-                    </Link>
-                  </li>
-                )}
-                {loggedInUserRole === "vol" && (
-                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/accepted_help_requests">
-                      <div className="px-2 py-4">{t("accepted-help-requests")}</div>
-                    </Link>
-                  </li>
-                )}
-                {loggedInUserRole === "vol" && (
-                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/my_help_offers">
-                      <div className="px-2 py-4">{t("my-help-offers")}</div>
-                    </Link>
-                  </li>
-                )}
-                {loggedInUserRole === "ref" && (
-                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/add_help_request">
-                      <div className="px-2 py-4">{t("add-request")}</div>
-                    </Link>
-                  </li>
-                )}
-                {loggedInUserRole === "ref" && (
-                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/all_help_offers">
-                      <div className="px-2 py-4">{t("all-help-offers")}</div>
-                    </Link>
-                  </li>
-                )}
-                {loggedInUserRole === "ref" && (
-                  <li className="hover-bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/accepted_help_offers">
-                      <div className="px-2 py-4">
-                        {t("accepted-help-offers")}
-                      </div>
-                    </Link>
-                  </li>
-                )}
-                {loggedInUserRole === "ref" && (
-                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/my_help_requests">
-                      <div className="px-2 py-4">{t("my-help-requests")}</div>
-                    </Link>
-                  </li>
-                )}
-                {(loggedInUserRole === "adm") && (
-                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/admin_help">
-                      <div className="px-2 py-4">{t("admin-help")}</div>
-                    </Link>
-                  </li>
-                )}
-                {(loggedInUserRole === "adm") && (
-                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/admin_user">
-                      <div className="px-2 py-4">{t("admin-user")}</div>
-                    </Link>
-                  </li>
-                )}
-              </ul>
-            </div>
-          </li>
+            </li>
+          )}
           <li>
             <Link to="/about" className="mx-8 hover:cursor-pointer">
               {t("about-us")}
@@ -176,21 +180,21 @@ export const Navbar = () => {
         </ul>
         <div className="flex">
           <div className="text-[#fff] hidden justify-center items-center mr-4 sm:flex">
-            {loggedInUserRole === "vol" && (
+            {currentUser_role === "ROLE_VOLUNTEER" && (
               <Link to="add_help_offer">
                 <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
                   {t("add-help-offer")}
                 </a>
               </Link>
             )}
-            {loggedInUserRole === "ref" && (
+            {currentUser_role === "ROLE_REFUGEE" && (
               <Link to="add_help_request">
                 <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
                   {t("add-request")}
                 </a>
               </Link>
             )}
-            {loggedInUserRole === "adm" && (
+            {currentUser_role === "ROLE_ADMIN" && (
               <Link to="admin_help">
                 <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
                   {t("admin-help")}
@@ -201,7 +205,7 @@ export const Navbar = () => {
           <div className="group relative">
 
             {loggedInUser ? (
-              <><div className="flex hover:cursor-pointer">
+              <><div className="flex hover:cursor-pointer px-4">
                 {loggedInUser}&nbsp;
                 <VscTriangleDown
                   className="group-hover:rotate-180 group-hover:transition duration-100"
@@ -237,11 +241,6 @@ export const Navbar = () => {
                   <li className="hover:bg-yellow-dark hover:cursor-pointer">
                     <Link to="/register">
                       <div className="px-2 py-4">{t("register")}</div>
-                    </Link>
-                  </li>
-                  <li className="hover:bg-yellow-dark hover:cursor-pointer">
-                    <Link to="/settings">
-                      <div className="px-2 py-4">{t("settings")}</div>
                     </Link>
                   </li>
                 </ul></>
@@ -292,7 +291,7 @@ export const Navbar = () => {
             </li>
 
             <div className="text-[#fff] flex items-center mt-6 ml-2">
-              {loggedInUserRole === "vol" && (
+              {currentUser_role === "ROLE_VOLUNTEER" && (
                 <Link to="add_help_offer">
                   <a className="px-4 py-1 rounded-lg bg-yellow-default hover:bg-yellow-light">
                     {t("add-help-offer")}

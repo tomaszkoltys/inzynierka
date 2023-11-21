@@ -24,56 +24,62 @@ export const AddOfferForm = () => {
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
   const [description, setDescription] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
-
+  const [imageLink, setImageLink] = useState("");
+  const [formErrors, setFormErrors] = useState({
+    voivodeship: false,
+    county: false,
+    helpType: false,
+    description: false,
+  });
 
   useEffect(() => {
     axios({
-    method: 'get',
-    url: 'http://localhost:8080/api/v1/help/allhelps',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
-    }
-  })
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/help/allhelps',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setHelps(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelps:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setHelpTypes(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/user/allusers',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/user/allusers',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Error fetching /allusers:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setVoivodeships(response.data))
       .catch((error) => {
         console.error("Error fetching /allvoivodeships:", error);
@@ -116,67 +122,100 @@ export const AddOfferForm = () => {
     setSelectedCountyId(selectedCountyId);
   };
 
-  const handleSubmit = () => {
-    /*if (!selectedCountyId || !selectedHelpTypeId || !description || !photo) {
-      alert("Wszystkie pola są wymagane.");
-      return;
-    }*/
+  const handleImageLinkChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setImageLink(event.target.value);
+  };
 
-     axios({
-      method: 'post',
-      url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo="photo.jpg"&side=2&author=1&type=${selectedHelpTypeId}`,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
-      }
-    })
-      .then((response) => {
-        console.log("Odpowiedź od serwera:", response.data);
-        toast.success("Pomyślnie dodano ofertę pomocy!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+  const handleSubmit = () => {
+    const currentUser_id = sessionStorage.getItem('user-id')
+
+    if (!selectedVoivodeshipId || !selectedCountyId || !selectedHelpTypeId || !description) {
+      setFormErrors({
+        voivodeship: !selectedVoivodeshipId,
+        county: !selectedCountyId,
+        helpType: !selectedHelpTypeId,
+        description: !description})
+        toast.error("Uzupełnij wymagane pola!");
+      return;
+    }
+    else{
+      axios({
+        method: 'post',
+        url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo=${imageLink}&side=1&author=${currentUser_id}&type=${selectedHelpTypeId}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
       })
-      .catch((error) => {
-        console.error("Błąd podczas wysyłania oferty:", error);
-      });
+        .then((response) => {
+          console.log("Odpowiedź od serwera:", response.data);
+          toast.success("Pomyślnie dodano ofertę pomocy!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          
+          setFormErrors({
+            voivodeship: false,
+            county: false,
+            helpType: false,
+            description: false,
+          })
+        })
+        .catch((error) => {
+          console.error("Błąd podczas wysyłania oferty:", error);
+        });
+    }
+
   };
 
   return (
     <div className="flex items-center justify-center">
       <ToastContainer />
-      <div className="w-full md:w-[70%] h-form flex flex-col min-h-[700px] bg-[#fff]">
+      <div className="w-full md:w-[70%] h-form flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-2.5%]">
             {t('add-help-offer')}
           </div>
-          <div className="flex flex-col">
-            <div className="flex flex-col mt-8 mb-12 gap-6">
+          <div className="flex flex-col mb-6">
+            <div className="flex flex-col mt-8 mb-6 gap-6">
+              <div className="flex">
               <Dropdown
                 label={t("choose-voivodeship")}
                 options={voivodeships.map((voivodeship) => ({ value: voivodeship.name }))}
                 onChange={handleVoivodeshipChange}
-              />
+                isError={formErrors.voivodeship}
+                />
+                {formErrors.voivodeship && <p className="text-red-500">Wybierz województwo.</p>}
+              </div>
+              <div className="flex">
               <Dropdown
                 label={t("choose-county")}
                 options={counties.map((county) => ({ value: county.name }))}
                 disabled={!selectedVoivodeship}
                 onChange={handleCountyChange}
-              />
+                isError={formErrors.county}
+                />
+                {formErrors.county && <p className="text-red-500">Wybierz powiat.</p>}
+              </div>
+              <div className="flex">
               <Dropdown
                 label={t("choose-type-of-help")}
                 options={helpTypes.map((helpType) => ({ value: helpType.namePL }))}
                 onChange={handleTypeChange}
-              />
+                isError={formErrors.helpType}
+                />
+                {formErrors.helpType && <p className="text-red-500">Wybierz rodzaj pomocy.</p>}
+              </div>
             </div>
-            <div>
+            <div className="flex">
               <textarea
                 placeholder={t("description")}
-                className="w-full h-[150px] p-2 border border-gray-300 text-[#000] rounded-md text-sm resize-none outline-none md:w-[40%]"
-                value={description} // Dodaj tę linię
-                onChange={(e) => setDescription(e.target.value)} // Dodaj tę linię
+                className={`w-full h-[150px] p-2 border ${formErrors.description ? 'border-red-500' : 'border-gray-300'} text-[#000] rounded-md text-sm resize-none outline-none md:w-[40%]`}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
+              {formErrors.description && <p className="text-red-500 mt-1">Wpisz opis.</p>}
             </div>
-            <div className="flex relative mb-10">
+            <div className="flex relative mb-6">
               <div className="flex items-center justify-center w-[80px] h-[80px] bg-gray-300 relative">
                 <input
                   type="file"
@@ -192,9 +231,18 @@ export const AddOfferForm = () => {
                 />
                 <AiOutlinePlus color="#fff" size={25} />
               </div>
-              <div className="inline">
-                <p className="mt-14 ml-4 text-gray-300">{t("add-photos")}</p>
+              <div className="inline py-2 px-2">
+                <p className="text-gray-300">{t("add-photos")}</p>
               </div>
+            </div>
+            <div className="flex flex-col mb-8 md:w-[40%]">
+              <input
+                type="text"
+                placeholder={t("image-link")}
+                className="w-full h-full p-2 border border-gray-300 text-[#000] rounded-md text-sm resize-none outline-none"
+                value={imageLink}
+                onChange={handleImageLinkChange}
+              />
             </div>
             <input
               type="submit"

@@ -18,13 +18,10 @@ export const AcceptedHelpRequestsList = () => {
   const [statuses, setStatuses] = useState<StatusProps[]>([]);
   const [users, setUsers] = useState<UserProps[]>([]);
 
-  //pobierz prośby o pomoc, ktore zaakceptowal user o id = 1(wolontariusz)
-  const user_id = 1;
-
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/v1/help/acceptedhelprequests?currentUserId=${user_id}`,
+      url: `http://localhost:8080/api/v1/help/acceptedhelprequests?currentUserId=${sessionStorage.getItem('user-id')}`,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
@@ -35,7 +32,7 @@ export const AcceptedHelpRequestsList = () => {
       })
       .catch((error) => {
         console.error(
-          `Error fetching acceptedhelprequests?currentUserId=${user_id}:`,
+          `Error fetching acceptedhelprequests?currentUserId=${sessionStorage.getItem('user-id')}:`,
           error
         );
       });

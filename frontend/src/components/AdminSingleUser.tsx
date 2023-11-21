@@ -4,11 +4,14 @@ import "/dist/assets/index-d018f553.css";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { AiOutlineEdit, AiOutlineBlock, AiOutlineCheckCircle, AiOutlineDelete } from "react-icons/ai";
+import { TbLock, TbLockOpen } from "react-icons/tb";
+
 
 type AdminSingleUserProps = {
   user: UserProps;
-  userRoles: UserRolesProps[]
-  accountStatuses: UserRolesProps[]
+  userRoles: UserRolesProps[];
+  accountStatuses: UserRolesProps[];
   onEdit: (userId: number, updatedUser: Partial<UserProps>) => void;
   onBlock: (userId: number) => void;
 };
@@ -19,9 +22,8 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
   const { t } = useTranslation();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [isBlocked, setIsBlocked] = useState(false)
+  const [isBlocked, setIsBlocked] = useState(false);
   const [editedUser, setEditedUser] = useState({ ...user });
-
 
   const handleSave = () => {
     axios({
@@ -32,22 +34,22 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
         'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
       }
     })
-    .then((response) => {
-      onEdit(user.id, editedUser);
-      setIsEditing(false);
-      console.log(response);
-      toast.success("Pomyślnie zaktualizowano użytkownika!", {
-        position: toast.POSITION.TOP_CENTER,
+      .then((response) => {
+        onEdit(user.id, editedUser);
+        setIsEditing(false);
+        console.log(response);
+        toast.success("Pomyślnie zaktualizowano użytkownika!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+      .catch((error) => {
+        console.error("Error saving user:", error);
+        // Obsłuż błąd zapisu
+        console.error(error);
+        toast.error("Błąd podczas aktualizowania użytkownika!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       });
-    })
-    .catch((error) => {
-      console.error("Error saving user:", error);
-      // Obsłuż błąd zapisu
-      console.error(error);
-      toast.error("Błąd podczas aktualizowania użytkownika!", {
-        position: toast.POSITION.TOP_CENTER,
-      });
-    });
   };
 
   const handleCancel = () => {
@@ -55,7 +57,6 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
     setEditedUser({ ...user });
     setIsEditing(false);
   };
-
 
   const handleBlock = () => {
     axios({
@@ -66,23 +67,22 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
         'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
       }
     })
-    .then((response) => {
-      onBlock(user.id);
-      setIsBlocked(true)
-      console.log(response);
-      toast.success("Pomyślnie zablokowano użytkownika!", {
-        position: toast.POSITION.TOP_CENTER,
+      .then((response) => {
+        onBlock(user.id);
+        setIsBlocked(true);
+        console.log(response);
+        toast.success("Pomyślnie zablokowano użytkownika!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+      .catch((error) => {
+        console.error("Error during blocking user:", error);
+        console.error(error);
+        toast.success("Błąd podczas próby zablokowania użytkownika!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       });
-    })
-    .catch((error) => {
-      console.error("Error during blocking user:", error);
-      console.error(error);
-      toast.success("Błąd podczas próby zablokowania użytkownika!", {
-        position: toast.POSITION.TOP_CENTER,
-      });
-    });
   };
-
 
   const handleUnblock = () => {
     axios({
@@ -93,21 +93,21 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
         'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
       }
     })
-    .then((response) => {
-      onBlock(user.id);
-      setIsBlocked(false)
-      console.log(response);
-      toast.success("Pomyślnie odblokowano użytkownika!", {
-        position: toast.POSITION.TOP_CENTER,
+      .then((response) => {
+        onBlock(user.id);
+        setIsBlocked(false);
+        console.log(response);
+        toast.success("Pomyślnie odblokowano użytkownika!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+      .catch((error) => {
+        console.error("Error during unblocking user:", error);
+        console.error(error);
+        toast.error("Błąd podczas próby odblokowania użytkownika.", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       });
-    })
-    .catch((error) => {
-      console.error("Error during unblocking user:", error);
-      console.error(error);
-      toast.success("Błąd podczas próby odblokowania użytkownika!", {
-        position: toast.POSITION.TOP_CENTER,
-      });
-    });
   };
 
   const deleteUser = () => {
@@ -184,16 +184,16 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
       <td>
         {isEditing ? (
           <select
-          value={editedUser.role}
-          onChange={(e) => setEditedUser({ ...editedUser, role: Number(e.target.value) })}
-          className="p-2 border border-gray-300 rounded-md text-[#000] text-sm outline-none focus:border focus:border-[#000] md:w-[90%]"
-        >
-          {userRoles.map((userRole) => (
-            <option key={userRole.id} value={userRole.id} style={{ color: "black" }}>
-              {userRole.name}
-            </option>
-          ))}
-        </select>
+            value={editedUser.role}
+            onChange={(e) => setEditedUser({ ...editedUser, role: Number(e.target.value) })}
+            className="p-2 border border-gray-300 rounded-md text-[#000] text-sm outline-none focus:border focus:border-[#000] md:w-[90%]"
+          >
+            {userRoles.map((userRole) => (
+              <option key={userRole.id} value={userRole.id} style={{ color: "black" }}>
+                {userRole.name}
+              </option>
+            ))}
+          </select>
         ) : (
           userRoles.map((userRole) => (
             editedUser.role === userRole.id ? <span className={`${user.account_status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{userRole.name}</span> : ""
@@ -215,12 +215,12 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
       <td>
         {isEditing ? (
           <select
-          value={editedUser.account_status}
-          onChange={(e) => setEditedUser({ ...editedUser, account_status: Number(e.target.value) })}
-          className="p-2 border border-gray-300 rounded-md text-[#000] text-sm outline-none focus:border focus:border-[#000] md:w-[90%]"
+            value={editedUser.account_status}
+            onChange={(e) => setEditedUser({ ...editedUser, account_status: Number(e.target.value) })}
+            className="p-2 border border-gray-300 rounded-md text-[#000] text-sm outline-none focus:border focus:border-[#000] md:w-[90%]"
           >
             {accountStatuses.map((accountStatus) => (
-              <option key={accountStatus.id} value={accountStatus.id} style={{ color: "black"}}>
+              <option key={accountStatus.id} value={accountStatus.id} style={{ color: "black" }}>
                 {accountStatus.name}
               </option>
             ))}
@@ -234,8 +234,8 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
       <td>
         {isEditing ? (
           <input
-          type="text"
-          className="w-full border-none outline-none ml-2 text-sm"
+            type="text"
+            className="w-full border-none outline-none ml-2 text-sm"
             value={editedUser.accepted}
             onChange={(e) => setEditedUser({ ...editedUser, accepted: Number(e.target.value) })}
           >
@@ -252,7 +252,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
               className="bg-green-500 text-white px-4 py-2 mx-2"
               onClick={handleSave}
             >
-              {t("save")}
+              <AiOutlineCheckCircle />
             </button>
             <button
               className="bg-red-500 text-white px-4 py-2 mx-2"
@@ -267,15 +267,19 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
               className="bg-yellow-default text-white px-4 py-1 mx-2"
               onClick={() => setIsEditing(true)}
             >
-              {t("edit")}
+              <AiOutlineEdit />
             </button>
             <button
-              className={`${user.account_status === 1 ? "bg-red-500 text-white": "bg-green-500 text-white"} px-4 py-1 mx-2`}
+              className={`${user.account_status === 1 ? "bg-red-500 text-white" : "bg-green-500 text-white"} px-4 py-1 mx-2`}
               onClick={user.account_status === 1 ? handleBlock : handleUnblock}
             >
-              {user.account_status === 1 ? t("block") : t("unblock")}
+             {user.account_status === 1 ? <TbLock /> : <TbLockOpen />}
+
+
             </button>
-            <button className="bg-red-600 text-white px-4 py-1 mx-2 mt-1" onClick={deleteUser}>Delete</button>
+            <button className="bg-red-600 text-white px-4 py-1 mx-2 mt-1" onClick={deleteUser}>
+              <AiOutlineDelete />
+            </button>
           </>
         )}
       </td>
