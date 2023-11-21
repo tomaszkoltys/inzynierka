@@ -75,9 +75,10 @@ export const Navbar = () => {
           {loggedInUser && (
               <li>
               <div className="group relative">
+                
                 <div className="border-b hover:cursor-pointer">
                   <Link
-                    to="/"
+                    to="/settings"
                     className="cursor-pointer flex justify-center items-center"
                   >
                     {t("main-page")}&nbsp;

@@ -24,56 +24,57 @@ export const AddOfferForm = () => {
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
   const [description, setDescription] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageLink, setImageLink] = useState("");
 
 
   useEffect(() => {
     axios({
-    method: 'get',
-    url: 'http://localhost:8080/api/v1/help/allhelps',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
-    }
-  })
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/help/allhelps',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setHelps(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelps:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setHelpTypes(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/user/allusers',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/user/allusers',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Error fetching /allusers:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setVoivodeships(response.data))
       .catch((error) => {
         console.error("Error fetching /allvoivodeships:", error);
@@ -116,11 +117,15 @@ export const AddOfferForm = () => {
     setSelectedCountyId(selectedCountyId);
   };
 
+  const handleImageLinkChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setImageLink(event.target.value);
+  };
+
   const handleSubmit = () => {
     const currentUser_id = sessionStorage.getItem('user-id')
-     axios({
+    axios({
       method: 'post',
-      url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo="photo.jpg"&side=1&author=${currentUser_id}&type=${selectedHelpTypeId}`,
+      url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo=${imageLink}&side=1&author=${currentUser_id}&type=${selectedHelpTypeId}`,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
@@ -145,8 +150,8 @@ export const AddOfferForm = () => {
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-2.5%]">
             {t('add-help-offer')}
           </div>
-          <div className="flex flex-col">
-            <div className="flex flex-col mt-8 mb-12 gap-6">
+          <div className="flex flex-col mb-6">
+            <div className="flex flex-col mt-8 mb-6 gap-6">
               <Dropdown
                 label={t("choose-voivodeship")}
                 options={voivodeships.map((voivodeship) => ({ value: voivodeship.name }))}
@@ -167,12 +172,12 @@ export const AddOfferForm = () => {
             <div>
               <textarea
                 placeholder={t("description")}
-                className="w-full h-[150px] p-2 border border-gray-300 text-[#000] rounded-md text-sm resize-none outline-none md:w-[40%]"
-                value={description} // Dodaj tę linię
-                onChange={(e) => setDescription(e.target.value)} // Dodaj tę linię
+                className="w-full h-[150px] p-2 border border-gray-300 text-[#000] rounded-md text-sm resize-none outline-none md:w-[40%] "
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
-            <div className="flex relative mb-10">
+            <div className="flex relative mb-6">
               <div className="flex items-center justify-center w-[80px] h-[80px] bg-gray-300 relative">
                 <input
                   type="file"
@@ -188,9 +193,18 @@ export const AddOfferForm = () => {
                 />
                 <AiOutlinePlus color="#fff" size={25} />
               </div>
-              <div className="inline">
-                <p className="mt-14 ml-4 text-gray-300">{t("add-photos")}</p>
+              <div className="inline py-2 px-2">
+                <p className="text-gray-300">{t("add-photos")}</p>
               </div>
+            </div>
+            <div className="flex flex-col mb-8 md:w-[40%]">
+              <input
+                type="text"
+                placeholder={t("image-link")}
+                className="w-full h-full p-2 border border-gray-300 text-[#000] rounded-md text-sm resize-none outline-none"
+                value={imageLink}
+                onChange={handleImageLinkChange}
+              />
             </div>
             <input
               type="submit"
