@@ -30,3 +30,7 @@
 - [x] Logowanie
 - [ ] Przypomnienie hasła
 - [ ] Powiadomienia mailowe
+
+Mail:
+swopdu@gmail.com
+swopdupollub123?!
