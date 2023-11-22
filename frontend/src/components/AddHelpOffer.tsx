@@ -3,7 +3,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { OfferProps, UserProps, HelpTypeProps, VoivodeshipsProps, CountiesProps } from "./AllHelpRequests.tsx";
+import { OfferProps, UserProps, HelpTypeProps, VoivodeshipsProps, CountiesProps } from "./AllHelpOffers.tsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

@@ -5,6 +5,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 
+export type StatusProps = {
+  id: number;
+  name: string;
+};
+
 export type OfferProps = {
   id: number;
   author: number;

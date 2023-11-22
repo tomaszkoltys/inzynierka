@@ -2,13 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineSearch } from "react-icons/ai";
-import { HelpTypeProps, OfferProps, UserProps } from "./AllHelpOffers";
+import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps, CurrentHelps } from "./AllHelpOffers";
 import { SingleAcceptedHelpOffer } from "./SingleAcceptedHelpOffer";
-
-export type StatusProps = {
-  id: number;
-  name: string;
-};
 
 export const AcceptedHelpOffersList = () => {
   const { t } = useTranslation();
@@ -17,6 +12,54 @@ export const AcceptedHelpOffersList = () => {
   const [helpTypes, setHelpTypes] = useState<HelpTypeProps[]>([]);
   const [statuses, setStatuses] = useState<StatusProps[]>([]);
   const [users, setUsers] = useState<UserProps[]>([]);
+  const [location, setLocation] = useState<string>("");
+  const [helps, setHelps] = useState<OfferProps[]>([]);
+  const [voivodeships, setVoivodeships] = useState<VoivodeshipsProps[]>([]);
+  const [counties, setCounties] = useState<CountiesProps[]>([]);
+  const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(
+    null
+  );
+  const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<
+    number | null
+  >(null);
+  const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
+  const [selectedCountyId, setSelectedCountyId] = useState<number | null>(null);
+  const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
+  const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(
+    null
+  );
+
+  const userCoordinates = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const bdcAPI = `https://api-bdc.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`;
+          getAPI(bdcAPI);
+        },
+        (err) => {
+          alert(err.message);
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by this browser");
+    }
+  };
+
+  const getAPI = (bdcAPI: string) => {
+    axios
+      .get(bdcAPI)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response);
+          const result = response.data;
+          console.log(response);
+          setLocation(result.city);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
 
   useEffect(() => {
     axios({
