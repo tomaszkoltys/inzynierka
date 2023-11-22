@@ -43,6 +43,7 @@ export type VoivodeshipsProps = {
 export type CountiesProps = {
   id: number;
   name: string;
+  city: string;
   voivodeship: number;
 };
 
@@ -89,6 +90,7 @@ export const CurrentHelps = () => {
       .get(bdcAPI)
       .then((response) => {
         if (response.status === 200) {
+          console.log(response);
           const result = response.data;
           console.log(response);
           setLocation(result.city);

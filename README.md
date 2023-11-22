@@ -1,23 +1,22 @@
 1. Moduły - wolontariusz
 
 - [x] Dodaj ofertę pomocy
-- [ ] Wszystkie prośby o pomoc
-  - [ ] Trzeba dokończyć akceptowanie pomocy tj. udzielanie pomocy
-- [ ] Zaakceptowane prośby o pomoc
-  - [ ] Trzeba dokończyć ocenianie uchodźcy
+- [x] Wszystkie prośby o pomoc
+- [x] Zaakceptowane prośby o pomoc
+    - [ ] Zmiana statusu realizacji
 - [x] Moje oferty pomocy
-  - [ ] Trzeba dokończyć oceny
-  - [ ] Trzeba dodać do bazy danych miasta i uwzględnić je w froncie
+    - [ ] Zmiana statusu realizacji
 
 2. Moduły - uchodźca
 
 - [x] Dodaj prośbę o pomoc
 - [x] Wszystkie oferty pomocy
-  - [ ] Trzeba dokończyć akceptowanie pomocy tj. przyjmowanie pomocy
 - [ ] Zaakceptowane oferty pomocy
-  - [ ] Trzeba dokończyć ocenianie wolontariusza 
+  - [ ] Ocenianie wolontariusza
+  - [ ] Usunięcie zmiany statusu realizacji
 - [x] Moje prośby o pomoc
-  - [ ] Trzeba dodać do bazy danych miasta i uwzględnić je w froncie
+  - [ ] Ocenianie wolontariusza
+  - [ ] Usunięcie zmiany statusu realizacji
 
 3. Moduły - admin
 
