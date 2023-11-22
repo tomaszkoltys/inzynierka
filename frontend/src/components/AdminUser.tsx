@@ -6,6 +6,7 @@ import AdminSingleUser from "./AdminSingleUser";
 import { Dropdown } from "./Dropdown.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AddUserForm } from "./AddUserForm.tsx";
 
 export type UserProps = {
   id: number;
@@ -32,6 +33,7 @@ const AdminUser = () => {
   const [userRolesId, setUserRolesId] = useState<number | null>(null);
   const [users, setUsers] = useState<UserProps[]>([]);
   const [accountStatuses, setAccountStatuses] = useState<UserRolesProps[]>([])
+  const [showRegisterForm, setShowRegisterForm] = useState<boolean>(false)
 
   useEffect(() => {
     axios({
@@ -113,9 +115,8 @@ const AdminUser = () => {
           <div className="mx-2 my-2">
             <span className="border-b border-gray-300">{t("filters")}</span>
           </div>
-          <div className="flex flex-col mx-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 mt-3 mb-12">
-              <div>
+          <div className="flex flex-row lg:flex-col mx-2">
+            <div className="flex items-center justify-between flex-col lg:flex-row mt-3 mb-12">
                 <div className="flex justify-center items-center text-[#000] w-60 h-10 border border-gray-300 rounded-md">
                   <input
                     autoFocus
@@ -127,9 +128,7 @@ const AdminUser = () => {
                     <AiOutlineSearch />
                   </label>
                 </div>
-              </div>
-              <div>
-                <div>
+                <div className="ml-0 lg:ml-6 w-60">
                   <Dropdown
                     label={t("role")}
                     options={userRoles.map((userRole) => ({
@@ -138,9 +137,15 @@ const AdminUser = () => {
                     onChange={handleUserRoleChange}
                   />
                 </div>
-              </div>
+                <div className="w-full lg:w-80"><button className="px-4 py-2 rounded-lg bg-yellow-default hover:bg-yellow-light text-white" onClick={() => setShowRegisterForm(true)}>{t("add-new-user")}</button></div>
             </div>
           </div>
+          {showRegisterForm && (
+            <div className="transition duration-700">
+              <button  className="px-4 py-2 rounded-lg bg-yellow-default hover:bg-yellow-light text-white" onClick={() => setShowRegisterForm(false)}>{t("hide")}</button>
+                <AddUserForm />
+            </div>
+          )}
           <div className="border-t border-gray-300">
             {/* Wyświetl użytkowników w tabeli */}
             <table className="w-full">
