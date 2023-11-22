@@ -1,5 +1,5 @@
 import axios from "axios";
-import { OfferProps, UserProps, HelpTypeProps } from "./AllHelpRequests";
+import { OfferProps, UserProps, HelpTypeProps } from "./Help";
 import { useState } from "react";
 import { FaHandsHelping } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";

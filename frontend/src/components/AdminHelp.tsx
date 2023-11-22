@@ -6,7 +6,7 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { AdminHelp } from "../pages/AdminHelp.tsx";
 import { ToastContainer, toast } from "react-toastify";
-import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./AllHelpOffers";
+import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
 import "react-toastify/dist/ReactToastify.css";
 
 export const AdminHelpList = () => {

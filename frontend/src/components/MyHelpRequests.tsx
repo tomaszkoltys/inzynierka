@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineSearch } from "react-icons/ai";
-import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./AllHelpOffers";
+import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
 import { SingleAcceptedHelpOffer } from "./SingleAcceptedHelpOffer";
 
 export const MyHelpRequestsList = () => {
@@ -106,7 +106,7 @@ export const MyHelpRequestsList = () => {
             <div className="flex justify-center items-center text-[#000] w-60 h-10 border border-gray-300 rounded-md">
               <input
                 autoFocus
-                placeholder={t("search-help-offer")}
+                placeholder={t("search-help-request")}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full border-none outline-none ml-2 text-sm"
               />

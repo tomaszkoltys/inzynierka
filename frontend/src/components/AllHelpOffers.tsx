@@ -4,53 +4,7 @@ import { SingleOffer } from "./SingleOffer.tsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-
-export type StatusProps = {
-  id: number;
-  name: string;
-};
-
-export type OfferProps = {
-  id: number;
-  author: number;
-  supporter: number;
-  county: number;
-  description: string;
-  photo: string;
-  side: number;
-  helpStatus: number;
-  type: number;
-};
-
-export type UserProps = {
-  id: number;
-  name: string;
-  surname: string;
-  password: string;
-  email_address: string;
-  role: number;
-  identity_number: string;
-  status: number;
-  accepted: number;
-};
-
-export type HelpTypeProps = {
-  id: number;
-  name: string;
-  namePL: string;
-};
-
-export type VoivodeshipsProps = {
-  id: number;
-  name: string;
-};
-
-export type CountiesProps = {
-  id: number;
-  name: string;
-  city: string;
-  voivodeship: number;
-};
+import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
 
 export const CurrentHelps = () => {
   const { t } = useTranslation();

@@ -2,7 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineSearch } from "react-icons/ai";
-import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps, CurrentHelps } from "./AllHelpOffers";
+import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
+import { CurrentHelps } from "./AllHelpOffers"
 import { SingleAcceptedHelpOffer } from "./SingleAcceptedHelpOffer";
 
 export const AcceptedHelpOffersList = () => {

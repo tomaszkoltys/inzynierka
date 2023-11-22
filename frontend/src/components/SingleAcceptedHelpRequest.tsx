@@ -1,4 +1,4 @@
-import { OfferProps, UserProps, HelpTypeProps } from "./AllHelpRequests";
+import { OfferProps, UserProps, HelpTypeProps } from "./Help";
 import { StatusProps } from "./MyHelpOffers";
 import { t } from "i18next";
 import axios from "axios";

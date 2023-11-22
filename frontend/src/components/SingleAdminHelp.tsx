@@ -1,4 +1,4 @@
-import { OfferProps, UserProps, HelpTypeProps } from "./AllHelpRequests";
+import { OfferProps, UserProps, HelpTypeProps } from "./Help";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -7,7 +7,6 @@ import { useState } from "react";
 import { TbPencilCancel, TbPencil } from "react-icons/tb";
 import { MdDeleteOutline } from "react-icons/md";
 import { AiOutlineSave } from "react-icons/ai";
-
 
 export const SingleAdminHelp = ({
   author,
