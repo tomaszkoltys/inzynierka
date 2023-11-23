@@ -1,6 +1,6 @@
-I. Backend - prośby do Oli
-- [ ] Dodanie zapytania, które wyświetla liczbę wszystkich pozytywnych ocen dla danego usera
-- [ ] Dodanie zapytania, które wyświetla liczbę wszystkich negatywnych ocen dla danego usera
+I. Backend
+- [x] Dodanie zapytania, które wyświetla liczbę wszystkich pozytywnych ocen dla danego usera
+- [x] Dodanie zapytania, które wyświetla liczbę wszystkich negatywnych ocen dla danego usera
 - [ ] Zapisywanie zdjęć dodawanych z dysku do bazy danych
 
 II. Frontend
@@ -22,10 +22,10 @@ II. Frontend
   - [x] Dodawanie like'ow/dislike'ow do bazy
   - [x] Wyświetlanie procentu poleceń
   - [ ] Wyświetlanie liczby pozytywnych/negatywnych ocen
-- [ ] Moje prośby o pomoc
+- [x] Moje prośby o pomoc
   - [x] Dodawanie like'ow/dislike'ow do bazy
   - [x] Wyświetlanie procentu poleceń
-  - [ ] Wyświetlanie liczby pozytywnych/negatywnych ocen
+  - [x] Wyświetlanie liczby pozytywnych/negatywnych ocen
 
 3. Moduły - admin
 
