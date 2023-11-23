@@ -5,6 +5,9 @@ I. Backend
 
 II. Frontend
 
+0. Moduły - wolontariusz/uchodźca
+- [ ] Pobieranie lokalizacji i uwzględnienie jej w filtrowaniu ofert/próśb o pomoc
+
 1. Moduły - wolontariusz
 
 - [x] Dodaj ofertę pomocy
@@ -15,10 +18,10 @@ II. Frontend
 2. Moduły - uchodźca
 
 - [x] Dodaj prośbę o pomoc
-- [ ] Wszystkie oferty pomocy
-  - [ ] Wyświetlanie procentu poleceń (ze wszystkich ofert wolontariusza przy jego ofercie)
-  - [ ] Wyświetlanie liczby pozytywnych/negatywnych ocen (ze wszystkich ofert wolontariusza przy jego ofercie)
-- [ ] Zaakceptowane oferty pomocy
+- [x] Wszystkie oferty pomocy
+  - [x] Wyświetlanie procentu poleceń (ze wszystkich ofert wolontariusza przy jego ofercie)
+  - [x] Wyświetlanie liczby pozytywnych/negatywnych ocen (ze wszystkich ofert wolontariusza przy jego ofercie)
+- [x] Zaakceptowane oferty pomocy
   - [x] Dodawanie like'ow/dislike'ow do bazy
   - [x] Wyświetlanie procentu poleceń
   - [x] Wyświetlanie liczby pozytywnych/negatywnych ocen
@@ -37,7 +40,7 @@ II. Frontend
 - [x] Rejestracja
 - [x] Logowanie
 - [ ] Przypomnienie hasła
-- [ ] Powiadomienia mailowe
+- [x] Powiadomienia mailowe
 
 Mail:
 swopdu@gmail.com
