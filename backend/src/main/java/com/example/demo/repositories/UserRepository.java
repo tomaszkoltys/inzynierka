@@ -35,4 +35,19 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query(value = "select * from user where username = :username", nativeQuery = true)
     Optional<User> findByUsername(String username);
 
+    @Query(value = "select * from user where id in (select user_id from user_notification_settings where new_help_offers = true)", nativeQuery = true)
+    List<User> findAllForNewHelpOffersNotification();
+
+    @Query(value = "select * from user where id in (select user_id from user_notification_settings where new_help_requests = true)", nativeQuery = true)
+    List<User> findAllForNewHelpRequestsNotification();
+
+    @Query(value = "select * from user where id in (select user_id from user_notification_settings where accepted_help_offers = true)", nativeQuery = true)
+    List<User> findAllForAcceptedHelpOffersNotification();
+
+    @Query(value = "select * from user where id in (select user_id from user_notification_settings where accepted_help_requests = true)", nativeQuery = true)
+    List<User> findAllForAcceptedHelpRequestsNotification();
+
+
+
+
 }

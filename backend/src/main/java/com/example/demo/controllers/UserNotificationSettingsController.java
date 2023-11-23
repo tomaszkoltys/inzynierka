@@ -30,5 +30,4 @@ public class UserNotificationSettingsController {
         userNotificationSettingsRepository.save(setting);
         return setting;
     }
-
 }

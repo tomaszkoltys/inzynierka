@@ -10,18 +10,17 @@ import lombok.*;
 @Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 public class UserNotificationSettings {
     @Id
     private Integer user_id;
     @Nonnull
-    private boolean new_help_offers;
+    private boolean new_help_offers=false;
     @Nonnull
-    private boolean new_help_requests;
+    private boolean new_help_requests=false;
     @Nonnull
-    private boolean accepted_help_offers;
+    private boolean accepted_help_offers=false;
     @Nonnull
-    private boolean accepted_help_requests;
+    private boolean accepted_help_requests=false;
 
    public UserNotificationSettings(int id){
          this.user_id = id;
