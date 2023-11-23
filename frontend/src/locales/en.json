@@ -67,5 +67,6 @@
   "accepted": "Accepted",
   "actions": "Actions",
   "image-link": "Image link",
-  "unaccepted-offer": "Unnacepted offer"
+  "unaccepted-help-offer": "Unnacepted offer",
+  "unaccepted-help-request": "Unnacepted request"
 }

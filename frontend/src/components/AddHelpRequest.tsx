@@ -123,7 +123,7 @@ export const AddHelpRequestForm = () => {
     else{
       axios({
         method: 'post',
-        url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo=${imageLink}&side=1&author=${currentUser_id}&type=${selectedHelpTypeId}`,
+        url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo=${imageLink}&side=2&author=${currentUser_id}&type=${selectedHelpTypeId}`,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`

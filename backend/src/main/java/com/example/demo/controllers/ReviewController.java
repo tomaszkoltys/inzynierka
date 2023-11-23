@@ -56,4 +56,13 @@ public class ReviewController {
         return ((float) sum / reviewList.size()) * 100;
     }
 
+    @GetMapping(value = "/positiveReviewCount")
+    public @ResponseBody Long getPositiveReviewCount(@RequestParam int user_id) {
+        return reviewRepository.countByUser_idAndReview_value(user_id, 1);
+    }
+
+    @GetMapping(value = "/negativeReviewCount")
+    public @ResponseBody Long getNegativeReviewCount(@RequestParam int user_id) {
+        return reviewRepository.countByUser_idAndReview_value(user_id, 0);
+    }
 }

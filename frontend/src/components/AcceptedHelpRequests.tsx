@@ -5,6 +5,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
 import { SingleMyHelpOffer } from "./SingleMyHelpOffer";
 import { Dropdown } from "./Dropdown";
+import { SingleAcceptedHelpRequest } from "./SingleAcceptedHelpRequest";
 
 export const AcceptedHelpRequestsList = () => {
   const { t } = useTranslation();
@@ -262,7 +263,7 @@ export const AcceptedHelpRequestsList = () => {
                 <p className="text-center font-medium">{t("no-needs-found")}</p>
               ) : (
                 searchOffers.map((offer: OfferProps) => (
-                  <SingleMyHelpOffer
+                  <SingleAcceptedHelpRequest
                     key={offer.id}
                     {...offer}
                     users={users}

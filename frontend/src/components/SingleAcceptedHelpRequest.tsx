@@ -1,10 +1,14 @@
+import { useState } from "react";
+import { Dropdown } from "./Dropdown";
 import { OfferProps, UserProps, HelpTypeProps } from "./Help";
 import { StatusProps } from "./MyHelpOffers";
 import { t } from "i18next";
 import axios from "axios";
 
 export const SingleAcceptedHelpRequest = ({
+  id,
   author,
+  supporter,
   type,
   description,
   photo,
@@ -15,20 +19,58 @@ export const SingleAcceptedHelpRequest = ({
 }: OfferProps & { users: UserProps[] } & { helpTypes: HelpTypeProps[] } & {
   statuses: StatusProps[];
 }) => {
-  console.log(helpStatus);
-  // Znajdź użytkownika na podstawie ID autora
+  const [selectedStatusType, setSelectedStatusType] = useState<string | null>(
+    null
+  );
+  const [selectedStatusTypeId, setSelectedStatusTypeId] = useState<
+    number | null
+  >(null);
+
   const authorUser = users.find((user) => {
     return user.id === author;
   });
-
-  // Znajdź odpowiednią nazwę typu pomocy na podstawie identyfikatora "type"
   const helpType = helpTypes.find((helpType) => helpType.id === type);
   const typeName = helpType ? helpType.namePL : "Nieznany typ pomocy";
-
-  //znajdz nazwe statusu
   const helpStat = statuses.find((helpStat) => helpStat.id === helpStatus);
   console.log(helpStat);
   const statusName = helpStat ? helpStat.name : "Nieznany status";
+  const supporterUser = users.find((user) => user.id === supporter);
+
+
+  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selected = event.target.value;
+    setSelectedStatusType(selected);
+    const selectedStatusTypeId =
+      statuses.find((helpStat) => helpStat.name === selected)?.id || null;
+    setSelectedStatusTypeId(selectedStatusTypeId);
+    axios({
+      method: 'post',
+      url: `http://localhost:8080/api/v1/help/updatehelpstatus?helpId=${id}&help_status=${selectedStatusTypeId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+      }
+    })
+      .then((response) => {
+        console.log("Help status updated:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error updating help status:", error);
+      });
+  };
+
+  const setStatusColor = (statusName: string) => {
+    switch (statusName) {
+      case "In progress":
+        return "#fae96b";
+      case "Completed":
+        return "#22f526";
+      case "Uncompleted":
+        return "#f50a16";
+      default:
+        return "white";
+    }
+  };
 
   return (
     <div className="flex flex-col bg-yellow-light border border-yellow-light text-[#fff]">
@@ -47,11 +89,20 @@ export const SingleAcceptedHelpRequest = ({
             {authorUser.name} {authorUser.surname}
           </span>
         ) : (
-          <span className="text-[#fff] text-lg">Nieznany autor</span>
+          <span className="text-[lightgray] text-lg">{t("unaccepted-help-offer")}</span>
         )}
       </div>
-      <div className="w-full flex items-center justify-center py-2">
-        <div>{statusName}</div>
+      <div className="w-full flex items-center justify-center flex-col">
+        <div className="flex w-full items-center justify-center mt-6">
+          <h2 style={{ color: setStatusColor(statusName) }}>{statusName}</h2>
+        </div>
+        <div className="w-full flex items-center justify-center flex-col my-6 gap-6">
+          <Dropdown
+            label={t("choose-help-status")}
+            options={statuses.map((helpStat) => ({ value: helpStat.name }))}
+            onChange={handleStatusChange}
+          />
+        </div>
       </div>
     </div>
   );

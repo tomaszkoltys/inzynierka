@@ -3,7 +3,7 @@ import { StatusProps } from "./MyHelpOffers";
 import { t } from "i18next";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { AiOutlineLike, AiFillLike, AiOutlineDislike, AiFillDislike, AiOutlinePercentage } from "react-icons/ai";
+import { AiOutlineLike, AiFillLike, AiOutlineDislike, AiFillDislike, AiOutlinePercentage } from "react-icons/ai"
 
 export const SingleMyHelpRequest = ({
   id,
@@ -31,6 +31,8 @@ export const SingleMyHelpRequest = ({
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
   const [recommendationPercentage, setRecommendationPercentage] = useState(0);
+  const [positiveReviewCount, setPositiveReviewCount] = useState(0);
+  const [negativeReviewCount, setNegativeReviewCount] = useState(0);
 
   const handleLike = () => {
     if (!liked) {
@@ -89,7 +91,7 @@ export const SingleMyHelpRequest = ({
   };
 
   useEffect(() => {
-    // Pobierz procent poleceń z backendu
+    // Pobierz procent poleceń, liczbę pozytywnych i negatywnych ocen z backendu
     axios({
       method: "get",
       url: `http://localhost:8080/api/v1/review/percentageofrecommendations?user_id=${supporter}`,
@@ -104,17 +106,44 @@ export const SingleMyHelpRequest = ({
       .catch((error) => {
         console.error("Error fetching recommendation percentage:", error);
       });
-  }, []); // Pobierz tylko raz przy załadowaniu komponentu
+
+    axios({
+      method: "get",
+      url: `http://localhost:8080/api/v1/review/positiveReviewCount?user_id=${supporter}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+      },
+    })
+      .then((response) => {
+        console.log(response.data);
+        setPositiveReviewCount(response.data || 0);
+      })
+      .catch((error) => {
+        console.error("Error fetching positive review count:", error);
+      });
+
+    axios({
+      method: "get",
+      url: `http://localhost:8080/api/v1/review/negativeReviewCount?user_id=${supporter}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+      },
+    })
+      .then((response) => {
+        setNegativeReviewCount(response.data || 0);
+      })
+      .catch((error) => {
+        console.error("Error fetching negative review count:", error);
+      });
+  }, [supporter]); // Pobierz dane przy załadowaniu komponentu i przy zmianie supporterUser
 
   return (
     <div className="flex flex-col bg-yellow-light border border-yellow-light text-[#fff]">
       <div className="flex h-48">
         <div className="w-[50%]">
-          <img
-            src={photo}
-            alt=""
-            className="w-full h-full object-cover"
-          />
+          <img src={photo} alt="" className="w-full h-full object-cover" />
         </div>
         <div className="w-[50%] mx-2 mb-2 my-2">
           <h4 className="text-xl font-semibold mx-5">{typeName}</h4>
@@ -124,25 +153,24 @@ export const SingleMyHelpRequest = ({
       <div className="flex items-center justify-between bg-yellow-dark p-4">
         <div className="flex items-center">
           {supporterUser ? (
-            <span className="text-[#fff] text-lg">
-              {supporterUser.name} {supporterUser.surname}
-            </span>
+            <div className="flex items-center mx-4 space-x-2">
+              <span className="text-[#fff] text-lg">
+                {supporterUser.name} {supporterUser.surname}
+              </span>
+              <button onClick={handleLike} className="text-green-500">
+                {liked ? <AiFillLike /> : <AiOutlineLike />}
+              </button>
+              <span>{positiveReviewCount}</span>
+              <button onClick={handleDislike} className="text-red-500">
+                {disliked ? <AiFillDislike /> : <AiOutlineDislike />}
+              </button>
+              <span>{negativeReviewCount}</span>
+              <AiOutlinePercentage className="text-gray-500" />
+              <span>{recommendationPercentage}%</span>
+            </div>
           ) : (
-            <span className="text-[#fff] text-lg">Nieznany autor</span>
+            <span className="text-[lightgray] text-lg">{t("unaccepted-help-request")}</span>
           )}
-          <div className="flex items-center mx-4 space-x-2">
-            <button onClick={handleLike} className="text-green-500">
-              {liked ? <AiFillLike /> : <AiOutlineLike />}
-            </button>
-            <span>{likes}</span>
-            <button onClick={handleDislike} className="text-red-500">
-              {disliked ? <AiFillDislike /> : <AiOutlineDislike />}
-            </button>
-            <span>{dislikes}</span>
-            <AiOutlinePercentage className="text-gray-500" />
-            {/* Wyświetl procent poleceń zamiast stałego tekstu */}
-            <span>{recommendationPercentage}%</span>
-          </div>
         </div>
         <div className="ml-4 border rounded-md py-1 px-2 text-[#fff] bg-gray-600">
           {statusName}

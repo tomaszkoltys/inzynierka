@@ -17,5 +17,6 @@ public interface ReviewRepository extends CrudRepository<Review, Integer> {
     @Query(value = "select * from review where user_id = :user_id", nativeQuery = true)
     List<Review> findAllByUserId(int user_id);
 
-
+    @Query(value = "SELECT COUNT(*) FROM review WHERE user_id = :user_id AND review_value = :review_value", nativeQuery = true)
+    Long countByUser_idAndReview_value(int user_id, int review_value);
 }

@@ -66,5 +66,6 @@
   "accepted": "Zaakceptowany",
   "actions": "Akcje",
   "image-link": "Podaj link do zdjęcia",
-  "unaccepted-offer": "Oferta nieprzyjęta"
+  "unaccepted-help-offer": "Nieprzyjęta oferta",
+  "unaccepted-help-request": "Nieprzyjęta prośba"
 }

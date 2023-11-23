@@ -89,7 +89,7 @@ export const SingleMyHelpOffer = ({
             {supporterUser.name} {supporterUser.surname}
           </span>
         ) : (
-          <span className="text-[lightgray] text-lg">{t("unaccepted-offer")}</span>
+          <span className="text-[lightgray] text-lg">{t("unaccepted-help-offer")}</span>
         )}
       </div>
       <div className="w-full flex items-center justify-center flex-col">
