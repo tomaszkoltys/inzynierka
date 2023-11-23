@@ -1,22 +1,31 @@
+I. Backend - prośby do Oli
+- [ ] Dodanie zapytania, które wyświetla liczbę wszystkich pozytywnych ocen dla danego usera
+- [ ] Dodanie zapytania, które wyświetla liczbę wszystkich negatywnych ocen dla danego usera
+- [ ] Zapisywanie zdjęć dodawanych z dysku do bazy danych
+
+II. Frontend
+
 1. Moduły - wolontariusz
 
 - [x] Dodaj ofertę pomocy
 - [x] Wszystkie prośby o pomoc
 - [x] Zaakceptowane prośby o pomoc
-    - [ ] Zmiana statusu realizacji
 - [x] Moje oferty pomocy
-    - [ ] Zmiana statusu realizacji
 
 2. Moduły - uchodźca
 
 - [x] Dodaj prośbę o pomoc
-- [x] Wszystkie oferty pomocy
+- [ ] Wszystkie oferty pomocy
+  - [ ] Wyświetlanie procentu poleceń (ze wszystkich ofert wolontariusza przy jego ofercie)
+  - [ ] Wyświetlanie liczby pozytywnych/negatywnych ocen (ze wszystkich ofert wolontariusza przy jego ofercie)
 - [ ] Zaakceptowane oferty pomocy
-  - [ ] Ocenianie wolontariusza
-  - [ ] Usunięcie zmiany statusu realizacji
-- [x] Moje prośby o pomoc
-  - [ ] Ocenianie wolontariusza
-  - [ ] Usunięcie zmiany statusu realizacji
+  - [x] Dodawanie like'ow/dislike'ow do bazy
+  - [x] Wyświetlanie procentu poleceń
+  - [ ] Wyświetlanie liczby pozytywnych/negatywnych ocen
+- [ ] Moje prośby o pomoc
+  - [x] Dodawanie like'ow/dislike'ow do bazy
+  - [x] Wyświetlanie procentu poleceń
+  - [ ] Wyświetlanie liczby pozytywnych/negatywnych ocen
 
 3. Moduły - admin
 
