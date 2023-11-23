@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
+import com.example.demo.enums.NotificationType;
 import com.example.demo.repositories.UserRepository;
+import com.example.demo.service.NotificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,11 @@ import java.util.Optional;
 public class HelpController {
 
     @Autowired
-    //private JavaMailSender javaMailSender;
     private HelpRepository helpRepository;
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private NotificationService notificationService;
 
     @PostMapping(value = "/addhelp", consumes = {"*/*"})
     public void addHelp(@RequestParam int county, @RequestParam String description,
@@ -36,6 +40,13 @@ public class HelpController {
         newHelp.setType(type);
         newHelp.setHelpStatus(1);
         helpRepository.save(newHelp);
+
+        var notificationType = switch (side){
+            case 1 -> NotificationType.new_help_offers;
+            case 2 -> NotificationType.new_help_requests;
+            default -> throw new IllegalStateException("Unexpected value: " + side);
+        };
+        notificationService.sendNotification(notificationType);
     }
 
     @GetMapping(value = "/allhelps")
