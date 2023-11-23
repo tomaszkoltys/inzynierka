@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dropdown } from "./Dropdown";
 import { OfferProps, UserProps, HelpTypeProps } from "./Help";
 import { StatusProps } from "./MyHelpOffers";
@@ -25,6 +25,7 @@ export const SingleAcceptedHelpRequest = ({
   const [selectedStatusTypeId, setSelectedStatusTypeId] = useState<
     number | null
   >(null);
+  const [statusName, setStatusName] = useState("Nieznany status");
 
   const authorUser = users.find((user) => {
     return user.id === author;
@@ -32,10 +33,12 @@ export const SingleAcceptedHelpRequest = ({
   const helpType = helpTypes.find((helpType) => helpType.id === type);
   const typeName = helpType ? helpType.namePL : "Nieznany typ pomocy";
   const helpStat = statuses.find((helpStat) => helpStat.id === helpStatus);
-  console.log(helpStat);
-  const statusName = helpStat ? helpStat.name : "Nieznany status";
   const supporterUser = users.find((user) => user.id === supporter);
 
+  useEffect(() => {
+    // Pobierz początkowy status
+    setStatusName(helpStat ? helpStat.name : "Nieznany status");
+  }, [helpStatus]);
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = event.target.value;
@@ -53,6 +56,7 @@ export const SingleAcceptedHelpRequest = ({
     })
       .then((response) => {
         console.log("Help status updated:", response.data);
+        setStatusName(selected); // Zaktualizuj status po zmianie
       })
       .catch((error) => {
         console.error("Error updating help status:", error);
@@ -83,7 +87,7 @@ export const SingleAcceptedHelpRequest = ({
           <p className="mt-2">{description}</p>
         </div>
       </div>
-      <div className="flex items-center justify-center bg-yellow-dark">
+      <div className="flex items-center justify-between bg-yellow-dark p-4">
         {authorUser ? (
           <span className="text-[#fff] text-lg">
             {authorUser.name} {authorUser.surname}
@@ -91,17 +95,15 @@ export const SingleAcceptedHelpRequest = ({
         ) : (
           <span className="text-[lightgray] text-lg">{t("unaccepted-help-offer")}</span>
         )}
-      </div>
-      <div className="w-full flex items-center justify-center flex-col">
-        <div className="flex w-full items-center justify-center mt-6">
-          <h2 style={{ color: setStatusColor(statusName) }}>{statusName}</h2>
+        <div className="flex items-center mx-4 space-x-2">
         </div>
-        <div className="w-full flex items-center justify-center flex-col my-6 gap-6">
-          <Dropdown
+        <Dropdown
             label={t("choose-help-status")}
             options={statuses.map((helpStat) => ({ value: helpStat.name }))}
             onChange={handleStatusChange}
           />
+        <div className="ml-4 border rounded-md py-1 px-2 text-[#fff] bg-gray-600">
+          {statusName}
         </div>
       </div>
     </div>

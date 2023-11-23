@@ -156,12 +156,8 @@ export const SingleAcceptedHelpOffer = ({
   return (
     <div className="flex flex-col bg-yellow-light border border-yellow-light text-[#fff]">
       <div className="flex h-48">
-        <div className="w-[50%]">
-          <img
-            src={photo}
-            alt=""
-            className="w-full h-full object-cover"
-          />
+      <div className="w-[50%]">
+          <img src={photo} alt="" className="w-full h-full object-cover" />
         </div>
         <div className="w-[50%] mx-2 mb-2 my-2">
           <h4 className="text-xl font-semibold mx-5">{typeName}</h4>
@@ -175,7 +171,7 @@ export const SingleAcceptedHelpOffer = ({
               {authorUser.name} {authorUser.surname}
             </span>
           ) : (
-            <span className="text-[#fff] text-lg">Nieznany autor</span>
+            <span className="text-[lightgray] text-lg">{t("unaccepted-help-offer")}</span>
           )}
           <div className="flex items-center mx-4 space-x-2">
             <button onClick={handleLike} className="text-green-500">

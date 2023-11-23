@@ -83,7 +83,7 @@ export const SingleMyHelpOffer = ({
           <p className="mt-2">{description}</p>
         </div>
       </div>
-      <div className="flex items-center justify-center bg-yellow-dark">
+      <div className="flex items-center justify-center bg-yellow-dark p-4">
         {supporterUser ? (
           <span className="text-[#fff] text-lg">
             {supporterUser.name} {supporterUser.surname}
@@ -91,17 +91,15 @@ export const SingleMyHelpOffer = ({
         ) : (
           <span className="text-[lightgray] text-lg">{t("unaccepted-help-offer")}</span>
         )}
-      </div>
-      <div className="w-full flex items-center justify-center flex-col">
-        <div className="flex w-full items-center justify-center mt-6">
-          <h2 style={{ color: setStatusColor(statusName) }}>{statusName}</h2>
+        <div className="flex items-center mx-4 space-x-2">
         </div>
-        <div className="w-full flex items-center justify-center flex-col my-6 gap-6">
-          <Dropdown
+        <Dropdown
             label={t("choose-help-status")}
             options={statuses.map((helpStat) => ({ value: helpStat.name }))}
             onChange={handleStatusChange}
           />
+        <div className="ml-4 border rounded-md py-1 px-2 text-[#fff] bg-gray-600">
+          {statusName}
         </div>
       </div>
     </div>
