@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { OfferProps, UserProps, HelpTypeProps } from "./AllHelpRequests";
+import { OfferProps, UserProps, HelpTypeProps } from "./Help";
 import { StatusProps } from "./MyHelpOffers";
 import { Dropdown } from "./Dropdown";
 import { t } from "i18next";
@@ -8,6 +8,7 @@ import axios from "axios";
 export const SingleMyHelpOffer = ({
   id,
   author,
+  supporter,
   type,
   description,
   photo,
@@ -28,6 +29,7 @@ export const SingleMyHelpOffer = ({
   const authorUser = users.find((user) => {
     return user.id === author;
   });
+  const supporterUser = users.find((user) => user.id === supporter);
 
   const helpType = helpTypes.find((helpType) => helpType.id === type);
   const typeName = helpType ? helpType.namePL : "Nieznany typ pomocy";
@@ -82,12 +84,12 @@ export const SingleMyHelpOffer = ({
         </div>
       </div>
       <div className="flex items-center justify-center bg-yellow-dark">
-        {authorUser ? (
+        {supporterUser ? (
           <span className="text-[#fff] text-lg">
-            {authorUser.name} {authorUser.surname}
+            {supporterUser.name} {supporterUser.surname}
           </span>
         ) : (
-          <span className="text-[#fff] text-lg">Nieznany autor</span>
+          <span className="text-[lightgray] text-lg">{t("unaccepted-offer")}</span>
         )}
       </div>
       <div className="w-full flex items-center justify-center flex-col">

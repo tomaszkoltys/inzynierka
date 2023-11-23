@@ -5,9 +5,10 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { AiOutlineLike, AiFillLike, AiOutlineDislike, AiFillDislike, AiOutlinePercentage } from "react-icons/ai";
 
-export const SingleAcceptedHelpOffer = ({
+export const SingleMyHelpRequest = ({
   id,
   author,
+  supporter,
   type,
   description,
   photo,
@@ -19,6 +20,7 @@ export const SingleAcceptedHelpOffer = ({
   statuses: StatusProps[];
 }) => {
   const authorUser = users.find((user) => user.id === author);
+  const supporterUser = users.find((user) => user.id === supporter);
   const helpType = helpTypes.find((helpType) => helpType.id === type);
   const typeName = helpType ? helpType.namePL : "Nieznany typ pomocy";
   const helpStat = statuses.find((helpStat) => helpStat.id === helpStatus);
@@ -34,7 +36,7 @@ export const SingleAcceptedHelpOffer = ({
     if (!liked) {
       axios({
         method: "post",
-        url: `http://localhost:8080/api/v1/review/addreview?user_id=${author}&help_id=${id}&value=1`,
+        url: `http://localhost:8080/api/v1/review/addreview?user_id=${supporter}&help_id=${id}&value=1`,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
@@ -62,7 +64,7 @@ export const SingleAcceptedHelpOffer = ({
     if (!disliked) {
       axios({
         method: "post",
-        url: `http://localhost:8080/api/v1/review/addreview?user_id=${author}&help_id=${id}&value=0`,
+        url: `http://localhost:8080/api/v1/review/addreview?user_id=${supporter}&help_id=${id}&value=0`,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
@@ -90,7 +92,7 @@ export const SingleAcceptedHelpOffer = ({
     // Pobierz procent poleceń z backendu
     axios({
       method: "get",
-      url: `http://localhost:8080/api/v1/review/percentageofrecommendations?user_id=${author}`,
+      url: `http://localhost:8080/api/v1/review/percentageofrecommendations?user_id=${supporter}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
@@ -121,9 +123,9 @@ export const SingleAcceptedHelpOffer = ({
       </div>
       <div className="flex items-center justify-between bg-yellow-dark p-4">
         <div className="flex items-center">
-          {authorUser ? (
+          {supporterUser ? (
             <span className="text-[#fff] text-lg">
-              {authorUser.name} {authorUser.surname}
+              {supporterUser.name} {supporterUser.surname}
             </span>
           ) : (
             <span className="text-[#fff] text-lg">Nieznany autor</span>

@@ -1,50 +1,10 @@
 import { Dropdown } from "./Dropdown.tsx";
 import { AiOutlineSearch } from "react-icons/ai";
-import { SingleOffer } from "./SingleOffer.tsx";
+import { SingleHelpRequest } from "./SingleHelpRequest";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-
-export type OfferProps = {
-  id: number;
-  author: number;
-  supporter: number;
-  county: number;
-  description: string;
-  photo: string;
-  side: number;
-  helpStatus: number;
-  type: number;
-};
-
-export type UserProps = {
-  id: number;
-  name: string;
-  surname: string;
-  password: string;
-  email_address: string;
-  role: number;
-  identity_number: string;
-  status: number;
-  accepted: number;
-};
-
-export type HelpTypeProps = {
-  id: number;
-  name: string;
-  namePL: string;
-};
-
-export type VoivodeshipsProps = {
-  id: number;
-  name: string;
-};
-
-export type CountiesProps = {
-  id: number;
-  name: string;
-  voivodeship: number;
-};
+import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
 
 export const CurrentNeeds = () => {
   const { t } = useTranslation();
@@ -278,7 +238,7 @@ export const CurrentNeeds = () => {
                 <p className="text-center font-medium">{t("no-needs-found")}</p>
               ) : (
                 searchOffers.map((offer: OfferProps) => (
-                  <SingleOffer
+                  <SingleHelpRequest
                     key={offer.id}
                     {...offer}
                     users={users}

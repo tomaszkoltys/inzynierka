@@ -1,4 +1,5 @@
 package com.example.demo.controllers;
+import com.example.demo.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -6,6 +7,8 @@ import com.example.demo.entities.Help;
 import com.example.demo.repositories.HelpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +18,9 @@ import java.util.Optional;
 public class HelpController {
 
     @Autowired
+    //private JavaMailSender javaMailSender;
     private HelpRepository helpRepository;
+    private UserRepository userRepository;
 
     @PostMapping(value = "/addhelp", consumes = {"*/*"})
     public void addHelp(@RequestParam int county, @RequestParam String description,

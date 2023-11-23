@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import { AiOutlineEdit, AiOutlineBlock, AiOutlineCheckCircle, AiOutlineDelete } from "react-icons/ai";
 import { TbLock, TbLockOpen } from "react-icons/tb";
 
-
 type AdminSingleUserProps = {
   user: UserProps;
   userRoles: UserRolesProps[];

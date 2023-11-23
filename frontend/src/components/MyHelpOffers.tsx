@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineSearch } from "react-icons/ai";
-import { HelpTypeProps, OfferProps, UserProps } from "./AllHelpRequests";
+import { HelpTypeProps, OfferProps, UserProps } from "./Help";
 import { SingleMyHelpOffer } from "./SingleMyHelpOffer";
 import { Dropdown } from "./Dropdown";
 

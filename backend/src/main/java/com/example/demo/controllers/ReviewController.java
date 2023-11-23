@@ -19,7 +19,7 @@ public class ReviewController {
     public ResponseEntity addReview(@RequestParam int user_id, @RequestParam int help_id,
                                     @RequestParam int value) {
 
-        if (value >= 1 && value <= 5) {
+        if (value >= 0 && value <= 1) {
             if (reviewRepository.findByHelpId(help_id).isPresent()) {
                 var review = reviewRepository.findByHelpId(help_id).get();
                 review.setReview_value(value);
@@ -35,7 +35,7 @@ public class ReviewController {
                 return ResponseEntity.ok(newReview);
             }
         } else {
-            return ResponseEntity.badRequest().body("Value must be in range from 1 to 5");
+            return ResponseEntity.badRequest().body("Value must be in range from 0 to 1");
         }
     }
 
@@ -44,13 +44,16 @@ public class ReviewController {
         return reviewRepository.findByHelpId(help_id).orElse(null);
     }
 
-    @GetMapping(value = "/averagerating")
-    public @ResponseBody Float getAverageRating(@RequestParam int user_id) {
+    @GetMapping(value = "/percentageofrecommendations")
+    public @ResponseBody Float getPercentageOfRecommendations(@RequestParam int user_id) {
         List<Review> reviewList = reviewRepository.findAllByUserId(user_id);
-        var sum = reviewList.stream().map(review -> review.getReview_value())
-                .reduce(0, (subtotal, element) -> subtotal + element);
-
-        return (float) sum / reviewList.size();
+        if (reviewList.isEmpty()) {
+            return 0.0f;
+        }
+        var sum = reviewList.stream()
+                .mapToInt(Review::getReview_value)
+                .sum();
+        return ((float) sum / reviewList.size()) * 100;
     }
 
 }
