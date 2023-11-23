@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineSearch } from "react-icons/ai";
 import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
-import { SingleAcceptedHelpOffer } from "./SingleAcceptedHelpOffer";
+import { SingleMyHelpRequest } from "./SingleMyHelpRequest";
 
 export const MyHelpRequestsList = () => {
   const { t } = useTranslation();
@@ -121,7 +121,7 @@ export const MyHelpRequestsList = () => {
                 <p className="text-center font-medium">{t("no-needs-found")}</p>
               ) : (
                 searchOffers.map((offer: OfferProps) => (
-                  <SingleAcceptedHelpOffer
+                  <SingleMyHelpRequest
                     key={offer.id}
                     {...offer}
                     users={users}

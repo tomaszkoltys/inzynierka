@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 console.clear();
 
-export const SingleOffer = ({
+export const SingleHelpOffer = ({
   id,
   author,
   type,

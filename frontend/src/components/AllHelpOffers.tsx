@@ -1,6 +1,6 @@
 import { Dropdown } from "./Dropdown.tsx";
 import { AiOutlineSearch } from "react-icons/ai";
-import { SingleOffer } from "./SingleOffer.tsx";
+import { SingleHelpOffer } from "./SingleHelpOffer.tsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
@@ -237,7 +237,7 @@ export const CurrentHelps = () => {
                 <p className="text-center font-medium">{t("no-needs-found")}</p>
               ) : (
                 searchOffers.map((offer: OfferProps) => (
-                  <SingleOffer
+                  <SingleHelpOffer
                     key={offer.id}
                     {...offer}
                     users={users}

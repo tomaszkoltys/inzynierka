@@ -44,13 +44,16 @@ public class ReviewController {
         return reviewRepository.findByHelpId(help_id).orElse(null);
     }
 
-    @GetMapping(value = "/averagerating")
-    public @ResponseBody Float getAverageRating(@RequestParam int user_id) {
+    @GetMapping(value = "/percentageofrecommendations")
+    public @ResponseBody Float getPercentageOfRecommendations(@RequestParam int user_id) {
         List<Review> reviewList = reviewRepository.findAllByUserId(user_id);
-        var sum = reviewList.stream().map(review -> review.getReview_value())
-                .reduce(0, (subtotal, element) -> subtotal + element);
-
-        return (float) sum / reviewList.size();
+        if (reviewList.isEmpty()) {
+            return 0.0f;
+        }
+        var sum = reviewList.stream()
+                .mapToInt(Review::getReview_value)
+                .sum();
+        return ((float) sum / reviewList.size()) * 100;
     }
 
 }
