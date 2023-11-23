@@ -23,12 +23,79 @@ export const SingleAcceptedHelpOffer = ({
   const typeName = helpType ? helpType.namePL : "Nieznany typ pomocy";
   const helpStat = statuses.find((helpStat) => helpStat.id === helpStatus);
   const statusName = helpStat ? helpStat.name : "Nieznany status";
-
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
   const [recommendationPercentage, setRecommendationPercentage] = useState(0);
+  const [positiveReviewCount, setPositiveReviewCount] = useState(0);
+  const [negativeReviewCount, setNegativeReviewCount] = useState(0);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://localhost:8080/api/v1/review/percentageofrecommendations?user_id=${author}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+      },
+    })
+      .then((response) => {
+        setRecommendationPercentage(response.data || 0);
+      })
+      .catch((error) => {
+        console.error("Error fetching recommendation percentage:", error);
+      });
+
+    axios({
+      method: "get",
+      url: `http://localhost:8080/api/v1/review/findreview?help_id=${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+      },
+    })
+      .then((response) => {
+        const review = response.data;
+        if (review) {
+          setLiked(review.review_value === 1);
+          setDisliked(review.review_value === 0);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching review:", error);
+      });
+
+    axios({
+      method: "get",
+      url: `http://localhost:8080/api/v1/review/positiveReviewCount?user_id=${author}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+      },
+    })
+      .then((response) => {
+        setPositiveReviewCount(response.data || 0);
+      })
+      .catch((error) => {
+        console.error("Error fetching positive review count:", error);
+      });
+
+    axios({
+      method: "get",
+      url: `http://localhost:8080/api/v1/review/negativeReviewCount?user_id=${author}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+      },
+    })
+      .then((response) => {
+        setNegativeReviewCount(response.data || 0);
+      })
+      .catch((error) => {
+        console.error("Error fetching negative review count:", error);
+      });
+  }, []);
 
   const handleLike = () => {
     if (!liked) {
@@ -86,24 +153,6 @@ export const SingleAcceptedHelpOffer = ({
     }
   };
 
-  useEffect(() => {
-    // Pobierz procent poleceń z backendu
-    axios({
-      method: "get",
-      url: `http://localhost:8080/api/v1/review/percentageofrecommendations?user_id=${author}`,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
-      },
-    })
-      .then((response) => {
-        setRecommendationPercentage(response.data || 0);
-      })
-      .catch((error) => {
-        console.error("Error fetching recommendation percentage:", error);
-      });
-  }, []); // Pobierz tylko raz przy załadowaniu komponentu
-
   return (
     <div className="flex flex-col bg-yellow-light border border-yellow-light text-[#fff]">
       <div className="flex h-48">
@@ -132,13 +181,12 @@ export const SingleAcceptedHelpOffer = ({
             <button onClick={handleLike} className="text-green-500">
               {liked ? <AiFillLike /> : <AiOutlineLike />}
             </button>
-            <span>{likes}</span>
+            <span>{positiveReviewCount}</span>
             <button onClick={handleDislike} className="text-red-500">
               {disliked ? <AiFillDislike /> : <AiOutlineDislike />}
             </button>
-            <span>{dislikes}</span>
+            <span>{negativeReviewCount}</span>
             <AiOutlinePercentage className="text-gray-500" />
-            {/* Wyświetl procent poleceń zamiast stałego tekstu */}
             <span>{recommendationPercentage}%</span>
           </div>
         </div>

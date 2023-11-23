@@ -25,7 +25,6 @@ export const SingleMyHelpRequest = ({
   const typeName = helpType ? helpType.namePL : "Nieznany typ pomocy";
   const helpStat = statuses.find((helpStat) => helpStat.id === helpStatus);
   const statusName = helpStat ? helpStat.name : "Nieznany status";
-
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [liked, setLiked] = useState(false);
@@ -91,7 +90,6 @@ export const SingleMyHelpRequest = ({
   };
 
   useEffect(() => {
-    // Pobierz procent poleceń, liczbę pozytywnych i negatywnych ocen z backendu
     axios({
       method: "get",
       url: `http://localhost:8080/api/v1/review/percentageofrecommendations?user_id=${supporter}`,
@@ -105,6 +103,25 @@ export const SingleMyHelpRequest = ({
       })
       .catch((error) => {
         console.error("Error fetching recommendation percentage:", error);
+      });
+
+    axios({
+      method: "get",
+      url: `http://localhost:8080/api/v1/review/findreview?help_id=${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+      },
+    })
+      .then((response) => {
+        const review = response.data;
+        if (review) {
+          setLiked(review.review_value === 1);
+          setDisliked(review.review_value === 0);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching review:", error);
       });
 
     axios({
@@ -137,7 +154,7 @@ export const SingleMyHelpRequest = ({
       .catch((error) => {
         console.error("Error fetching negative review count:", error);
       });
-  }, [supporter]); // Pobierz dane przy załadowaniu komponentu i przy zmianie supporterUser
+  }, [supporter]);
 
   return (
     <div className="flex flex-col bg-yellow-light border border-yellow-light text-[#fff]">

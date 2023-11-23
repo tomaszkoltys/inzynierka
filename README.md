@@ -21,7 +21,7 @@ II. Frontend
 - [ ] Zaakceptowane oferty pomocy
   - [x] Dodawanie like'ow/dislike'ow do bazy
   - [x] Wyświetlanie procentu poleceń
-  - [ ] Wyświetlanie liczby pozytywnych/negatywnych ocen
+  - [x] Wyświetlanie liczby pozytywnych/negatywnych ocen
 - [x] Moje prośby o pomoc
   - [x] Dodawanie like'ow/dislike'ow do bazy
   - [x] Wyświetlanie procentu poleceń

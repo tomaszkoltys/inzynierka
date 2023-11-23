@@ -53,7 +53,8 @@ public class ReviewController {
         var sum = reviewList.stream()
                 .mapToInt(Review::getReview_value)
                 .sum();
-        return ((float) sum / reviewList.size()) * 100;
+        float percentage = ((float) sum / reviewList.size()) * 100;
+        return Math.round(percentage * 100.0) / 100.0f; //
     }
 
     @GetMapping(value = "/positiveReviewCount")
