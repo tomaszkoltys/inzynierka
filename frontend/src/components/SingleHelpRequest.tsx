@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaHandsHelping } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { t } from "i18next";
 
 console.clear();
 
@@ -67,7 +68,7 @@ export const SingleHelpRequest = ({
   const currentUserRole = sessionStorage.getItem('user-role');
 
   const buttonText =
-    currentUserRole === "ROLE_VOLUNTEER" ? "Udziel pomocy" :
+    currentUserRole === "ROLE_VOLUNTEER" ? <div>{t("provide-help")}</div> :
     currentUserRole === "ROLE_REFUGEE" ? "Przyjmij pomoc" :
     "";
 
