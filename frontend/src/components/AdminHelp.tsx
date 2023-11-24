@@ -69,7 +69,7 @@ export const AdminHelpList = () => {
       url: 'http://localhost:8080/api/v1/help/allhelps',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
     .then((response) => setHelps(response.data))
@@ -82,7 +82,7 @@ export const AdminHelpList = () => {
       url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
     .then((response) => setHelpTypes(response.data))
@@ -95,7 +95,7 @@ export const AdminHelpList = () => {
         url: 'http://localhost:8080/api/v1/user/allusers',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
       })
       .then((response) => setUsers(response.data))
@@ -108,7 +108,7 @@ export const AdminHelpList = () => {
         url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
       })
       .then((response) => setVoivodeships(response.data))
@@ -121,7 +121,7 @@ export const AdminHelpList = () => {
         url: 'http://localhost:8080/api/v1/county/allcounties',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
       })
       .then((response) => setAllCounties(response.data))
@@ -148,7 +148,7 @@ export const AdminHelpList = () => {
         url: `http://localhost:8080/api/v1/county/countiesbyvoivodeship?currentVoivodeship=${selectedVoivodeshipId}`,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
       })
       .then((response) => setCounties(response.data))

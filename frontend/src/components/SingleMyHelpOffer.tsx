@@ -48,7 +48,7 @@ export const SingleMyHelpOffer = ({
       url: `http://localhost:8080/api/v1/help/updatehelpstatus?helpId=${id}&help_status=${selectedStatusTypeId}`,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => {

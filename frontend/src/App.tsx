@@ -20,28 +20,41 @@ import { AdminHelp } from "./pages/AdminHelp";
 import  AdminUser  from "./components/AdminUser";
 
 function App() {
+  const currentUser_role = localStorage.getItem('user-role')
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Login />} />
+      {currentUser_role === 'ROLE_VOLUNTEER' ? <Route path="/" element={<Main />} /> : currentUser_role === 'ROLE_REFUGEE' ? <Route path="/" element={<AllHelps />} /> : currentUser_role === 'ROLE_ADMIN' ? <Route path="/" element={<AdminHelp />} /> : <Route path="/" element={<Login />} />}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/remind" element={<Remind />} />
         <Route path="/change_password" element={<ChangePassword />} />
-        <Route path="/add_help_offer" element={<AddOffer />} />
-        <Route path="/add_help_request" element={<AddHelpRequest />} />
-        <Route path="/all_help_requests" element={<Main />} />
-        <Route path="/all_help_offers" element={<AllHelps />} />
-        <Route path="/my_help_offers" element={<MyHelpOffers />} />
-        <Route path="/accepted_help_requests" element={<AcceptedHelpRequests />} /> 
-        <Route path="/accepted_help_offers" element={<AcceptedHelpOffers />} /> 
-        <Route path="/my_help_requests" element={<MyHelpRequests />} />
+        {currentUser_role === 'ROLE_VOLUNTEER' && (
+          <>
+            <Route path="/add_help_offer" element={<AddOffer />} />
+            <Route path="/all_help_requests" element={<Main />} />
+            <Route path="/my_help_offers" element={<MyHelpOffers />} />
+            <Route path="/accepted_help_requests" element={<AcceptedHelpRequests />} />
+          </>
+      )}
+      {currentUser_role === 'ROLE_REFUGEE' && (
+          <>
+            <Route path="/add_help_request" element={<AddHelpRequest />} />
+            <Route path="/all_help_offers" element={<AllHelps />} /> 
+            <Route path="/accepted_help_offers" element={<AcceptedHelpOffers />} /> 
+            <Route path="/my_help_requests" element={<MyHelpRequests />} />
+          </>
+      )}
+      {currentUser_role === 'ROLE_ADMIN' && (
+        <>
+          <Route path="/admin_help" element={<AdminHelp />} />
+          <Route path="/admin_user" element={<AdminUser />} />
+        </>
+      )}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/admin_help" element={<AdminHelp />} />
-        <Route path="/admin_user" element={<AdminUser />} />
       </Routes>
       <Footer />
     </>

@@ -22,10 +22,10 @@ export const SingleHelpRequest = ({
   const handleAcceptClick = async () => {
     axios({
       method: 'put',
-      url: `http://localhost:8080/api/v1/help/accepthelp?id=${id}&supporter=${sessionStorage.getItem('user-id')}`,
+      url: `http://localhost:8080/api/v1/help/accepthelp?id=${id}&supporter=${localStorage.getItem('user-id')}`,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
     .then((response) => {
@@ -65,7 +65,7 @@ export const SingleHelpRequest = ({
 
   const helpType = helpTypes.find((helpType) => helpType.id === type);
   const typeName = helpType ? helpType.namePL : "Nieznany typ pomocy";
-  const currentUserRole = sessionStorage.getItem('user-role');
+  const currentUserRole = localStorage.getItem('user-role');
 
   const buttonText =
     currentUserRole === "ROLE_VOLUNTEER" ? <div>{t("provide-help")}</div> :

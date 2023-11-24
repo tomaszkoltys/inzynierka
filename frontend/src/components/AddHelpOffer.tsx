@@ -38,7 +38,7 @@ export const AddOfferForm = () => {
       url: 'http://localhost:8080/api/v1/help/allhelps',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => setHelps(response.data))
@@ -51,7 +51,7 @@ export const AddOfferForm = () => {
       url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => setHelpTypes(response.data))
@@ -64,7 +64,7 @@ export const AddOfferForm = () => {
       url: 'http://localhost:8080/api/v1/user/allusers',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => setUsers(response.data))
@@ -77,7 +77,7 @@ export const AddOfferForm = () => {
       url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => setVoivodeships(response.data))
@@ -98,7 +98,7 @@ export const AddOfferForm = () => {
         url: `http://localhost:8080/api/v1/county/countiesbyvoivodeship?currentVoivodeship=${selectedVoivodeshipId}`,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
       })
         .then((response) => setCounties(response.data))
@@ -127,7 +127,7 @@ export const AddOfferForm = () => {
   };
 
   const handleSubmit = () => {
-    const currentUser_id = sessionStorage.getItem('user-id')
+    const currentUser_id = localStorage.getItem('user-id')
 
     if (!selectedVoivodeshipId || !selectedCountyId || !selectedHelpTypeId || !description) {
       setFormErrors({
@@ -135,7 +135,7 @@ export const AddOfferForm = () => {
         county: !selectedCountyId,
         helpType: !selectedHelpTypeId,
         description: !description})
-        toast.error("Uzupełnij wymagane pola!");
+        toast.error(t('complete-necessary-fields'));
       return;
     }
     else{
@@ -144,12 +144,12 @@ export const AddOfferForm = () => {
         url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo=${imageLink}&side=1&author=${currentUser_id}&type=${selectedHelpTypeId}`,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
       })
         .then((response) => {
           console.log("Odpowiedź od serwera:", response.data);
-          toast.success("Pomyślnie dodano ofertę pomocy!", {
+          toast.success(t('help-offer-successfully-added'), {
             position: toast.POSITION.TOP_CENTER,
           });
           
@@ -184,7 +184,7 @@ export const AddOfferForm = () => {
                 onChange={handleVoivodeshipChange}
                 isError={formErrors.voivodeship}
                 />
-                {formErrors.voivodeship && <p className="text-red-500">Wybierz województwo.</p>}
+                {formErrors.voivodeship && <p className="text-red-500">{t('select-voivodeship')}</p>}
               </div>
               <div className="flex">
               <Dropdown
@@ -194,7 +194,7 @@ export const AddOfferForm = () => {
                 onChange={handleCountyChange}
                 isError={formErrors.county}
                 />
-                {formErrors.county && <p className="text-red-500">Wybierz powiat.</p>}
+                {formErrors.county && <p className="text-red-500">{t('select-county')}</p>}
               </div>
               <div className="flex">
               <Dropdown
@@ -203,7 +203,7 @@ export const AddOfferForm = () => {
                 onChange={handleTypeChange}
                 isError={formErrors.helpType}
                 />
-                {formErrors.helpType && <p className="text-red-500">Wybierz rodzaj pomocy.</p>}
+                {formErrors.helpType && <p className="text-red-500">{t('select-type-help')}</p>}
               </div>
             </div>
             <div className="flex">
@@ -213,7 +213,7 @@ export const AddOfferForm = () => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
-              {formErrors.description && <p className="text-red-500 mt-1">Wpisz opis.</p>}
+              {formErrors.description && <p className="text-red-500 mt-1">{t('enter-description')}</p>}
             </div>
             <div className="flex relative mb-6">
               <div className="flex items-center justify-center w-[80px] h-[80px] bg-gray-300 relative">

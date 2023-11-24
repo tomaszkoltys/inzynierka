@@ -26,16 +26,16 @@ export const Navbar = () => {
 
   const handleLogout = () => {
     // Wyczyszczenie tokena z localStorage
-    sessionStorage.removeItem('jwt-token');
+    localStorage.removeItem('jwt-token');
     localStorage.removeItem('loggedInUser');
-    sessionStorage.removeItem('user-id');
-    sessionStorage.removeItem('user-role');
+    localStorage.removeItem('user-id');
+    localStorage.removeItem('user-role');
     setLoggedInUser(null);
     setLoggedInUserRole(null);
     window.location.href = '/login';
   };
 
-  const currentUser_role = sessionStorage.getItem('user-role')
+  const currentUser_role = localStorage.getItem('user-role')
 
   return (
     <div className="flex justify-between items-center h-24 w-full px-2 sm:px-8 text-black bg-[#fff] border-b border-gray-300 fixed z-30">

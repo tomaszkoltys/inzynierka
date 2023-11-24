@@ -35,7 +35,7 @@ export const SingleAdminHelp = ({
       url: `http://localhost:8080/api/v1/help/updatehelp?id=${id}&type=${updatedType}&description=${updatedDescription}&photo=${updatedPhoto}`,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
     .then((response) => {
@@ -67,7 +67,7 @@ export const SingleAdminHelp = ({
       url: `http://localhost:8080/api/v1/help/deletehelp?id=${id}`,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
     .then((response) => {

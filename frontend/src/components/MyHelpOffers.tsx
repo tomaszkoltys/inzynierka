@@ -41,7 +41,7 @@ export const MyHelpOffersList = () => {
   const [uncompletedOption, setUncompletedOption] = useState<boolean>(false);
   const [completedOption, setCompletedOption] = useState<boolean>(false);
 
-  const currentUser_id = sessionStorage.getItem('user-id')
+  const currentUser_id = localStorage.getItem('user-id')
 
   useEffect(() => {
     axios({
@@ -49,7 +49,7 @@ export const MyHelpOffersList = () => {
       url: `http://localhost:8080/api/v1/help/myhelpoffers?currentUserId=${currentUser_id}`,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => {
@@ -67,7 +67,7 @@ export const MyHelpOffersList = () => {
       url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => setHelpTypes(response.data))
@@ -80,7 +80,7 @@ export const MyHelpOffersList = () => {
       url: 'http://localhost:8080/api/v1/user/allusers',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => setUsers(response.data))
@@ -93,7 +93,7 @@ export const MyHelpOffersList = () => {
       url: 'http://localhost:8080/api/v1/help-status/allhelpstatuses',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => setStatuses(response.data))
@@ -106,7 +106,7 @@ export const MyHelpOffersList = () => {
       url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => setVoivodeships(response.data))
@@ -131,7 +131,7 @@ export const MyHelpOffersList = () => {
         url: `http://localhost:8080/api/v1/county/countiesbyvoivodeship?currentVoivodeship=${selectedVoivodeshipId}`,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
       })
         .then((response) => setCounties(response.data))

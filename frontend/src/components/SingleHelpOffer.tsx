@@ -31,7 +31,7 @@ export const SingleHelpOffer = ({
       url: `http://localhost:8080/api/v1/review/percentageofrecommendations?user_id=${author}`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
       },
     })
       .then((response) => {
@@ -46,7 +46,7 @@ export const SingleHelpOffer = ({
       url: `http://localhost:8080/api/v1/review/findreview?help_id=${id}`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
       },
     })
       .then((response) => {
@@ -65,7 +65,7 @@ export const SingleHelpOffer = ({
       url: `http://localhost:8080/api/v1/review/positiveReviewCount?user_id=${author}`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
       },
     })
       .then((response) => {
@@ -80,7 +80,7 @@ export const SingleHelpOffer = ({
       url: `http://localhost:8080/api/v1/review/negativeReviewCount?user_id=${author}`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
       },
     })
       .then((response) => {
@@ -94,10 +94,10 @@ export const SingleHelpOffer = ({
   const handleAcceptClick = async () => {
     axios({
       method: 'put',
-      url: `http://localhost:8080/api/v1/help/accepthelp?id=${id}&supporter=${sessionStorage.getItem('user-id')}`,
+      url: `http://localhost:8080/api/v1/help/accepthelp?id=${id}&supporter=${localStorage.getItem('user-id')}`,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
     .then((response) => {
@@ -137,7 +137,7 @@ export const SingleHelpOffer = ({
 
   const helpType = helpTypes.find((helpType) => helpType.id === type);
   const typeName = helpType ? helpType.namePL : "Nieznany typ pomocy";
-  const currentUserRole = sessionStorage.getItem('user-role');
+  const currentUserRole = localStorage.getItem('user-role');
 
   const buttonText =
     currentUserRole === "ROLE_VOLUNTEER" ? "Udziel pomocy" :

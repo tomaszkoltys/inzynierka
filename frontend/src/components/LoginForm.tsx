@@ -66,9 +66,9 @@ export const LoginForm = () => {
       setLoggedInUser(data.username); // Ustawia zalogowanego użytkownika
       setLoggedInUserPassword(data.password); // Ustawia haslo użytkownika
       setLoggedInUserRole("vol"); // Ustawia rolę zalogowanego użytkownika
-      sessionStorage.setItem('jwt-token', response.data['jwt-token'])
-      sessionStorage.setItem('user-id', response.data['user-id'])
-      sessionStorage.setItem('user-role', response.data['user-role'])
+      localStorage.setItem('jwt-token', response.data['jwt-token'])
+      localStorage.setItem('user-id', response.data['user-id'])
+      localStorage.setItem('user-role', response.data['user-role'])
       localStorage.setItem('loggedInUser', data.username);
       localStorage.setItem('loggedInUserRole', "vol"); // Zapisuje rolę zalogowanego użytkownika w localStorage
       localStorage.setItem('loggedInUserPassword', data.password); // Zapisuje haslo zalogowanego użytkownika w localStorage
@@ -76,7 +76,7 @@ export const LoginForm = () => {
         position: toast.POSITION.TOP_CENTER,
       }) 
       // Zapisz informacje o zalogowanym użytkowniku w localStorage
-      const currentUser_role = sessionStorage.getItem('user-role')
+      const currentUser_role = localStorage.getItem('user-role')
       //Przekieruj użytkownika na odpowiednią stronę po zalogowaniu
       if(currentUser_role === "ROLE_REFUGEE") navigate('/all_help_offers');
       if(currentUser_role === "ROLE_VOLUNTEER") navigate('/all_help_requests');

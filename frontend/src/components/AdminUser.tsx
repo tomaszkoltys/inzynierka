@@ -41,7 +41,7 @@ const AdminUser = () => {
       url: 'http://localhost:8080/api/v1/user/allusers',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => setUsers(response.data))
@@ -54,7 +54,7 @@ const AdminUser = () => {
         url: 'http://localhost:8080/api/v1/role/alluserroles',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
       })
         .then((response) => setUserRoles(response.data))
@@ -67,7 +67,7 @@ const AdminUser = () => {
           url: 'http://localhost:8080/api/v1/role/allaccountstatuses',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+            'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
           }
         })
           .then((response) => setAccountStatuses(response.data))

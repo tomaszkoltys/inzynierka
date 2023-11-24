@@ -30,7 +30,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
       url: `http://localhost:8080/api/v1/user/edituser?userId=${user.id}&name=${editedUser.name}&surname=${editedUser.surname}&username=${editedUser.username}&email_address=${editedUser.email_address}&identity_number=${editedUser.identity_number}&status=${editedUser.account_status}&accepted=${editedUser.accepted}&role=${editedUser.role}`,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => {
@@ -63,7 +63,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
       url: `http://localhost:8080/api/v1/user/edituser?userId=${user.id}&name=${editedUser.name}&surname=${editedUser.surname}&username=${editedUser.username}&email_address=${editedUser.email_address}&identity_number=${editedUser.identity_number}&status=2&accepted=${editedUser.accepted}&role=${editedUser.role}`,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => {
@@ -89,7 +89,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
       url: `http://localhost:8080/api/v1/user/edituser?userId=${user.id}&name=${editedUser.name}&surname=${editedUser.surname}&username=${editedUser.username}&email_address=${editedUser.email_address}&identity_number=${editedUser.identity_number}&status=1&accepted=${editedUser.accepted}&role=${editedUser.role}`,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => {
@@ -115,7 +115,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
       url: `http://localhost:8080/api/v1/user/deleteuser?userId=${user.id}`,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => {

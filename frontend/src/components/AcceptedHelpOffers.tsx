@@ -65,10 +65,10 @@ export const AcceptedHelpOffersList = () => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/v1/help/acceptedhelpoffers?currentUserId=${sessionStorage.getItem('user-id')}`,
+      url: `http://localhost:8080/api/v1/help/acceptedhelpoffers?currentUserId=${localStorage.getItem('user-id')}`,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
       .then((response) => {
@@ -76,7 +76,7 @@ export const AcceptedHelpOffersList = () => {
       })
       .catch((error) => {
         console.error(
-          `Error fetching acceptedhelpoffers?currentUserId=${sessionStorage.getItem('user-id')}:`,
+          `Error fetching acceptedhelpoffers?currentUserId=${localStorage.getItem('user-id')}:`,
           error
         );
       });
@@ -86,7 +86,7 @@ export const AcceptedHelpOffersList = () => {
         url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
       })
       .then((response) => setHelpTypes(response.data))
@@ -99,7 +99,7 @@ export const AcceptedHelpOffersList = () => {
         url: 'http://localhost:8080/api/v1/help-status/allhelpstatuses',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
       })
       .then((response) => {
@@ -114,7 +114,7 @@ export const AcceptedHelpOffersList = () => {
         url: 'http://localhost:8080/api/v1/user/allusers',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
       })
       .then((response) => setUsers(response.data))

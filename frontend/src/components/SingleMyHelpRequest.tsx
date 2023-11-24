@@ -40,7 +40,7 @@ export const SingleMyHelpRequest = ({
         url: `http://localhost:8080/api/v1/review/addreview?user_id=${supporter}&help_id=${id}&value=1`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
         },
       })
         .then((response) => {
@@ -68,7 +68,7 @@ export const SingleMyHelpRequest = ({
         url: `http://localhost:8080/api/v1/review/addreview?user_id=${supporter}&help_id=${id}&value=0`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
         },
       })
         .then((response) => {
@@ -95,7 +95,7 @@ export const SingleMyHelpRequest = ({
       url: `http://localhost:8080/api/v1/review/percentageofrecommendations?user_id=${supporter}`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
       },
     })
       .then((response) => {
@@ -110,7 +110,7 @@ export const SingleMyHelpRequest = ({
       url: `http://localhost:8080/api/v1/review/findreview?help_id=${id}`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
       },
     })
       .then((response) => {
@@ -129,7 +129,7 @@ export const SingleMyHelpRequest = ({
       url: `http://localhost:8080/api/v1/review/positiveReviewCount?user_id=${supporter}`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
       },
     })
       .then((response) => {
@@ -145,7 +145,7 @@ export const SingleMyHelpRequest = ({
       url: `http://localhost:8080/api/v1/review/negativeReviewCount?user_id=${supporter}`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("jwt-token")}`,
+        Authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
       },
     })
       .then((response) => {
