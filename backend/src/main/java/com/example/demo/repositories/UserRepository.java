@@ -34,6 +34,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Query(value = "select * from user where username = :username", nativeQuery = true)
     Optional<User> findByUsername(String username);
+    @Query(value = "select * from user where email_address = :email_address", nativeQuery = true)
+    Optional<User> findByEmail(String email_address);
 
     @Query(value = "select * from user where id in (select user_id from user_notification_settings where new_help_offers = true)", nativeQuery = true)
     List<User> findAllForNewHelpOffersNotification();
@@ -46,6 +48,9 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Query(value = "select * from user where id in (select user_id from user_notification_settings where accepted_help_requests = true)", nativeQuery = true)
     List<User> findAllForAcceptedHelpRequestsNotification();
+
+    @Query(value = "update user set reset_password_code = :randomCode where id = :userId", nativeQuery = true)
+    int updateRandomCode(int randomCode, int userId);
 
 
 

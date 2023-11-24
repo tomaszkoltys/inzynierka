@@ -34,5 +34,6 @@ public class User {
     private int accepted;
     private float average_rating;
     private int rating_count;
+    private Integer reset_password_code;
 }
 

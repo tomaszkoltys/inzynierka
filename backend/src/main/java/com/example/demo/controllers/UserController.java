@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.entities.User;
 import com.example.demo.helper.SecurityHelper;
 import com.example.demo.repositories.UserRepository;
+import com.example.demo.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.net.http.HttpResponse;
 @RequestMapping("/api/v1/user")
 public class UserController {
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     @PostMapping(value = "/addrating")
     public void addRating(@RequestParam int ratedUserId, @RequestParam int rating){
@@ -115,6 +117,19 @@ public class UserController {
             userRepository.delete(user);
         }
     }
+    @PostMapping(value = "/remindpassword")
+    public void remindPassword(@RequestParam String email_address){
+        notificationService.sendResetPasswordNotification(email_address);
+    }
 
+    @PostMapping(value = "/resetpassword")
+    public void resetPassword(@RequestParam String email_address, @RequestParam int randomCode, @RequestParam String password) throws Exception {
+        var user = userRepository.findByEmail(email_address).orElse(null);
+        if(user == null){
+            throw new Exception("User not found");
+        }else if(user.getReset_password_code()==randomCode){
+            user.setPassword(SecurityHelper.hashPassword(password));
+        }
+    }
 
 }

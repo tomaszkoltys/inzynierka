@@ -1,9 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.BodyDTO;
-import com.example.demo.dto.DataDTO;
-import com.example.demo.dto.EmailDTO;
-import com.example.demo.dto.MessageDTO;
+import com.example.demo.dto.*;
 import com.example.demo.enums.NotificationType;
 import com.example.demo.repositories.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Random;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +42,7 @@ public class NotificationService {
 
         emailList.stream()
                 .map(user -> {
-                    var dataDTO = new DataDTO(user.getName());
+                    var dataDTO = new DataDTO(user.getName(), null);
                     var emailDTO = new EmailDTO(user.getEmail_address());
                     var messageDTO = new MessageDTO(emailDTO, template, dataDTO);
                     return new BodyDTO(messageDTO);
@@ -56,6 +56,30 @@ public class NotificationService {
             }
         });
     }
+
+    public void sendResetPasswordNotification(String email_address){
+        String template = "0A1YB1E9QRMPX2GCQG5YJ9CZMY4F";
+        var user =  userRepository.findByEmail(email_address).orElse(null);
+        var randomCode = new Random().nextInt(900000)+100000;
+        userRepository.updateRandomCode(randomCode, user.getId());
+
+        Stream.of(user)
+                .map(userData -> {
+                    var dataDTO = new DataDTO(userData.getName(), String.valueOf(randomCode));
+                    var emailDTO = new EmailDTO(userData.getEmail_address());
+                    var messageDTO = new MessageDTO(emailDTO, template, dataDTO);
+                    return new BodyDTO(messageDTO);
+                })
+                .toList()
+                .forEach(email -> {
+                    try{
+                        sendEmail(email);
+                    }catch (Exception e){
+
+                    }
+                });
+    }
+
 
     private void sendEmail(BodyDTO bodyDTO) throws JsonProcessingException {
         ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
