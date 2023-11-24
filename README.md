@@ -6,7 +6,7 @@ I. Backend
 II. Frontend
 
 0. Moduły - wolontariusz/uchodźca
-- [ ] Pobieranie lokalizacji i uwzględnienie jej w filtrowaniu ofert/próśb o pomoc
+- [ ] Pobieranie lokalizacji i uwzględnienie jej w filtrowaniu ofert/próśb o pomoc(działa jeśli nazwa zwróconego miasta jest równa nazwie powiatu w bazie)
 
 1. Moduły - wolontariusz
 

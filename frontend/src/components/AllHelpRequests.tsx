@@ -5,6 +5,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
+export type AllCountiesProps = {
+  id: number;
+  name: string;
+  voivodeship: number;
+};
 
 export const CurrentNeeds = () => {
   const { t } = useTranslation();
@@ -15,6 +20,7 @@ export const CurrentNeeds = () => {
   const [users, setUsers] = useState<UserProps[]>([]);
   const [voivodeships, setVoivodeships] = useState<VoivodeshipsProps[]>([]);
   const [counties, setCounties] = useState<CountiesProps[]>([]);
+  const [allCounties, setAllCounties] = useState<AllCountiesProps[]>([]);
   const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(
     null
   );
@@ -23,6 +29,7 @@ export const CurrentNeeds = () => {
   >(null);
   const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
   const [selectedCountyId, setSelectedCountyId] = useState<number | null>(null);
+  const [selectedCountyIdByLocation, setSelectedCountyIdByLocation] = useState<number | null>(null);
   const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(
     null
@@ -50,7 +57,9 @@ export const CurrentNeeds = () => {
       .then((response) => {
         if (response.status === 200) {
           const result = response.data;
-          console.log(result);
+          //takie dane zwraca api na podstawie szerokosci i dlugosci geograficznej
+          console.log(result)
+          //i z tego miasto biore
           setLocation(result.city);
         }
       })
@@ -59,8 +68,10 @@ export const CurrentNeeds = () => {
       });
   };
 
-
   useEffect(() => {
+    if (location !== "") {
+      handleCountyChangeByLocation();
+    }
     axios({
       method: 'get',
       url: 'http://localhost:8080/api/v1/help/allhelprequests',
@@ -112,7 +123,20 @@ export const CurrentNeeds = () => {
       .catch((error) => {
         console.error("Error fetching /allvoivodeships:", error);
       });
-  }, []);
+
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/county/allcounties',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
+      .then((response) => setAllCounties(response.data))
+      .catch((error) => {
+        console.error("Error fetching /allcounties:", error);
+      });
+  }, [location]);
 
   const handleVoivodeshipChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -157,12 +181,18 @@ export const CurrentNeeds = () => {
     setSelectedCountyId(selectedCountyId);
   };
 
+  const handleCountyChangeByLocation = () => {
+     const countyIdByLocation = allCounties.find((county:AllCountiesProps) => county.name === location)?.id || null;
+     setSelectedCountyIdByLocation(countyIdByLocation);
+    }
+
   const searchOffers = helps.filter((offer) => {
     return (
       (search.toLowerCase() === "" ||
         offer.description.toLowerCase().includes(search)) &&
       (selectedHelpType === null || offer.type === selectedHelpTypeId) &&
-      (selectedCounty === null || offer.county === selectedCountyId)
+      (selectedCounty === null || offer.county === selectedCountyId) && 
+      (selectedCountyIdByLocation === null || offer.county === selectedCountyIdByLocation)
     );
   });
 

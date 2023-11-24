@@ -8,6 +8,7 @@ import { AdminHelp } from "../pages/AdminHelp.tsx";
 import { ToastContainer, toast } from "react-toastify";
 import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
 import "react-toastify/dist/ReactToastify.css";
+import { AllCountiesProps } from "./AllHelpRequests.tsx";
 
 export const AdminHelpList = () => {
   const { t } = useTranslation();
@@ -18,10 +19,12 @@ export const AdminHelpList = () => {
   const [users, setUsers] = useState<UserProps[]>([]);
   const [voivodeships, setVoivodeships] = useState<VoivodeshipsProps[]>([]);
   const [counties, setCounties] = useState<CountiesProps[]>([]);
+  const [allCounties, setAllCounties] = useState<AllCountiesProps[]>([]);
   const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(null);
   const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<number | null >(null);
   const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
   const [selectedCountyId, setSelectedCountyId] = useState<number | null>(null);
+  const [selectedCountyIdByLocation, setSelectedCountyIdByLocation] = useState<number | null>(null);
   const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
 
@@ -58,6 +61,9 @@ export const AdminHelpList = () => {
 
 
   useEffect(() => {
+    if (location !== "") {
+      handleCountyChangeByLocation();
+    }
     axios({
       method: 'get',
       url: 'http://localhost:8080/api/v1/help/allhelps',
@@ -109,7 +115,20 @@ export const AdminHelpList = () => {
       .catch((error) => {
         console.error("Error fetching /allvoivodeships:", error);
       });
-  }, []);
+
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/v1/county/allcounties',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('jwt-token')}`
+        }
+      })
+      .then((response) => setAllCounties(response.data))
+      .catch((error) => {
+        console.error("Error fetching /allcounties:", error);
+      });
+  }, [location]);
 
   const handleVoivodeshipChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -155,12 +174,18 @@ export const AdminHelpList = () => {
     setSelectedCountyId(selectedCountyId);
   };
 
+  const handleCountyChangeByLocation = () => {
+    const countyIdByLocation = allCounties.find((county:AllCountiesProps) => county.name === location)?.id || null;
+    setSelectedCountyIdByLocation(countyIdByLocation);
+   }
+   
   const searchOffers = helps.filter((offer) => {
     return (
       (search.toLowerCase() === "" ||
         offer.description.toLowerCase().includes(search)) &&
       (selectedHelpType === null || offer.type === selectedHelpTypeId) &&
-      (selectedCounty === null || offer.county === selectedCountyId)
+      (selectedCounty === null || offer.county === selectedCountyId) && 
+      (selectedCountyIdByLocation === null || offer.county === selectedCountyIdByLocation)
     );
   }
   );

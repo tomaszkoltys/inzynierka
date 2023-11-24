@@ -5,6 +5,7 @@ import { FaHandsHelping } from "react-icons/fa";
 import { AiFillLike, AiFillDislike, AiOutlinePercentage } from "react-icons/ai";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { t } from "i18next";
 
 export const SingleHelpOffer = ({
   id,
@@ -140,7 +141,7 @@ export const SingleHelpOffer = ({
 
   const buttonText =
     currentUserRole === "ROLE_VOLUNTEER" ? "Udziel pomocy" :
-    currentUserRole === "ROLE_REFUGEE" ? "Przyjmij pomoc" :
+    currentUserRole === "ROLE_REFUGEE" ? <div>{t("accept-help")}</div> :
     "";
 
   return (
