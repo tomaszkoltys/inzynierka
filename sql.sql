@@ -231,11 +231,16 @@ CREATE TABLE `user` (
   `accepted` tinyint DEFAULT NULL,
   `rating_count` int DEFAULT NULL,
   `average_rating` int DEFAULT NULL,
+  `reset_password_code` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `role` (`role`),
   KEY `account_status` (`account_status`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`id`),
-  CONSTRAINT `user_ibfk_2` FOREIGN KEY (`account_status`) REFERENCES `account_status` (`id`)
+  CONSTRAINT `user_ibfk_2` FOREIGN KEY (`account_status`) REFERENCES `account_status` (`id`),
+  CONSTRAINT `uq_user_username` UNIQUE (`username`),
+  CONSTRAINT `uq_user_email_adress` UNIQUE (`email_address`),
+  CONSTRAINT `uq_user_identity_number` UNIQUE (`identity_number`),
+  CONSTRAINT `uq_user_reset_password_code` UNIQUE (`reset_password_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
