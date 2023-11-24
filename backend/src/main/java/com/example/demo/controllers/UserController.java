@@ -72,19 +72,25 @@ public class UserController {
                         @RequestParam String email_address, @RequestParam int role,
                         @RequestParam String identity_number){
 
-        User newUser = new User();
-        newUser.setName(name);
-        newUser.setSurname(surname);
-        newUser.setUsername(username);
-        newUser.setPassword(SecurityHelper.hashPassword(password));
-        newUser.setEmail_address(email_address);
-        newUser.setRole(role);
-        newUser.setIdentity_number(identity_number);
-        newUser.setAccount_status(1);
-        newUser.setAccepted(1);
-        newUser.setRating_count(0);
-        newUser.setAverage_rating(0);
-        userRepository.save(newUser);
+        if(userRepository.findByUsername(username).isPresent()) {
+            throw new RuntimeException("Username already taken");
+
+        }else {
+            User newUser = new User();
+            newUser.setName(name);
+            newUser.setSurname(surname);
+            newUser.setUsername(username);
+            newUser.setPassword(SecurityHelper.hashPassword(password));
+            newUser.setEmail_address(email_address);
+            newUser.setRole(role);
+            newUser.setIdentity_number(identity_number);
+            newUser.setAccount_status(1);
+            newUser.setAccepted(1);
+            newUser.setRating_count(0);
+            newUser.setAverage_rating(0);
+            userRepository.save(newUser);
+        }
+
     }
 
     @PostMapping(value = "/editpassword")
@@ -109,5 +115,6 @@ public class UserController {
             userRepository.delete(user);
         }
     }
+
 
 }
