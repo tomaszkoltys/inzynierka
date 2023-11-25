@@ -6,14 +6,15 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
-import groovy.lang.Singleton;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-
+@Service
 public class HelpPhotoService {
+
     public void uploadObject(String projectId, String bucketName, String objectName, byte[] object) throws IOException {
         Credentials credentials = GoogleCredentials
                 .fromStream(new FileInputStream("src/main/resources/application_default_credentials.json"));
