@@ -1,8 +1,10 @@
 package com.example.demo.controllers;
 import com.example.demo.enums.NotificationType;
 import com.example.demo.repositories.UserRepository;
+import com.example.demo.service.HelpPhotoService;
 import com.example.demo.service.NotificationService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import com.example.demo.entities.Help;
@@ -11,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,16 +29,19 @@ public class HelpController {
     private UserRepository userRepository;
     @Autowired
     private NotificationService notificationService;
+    @Autowired
+    private HelpPhotoService helpPhotoService;
 
-    @PostMapping(value = "/addhelp", consumes = {"*/*"})
-    public void addHelp(@RequestParam int county, @RequestParam String description,
-                        @RequestParam String photo, @RequestParam int side,
-                        @RequestParam int author, @RequestParam int type){
+    @PostMapping(value = "/addhelp", headers = ("content-type=multipart/*"), consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void addHelp(@RequestParam("county") int county, @RequestParam("description") String description,
+                        @RequestParam("photo") MultipartFile photo, @RequestParam("side") int side,
+                        @RequestParam("author") int author, @RequestParam("type") int type) throws IOException {
 
+        helpPhotoService.uploadObject("inzynierka", "help-photos", photo.getOriginalFilename(), photo.getBytes());
         Help newHelp = new Help();
         newHelp.setCounty(county);
         newHelp.setDescription(description);
-        newHelp.setPhoto(photo);
+        newHelp.setPhoto(photo.getOriginalFilename());
         newHelp.setSide(side);
         newHelp.setAuthor(author);
         newHelp.setType(type);
