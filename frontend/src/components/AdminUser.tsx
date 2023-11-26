@@ -89,7 +89,7 @@ const AdminUser = () => {
   const filteredUsers = users.filter((user) => {
     return (
       (search.toLowerCase() === "" ||
-        user.name.toLowerCase().includes(search)) &&
+      user.username.toLowerCase().includes(search.toLowerCase())) &&
       (userRolesId === null || user.role === userRolesId)
     );
   });

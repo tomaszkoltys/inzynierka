@@ -109,8 +109,6 @@ export const AddHelpRequestForm = () => {
   };
 
   const handleSubmit = () => {
-    const currentUser_id = localStorage.getItem('user-id')
-
     if (!selectedVoivodeshipId || !selectedCountyId || !selectedHelpTypeId || !description) {
       setFormErrors({
         voivodeship: !selectedVoivodeshipId,
@@ -123,7 +121,7 @@ export const AddHelpRequestForm = () => {
     else{
       axios({
         method: 'post',
-        url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo=${imageLink}&side=2&author=${currentUser_id}&type=${selectedHelpTypeId}`,
+        url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo=${imageLink}&side=2&author=${localStorage.getItem('user-id')}&type=${selectedHelpTypeId}`,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`

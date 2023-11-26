@@ -56,7 +56,7 @@ export const SingleAcceptedHelpRequest = ({
     })
       .then((response) => {
         console.log("Help status updated:", response.data);
-        setStatusName(selected); // Zaktualizuj status po zmianie
+        setStatusName(selected);
       })
       .catch((error) => {
         console.error("Error updating help status:", error);

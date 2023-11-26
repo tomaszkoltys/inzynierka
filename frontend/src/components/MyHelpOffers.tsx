@@ -41,12 +41,10 @@ export const MyHelpOffersList = () => {
   const [uncompletedOption, setUncompletedOption] = useState<boolean>(false);
   const [completedOption, setCompletedOption] = useState<boolean>(false);
 
-  const currentUser_id = localStorage.getItem('user-id')
-
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/v1/help/myhelpoffers?currentUserId=${currentUser_id}`,
+      url: `http://localhost:8080/api/v1/help/myhelpoffers?currentUserId=${localStorage.getItem('user-id')}`,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
@@ -57,7 +55,7 @@ export const MyHelpOffersList = () => {
       })
       .catch((error) => {
         console.error(
-          `Error fetching /myhelpoffers?currentUserId=${currentUser_id}:`,
+          `Error fetching /myhelpoffers?currentUserId=${localStorage.getItem('user-id')}:`,
           error
         );
       });
@@ -167,11 +165,11 @@ export const MyHelpOffersList = () => {
       (inprogressOption === false ||
         uncompletedOption === true ||
         completedOption === true ||
-        offer.helpStatus === 1) &&
+        offer.helpStatus === 2) &&
       (uncompletedOption === false ||
         inprogressOption === true ||
         completedOption === true ||
-        offer.helpStatus === 2) &&
+        offer.helpStatus === 4) &&
         (completedOption === false ||
           inprogressOption === true ||
           uncompletedOption === true ||
