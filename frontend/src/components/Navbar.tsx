@@ -25,7 +25,6 @@ export const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    // Wyczyszczenie tokena z localStorage
     localStorage.removeItem('jwt-token');
     localStorage.removeItem('loggedInUser');
     localStorage.removeItem('user-id');

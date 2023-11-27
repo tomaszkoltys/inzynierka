@@ -4,7 +4,7 @@ import { SingleHelpOffer } from "./SingleHelpOffer.tsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
+import { HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
 import { AllCountiesProps } from "./AllHelpRequests.tsx";
 
 export const CurrentHelps = () => {

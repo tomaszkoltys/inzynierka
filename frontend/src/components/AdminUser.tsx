@@ -95,13 +95,10 @@ const AdminUser = () => {
   });
 
   const handleEditUser = (userId: number) => {
-    // Tutaj można dodać logikę edycji użytkownika
-    // Na przykład otwarcie formularza edycji
     console.log("Edit user with ID:", userId);
   };
 
   const handleBlockUser = (userId: number) => {
-    // Tutaj można dodać logikę blokowania użytkownika
     console.log("Block user with ID:", userId);
   };
 
@@ -147,7 +144,6 @@ const AdminUser = () => {
             </div>
           )}
           <div className="border-t border-gray-300">
-            {/* Wyświetl użytkowników w tabeli */}
             <table className="w-full">
               <thead>
                 <tr>

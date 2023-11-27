@@ -4,7 +4,7 @@ import "/dist/assets/index-d018f553.css";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { AiOutlineEdit, AiOutlineBlock, AiOutlineCheckCircle, AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineCheckCircle, AiOutlineDelete } from "react-icons/ai";
 import { TbLock, TbLockOpen } from "react-icons/tb";
 
 type AdminSingleUserProps = {
@@ -42,7 +42,6 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
       })
       .catch((error) => {
         console.error("Error saving user:", error);
-        // Obsłuż błąd zapisu
         console.error(error);
         toast.error("Błąd podczas aktualizowania użytkownika!", {
           position: toast.POSITION.TOP_CENTER,
@@ -51,7 +50,6 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
   };
 
   const handleCancel = () => {
-    // Anuluj edycję i przywróć oryginalne dane użytkownika
     setEditedUser({ ...user });
     setIsEditing(false);
   };

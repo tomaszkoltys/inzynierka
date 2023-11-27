@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineSearch } from "react-icons/ai";
-import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
+import { StatusProps, HelpTypeProps, OfferProps, UserProps } from "./Help";
 import { SingleMyHelpRequest } from "./SingleMyHelpRequest";
 
 export const MyHelpRequestsList = () => {
@@ -12,20 +12,6 @@ export const MyHelpRequestsList = () => {
   const [helpTypes, setHelpTypes] = useState<HelpTypeProps[]>([]);
   const [statuses, setStatuses] = useState<StatusProps[]>([]);
   const [users, setUsers] = useState<UserProps[]>([]);
-  const [voivodeships, setVoivodeships] = useState<VoivodeshipsProps[]>([]);
-  const [counties, setCounties] = useState<CountiesProps[]>([]);
-  const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(
-    null
-  );
-  const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<
-    number | null
-  >(null);
-  const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
-  const [selectedCountyId, setSelectedCountyId] = useState<number | null>(null);
-  const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
-  const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(
-    null
-  );
 
   useEffect(() => {
     axios({
@@ -41,7 +27,7 @@ export const MyHelpRequestsList = () => {
       })
       .catch((error) => {
         console.error(
-          `Error fetching acceptedhelpoffers?currentUserId=${localStorage.getItem('user-id')}:`,
+          `Error fetching myrequests?currentUserId=${localStorage.getItem('user-id')}:`,
           error
         );
       });

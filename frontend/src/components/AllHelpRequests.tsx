@@ -4,7 +4,7 @@ import { SingleHelpRequest } from "./SingleHelpRequest";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
+import { HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
 export type AllCountiesProps = {
   id: number;
   name: string;

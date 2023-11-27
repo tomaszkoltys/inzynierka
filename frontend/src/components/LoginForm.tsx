@@ -1,4 +1,4 @@
-import { Link, Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { z, ZodType } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -63,21 +63,19 @@ export const LoginForm = () => {
           'Content-Type': "application/json"
         }
       })
-      setLoggedInUser(data.username); // Ustawia zalogowanego użytkownika
-      setLoggedInUserPassword(data.password); // Ustawia haslo użytkownika
-      setLoggedInUserRole("vol"); // Ustawia rolę zalogowanego użytkownika
+      setLoggedInUser(data.username);
+      setLoggedInUserPassword(data.password);
+      setLoggedInUserRole("vol");
       localStorage.setItem('jwt-token', response.data['jwt-token'])
       localStorage.setItem('user-id', response.data['user-id'])
       localStorage.setItem('user-role', response.data['user-role'])
       localStorage.setItem('loggedInUser', data.username);
-      localStorage.setItem('loggedInUserRole', "vol"); // Zapisuje rolę zalogowanego użytkownika w localStorage
-      localStorage.setItem('loggedInUserPassword', data.password); // Zapisuje haslo zalogowanego użytkownika w localStorage
+      localStorage.setItem('loggedInUserRole', "vol");
+      localStorage.setItem('loggedInUserPassword', data.password);
       toast.success("Pomyślnie zalogowano!", {
         position: toast.POSITION.TOP_CENTER,
       }) 
-      // Zapisz informacje o zalogowanym użytkowniku w localStorage
       const currentUser_role = localStorage.getItem('user-role')
-      //Przekieruj użytkownika na odpowiednią stronę po zalogowaniu
       if(currentUser_role === "ROLE_REFUGEE") navigate('/all_help_offers');
       if(currentUser_role === "ROLE_VOLUNTEER") navigate('/all_help_requests');
       if(currentUser_role === "ROLE_ADMIN") navigate('/admin_help');

@@ -3,17 +3,13 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { OfferProps, UserProps, HelpTypeProps, VoivodeshipsProps, CountiesProps } from "./Help";
+import { HelpTypeProps, VoivodeshipsProps, CountiesProps } from "./Help";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const AddOfferForm = () => {
   const { t } = useTranslation();
-  const [location, setLocation] = useState<string>("");
-  const [search, setSearch] = useState<string>("");
-  const [helps, setHelps] = useState<OfferProps[]>([]);
   const [helpTypes, setHelpTypes] = useState<HelpTypeProps[]>([]);
-  const [users, setUsers] = useState<UserProps[]>([]);
   const [voivodeships, setVoivodeships] = useState<VoivodeshipsProps[]>([]);
   const [counties, setCounties] = useState<CountiesProps[]>([]);
   const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(null);
@@ -35,19 +31,6 @@ export const AddOfferForm = () => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: 'http://localhost:8080/api/v1/help/allhelps',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-      }
-    })
-      .then((response) => setHelps(response.data))
-      .catch((error) => {
-        console.error("Error fetching /allhelps:", error);
-      });
-
-    axios({
-      method: 'get',
       url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
       headers: {
         'Content-Type': 'application/json',
@@ -58,20 +41,7 @@ export const AddOfferForm = () => {
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
       });
-
-    axios({
-      method: 'get',
-      url: 'http://localhost:8080/api/v1/user/allusers',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-      }
-    })
-      .then((response) => setUsers(response.data))
-      .catch((error) => {
-        console.error("Error fetching /allusers:", error);
-      });
-
+      
     axios({
       method: 'get',
       url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',

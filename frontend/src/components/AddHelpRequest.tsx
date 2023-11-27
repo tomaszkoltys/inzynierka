@@ -3,14 +3,13 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { OfferProps, UserProps, HelpTypeProps, VoivodeshipsProps, CountiesProps } from "./Help";
+import { HelpTypeProps, VoivodeshipsProps, CountiesProps } from "./Help";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const AddHelpRequestForm = () => {
   const { t } = useTranslation();
   const [helpTypes, setHelpTypes] = useState<HelpTypeProps[]>([]);
-  const [users, setUsers] = useState<UserProps[]>([]);
   const [counties, setCounties] = useState<CountiesProps[]>([]);
   const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
   const [selectedCountyId, setSelectedCountyId] = useState<number | null>(null);
@@ -41,18 +40,6 @@ export const AddHelpRequestForm = () => {
       .then((response) => setHelpTypes(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
-      });
-    axios({
-      method: 'get',
-      url: 'http://localhost:8080/api/v1/user/allusers',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-      }
-    })
-      .then((response) => setUsers(response.data))
-      .catch((error) => {
-        console.error("Error fetching /allusers:", error);
       });
     axios({
       method: 'get',

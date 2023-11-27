@@ -4,9 +4,8 @@ import { SingleAdminHelp } from "./SingleAdminHelp.tsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { AdminHelp } from "../pages/AdminHelp.tsx";
 import { ToastContainer, toast } from "react-toastify";
-import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
+import { HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
 import "react-toastify/dist/ReactToastify.css";
 import { AllCountiesProps } from "./AllHelpRequests.tsx";
 
@@ -28,36 +27,6 @@ export const AdminHelpList = () => {
   const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
 
-  const userCoordinates = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const bdcAPI = `https://api-bdc.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`;
-          getAPI(bdcAPI);
-        },
-        (err) => {
-          alert(err.message);
-        }
-      );
-    } else {
-      alert("Geolocation is not supported by this browser");
-    }
-  };
-
-  const getAPI = (bdcAPI: string) => {
-    axios
-      .get(bdcAPI)
-      .then((response) => {
-        if (response.status === 200) {
-          const result = response.data;
-          console.log(response);
-          setLocation(result.city);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
 
   useEffect(() => {
     if (location !== "") {
