@@ -38,10 +38,10 @@ export const AddHelpRequestForm = () => {
         'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
-    .then((response) => setHelpTypes(response.data))
-    .catch((error) => {
-      console.error("Error fetching /allhelptypes:", error);
-    });
+      .then((response) => setHelpTypes(response.data))
+      .catch((error) => {
+        console.error("Error fetching /allhelptypes:", error);
+      });
     axios({
       method: 'get',
       url: 'http://localhost:8080/api/v1/user/allusers',
@@ -54,14 +54,14 @@ export const AddHelpRequestForm = () => {
       .catch((error) => {
         console.error("Error fetching /allusers:", error);
       });
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setVoivodeships(response.data))
       .catch((error) => {
         console.error("Error fetching /allvoivodeships:", error);
@@ -114,11 +114,12 @@ export const AddHelpRequestForm = () => {
         voivodeship: !selectedVoivodeshipId,
         county: !selectedCountyId,
         helpType: !selectedHelpTypeId,
-        description: !description})
-        toast.error(t('complete-necessary-fields'));
+        description: !description
+      })
+      toast.error(t('complete-necessary-fields'));
       return;
     }
-    else{
+    else {
       axios({
         method: 'post',
         url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo=${imageLink}&side=2&author=${localStorage.getItem('user-id')}&type=${selectedHelpTypeId}`,
@@ -162,8 +163,8 @@ export const AddHelpRequestForm = () => {
                   options={voivodeships.map((voivodeship) => ({ value: voivodeship.name }))}
                   onChange={handleVoivodeshipChange}
                   isError={formErrors.voivodeship}
-                  />
-                  {formErrors.voivodeship && <p className="text-red-500">{t('select-voivodeship')}</p>}
+                />
+                {formErrors.voivodeship && <p className="text-red-500">{t('select-voivodeship')}</p>}
               </div>
               <div className="flex">
                 <Dropdown
@@ -172,8 +173,8 @@ export const AddHelpRequestForm = () => {
                   disabled={!selectedVoivodeship}
                   onChange={handleCountyChange}
                   isError={formErrors.county}
-                  />
-                  {formErrors.county && <p className="text-red-500">{t('select-county')}</p>}
+                />
+                {formErrors.county && <p className="text-red-500">{t('select-county')}</p>}
               </div>
               <div className="flex">
                 <Dropdown
@@ -181,8 +182,8 @@ export const AddHelpRequestForm = () => {
                   options={helpTypes.map((helpType) => ({ value: helpType.namePL }))}
                   onChange={handleTypeChange}
                   isError={formErrors.helpType}
-                  />
-                  {formErrors.helpType && <p className="text-red-500">{t('select-type-help')}</p>}
+                />
+                {formErrors.helpType && <p className="text-red-500">{t('select-type-help')}</p>}
               </div>
             </div>
             <div className="flex">
@@ -194,9 +195,9 @@ export const AddHelpRequestForm = () => {
               />
               {formErrors.description && <p className="text-red-500 mt-1">{t('enter-description')}</p>}
             </div>
-            <div className="flex relative mb-6">
-              <div className="flex items-center justify-center w-[80px] h-[80px] bg-gray-300 relative">
-              <input
+            <div className="flex relative">
+              <div className="flex items-center justify-center w-[80px] h-[80px] bg-gray-300 relative my-6">
+                <input
                   type="file"
                   accept="image/*"
                   className="absolute opacity-0 left-0 w-full h-full"
@@ -210,11 +211,11 @@ export const AddHelpRequestForm = () => {
                 />
                 <AiOutlinePlus color="#fff" size={25} />
               </div>
-              <div className="inline py-2 px-2">
+              <div className="inline py-2 px-2 my-6">
                 <p className="text-gray-300">{t("add-photos")}</p>
               </div>
             </div>
-            <div className="flex flex-col mb-8 md:w-[40%]">
+            <div className="flex flex-col md:w-[40%]">
               <input
                 type="text"
                 placeholder={t("image-link")}
@@ -223,12 +224,13 @@ export const AddHelpRequestForm = () => {
                 onChange={handleImageLinkChange}
               />
             </div>
-            <input
-              type="submit"
-              className="flex items-center justify-center py-2 px-2 bg-yellow-default rounded-md text-xl text-[#fff] hover:cursor-pointer hover:bg-yellow-light addOffer__btn w-full md:w-[40%]"
-              value={t('add-request')}
-              onClick={handleSubmit}
-            />
+            <div className="flex items-center justify-center my-6 py-2 px-2 bg-yellow-default rounded-md text-xl text-[#fff] hover:cursor-pointer hover:bg-yellow-light addOffer__btn w-full md:w-[40%]">
+              <input
+                type="submit"
+                value={t('add-request')}
+                onClick={handleSubmit}
+              />
+            </div>
           </div>
         </div>
       </div>

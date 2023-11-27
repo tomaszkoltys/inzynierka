@@ -132,11 +132,12 @@ export const AddOfferForm = () => {
         voivodeship: !selectedVoivodeshipId,
         county: !selectedCountyId,
         helpType: !selectedHelpTypeId,
-        description: !description})
-        toast.error(t('complete-necessary-fields'));
+        description: !description
+      })
+      toast.error(t('complete-necessary-fields'));
       return;
     }
-    else{
+    else {
       axios({
         method: 'post',
         url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo=${imageLink}&side=1&author=${localStorage.getItem('user-id')}&type=${selectedHelpTypeId}`,
@@ -150,7 +151,7 @@ export const AddOfferForm = () => {
           toast.success(t('help-offer-successfully-added'), {
             position: toast.POSITION.TOP_CENTER,
           });
-          
+
           setFormErrors({
             voivodeship: false,
             county: false,
@@ -176,30 +177,30 @@ export const AddOfferForm = () => {
           <div className="flex flex-col mb-6">
             <div className="flex flex-col mt-8 mb-6 gap-6">
               <div className="flex">
-              <Dropdown
-                label={t("choose-voivodeship")}
-                options={voivodeships.map((voivodeship) => ({ value: voivodeship.name }))}
-                onChange={handleVoivodeshipChange}
-                isError={formErrors.voivodeship}
+                <Dropdown
+                  label={t("choose-voivodeship")}
+                  options={voivodeships.map((voivodeship) => ({ value: voivodeship.name }))}
+                  onChange={handleVoivodeshipChange}
+                  isError={formErrors.voivodeship}
                 />
                 {formErrors.voivodeship && <p className="text-red-500">{t('select-voivodeship')}</p>}
               </div>
               <div className="flex">
-              <Dropdown
-                label={t("choose-county")}
-                options={counties.map((county) => ({ value: county.name }))}
-                disabled={!selectedVoivodeship}
-                onChange={handleCountyChange}
-                isError={formErrors.county}
+                <Dropdown
+                  label={t("choose-county")}
+                  options={counties.map((county) => ({ value: county.name }))}
+                  disabled={!selectedVoivodeship}
+                  onChange={handleCountyChange}
+                  isError={formErrors.county}
                 />
                 {formErrors.county && <p className="text-red-500">{t('select-county')}</p>}
               </div>
               <div className="flex">
-              <Dropdown
-                label={t("choose-type-of-help")}
-                options={helpTypes.map((helpType) => ({ value: helpType.namePL }))}
-                onChange={handleTypeChange}
-                isError={formErrors.helpType}
+                <Dropdown
+                  label={t("choose-type-of-help")}
+                  options={helpTypes.map((helpType) => ({ value: helpType.namePL }))}
+                  onChange={handleTypeChange}
+                  isError={formErrors.helpType}
                 />
                 {formErrors.helpType && <p className="text-red-500">{t('select-type-help')}</p>}
               </div>
@@ -213,8 +214,8 @@ export const AddOfferForm = () => {
               />
               {formErrors.description && <p className="text-red-500 mt-1">{t('enter-description')}</p>}
             </div>
-            <div className="flex relative mb-6">
-              <div className="flex items-center justify-center w-[80px] h-[80px] bg-gray-300 relative">
+            <div className="flex relative">
+            <div className="flex items-center justify-center w-[80px] h-[80px] bg-gray-300 relative my-6">
                 <input
                   type="file"
                   accept="image/*"
@@ -229,11 +230,11 @@ export const AddOfferForm = () => {
                 />
                 <AiOutlinePlus color="#fff" size={25} />
               </div>
-              <div className="inline py-2 px-2">
+              <div className="inline py-2 px-2 my-6">
                 <p className="text-gray-300">{t("add-photos")}</p>
               </div>
             </div>
-            <div className="flex flex-col mb-8 md:w-[40%]">
+            <div className="flex flex-col md:w-[40%]">
               <input
                 type="text"
                 placeholder={t("image-link")}
@@ -242,12 +243,13 @@ export const AddOfferForm = () => {
                 onChange={handleImageLinkChange}
               />
             </div>
-            <input
-              type="submit"
-              className="flex items-center justify-center py-2 px-2 bg-yellow-default rounded-md text-xl text-[#fff] hover:cursor-pointer hover:bg-yellow-light addOffer__btn w-full md:w-[40%]"
-              value={t('add-help-offer')}
-              onClick={handleSubmit}
-            />
+            <div className="flex items-center justify-center my-6 py-2 px-2 bg-yellow-default rounded-md text-xl text-[#fff] hover:cursor-pointer hover:bg-yellow-light addOffer__btn w-full md:w-[40%]">
+              <input
+                type="submit"
+                value={t('add-help-offer')}
+                onClick={handleSubmit}
+              />
+            </div>
           </div>
         </div>
       </div>
