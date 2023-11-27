@@ -78,7 +78,7 @@ export const SettingsWindowVol = () => {
   return (
     <div className="">
       <div className="flex items-center justify-center">
-        <div className="w-full md:w-[50%] h-form flex flex-col min-h-[600px] bg-[#fff]">
+        <div className="w-full md:w-[50%] h-form flex flex-col min-h bg-[#fff]">
           <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
             <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-3%]">
               {t("settings")}

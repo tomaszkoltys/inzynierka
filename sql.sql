@@ -1,6 +1,8 @@
+CREATE DATABASE  IF NOT EXISTS `inzynierka` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `inzynierka`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: inzynierka
+-- Host: localhost    Database: inzynierka
 -- ------------------------------------------------------
 -- Server version	8.0.34
 
@@ -104,7 +106,7 @@ CREATE TABLE `help` (
 
 LOCK TABLES `help` WRITE;
 /*!40000 ALTER TABLE `help` DISABLE KEYS */;
-INSERT INTO `help` VALUES (50,34,37,1,2,'I need a room for three nights.','https://i.imgur.com/yV5OQht.jpg',2,2),(51,35,NULL,54,4,'Potrzebuję leki przeciwbólowe dla syna.','https://i.imgur.com/yaXNpE6.jpg',2,1),(52,36,NULL,138,1,'I will accept any pasta!','https://i.imgur.com/vU2ajjQ.jpg',2,2),(53,37,36,1,4,'Oddam leki przeciwzapalne widoczne na zdjęciu.','https://images.pexels.com/photos/161449/medical-tablets-pills-drug-161449.jpeg?auto=compress',1,2),(54,38,36,54,3,'I will give away clothes for an adult.','https://images.pexels.com/photos/3735641/pexels-photo-3735641.jpeg?auto=compress',1,2),(55,39,36,138,5,'I offer help in organizing a visit to a psychologist.','https://images.pexels.com/photos/161449/medical-tablets-pills-drug-161449.jpeg?auto=compress',1,2),(56,37,NULL,142,1,'Oddam 6 kg ryżu i 4 kg makaronu.','https://i.imgur.com/vU2ajjQ.jpg',1,1),(57,41,37,101,1,'Chcę jedzenie.','https://i.imgur.com/vU2ajjQ.jpg',2,3),(58,37,41,199,3,'Oddam ubrania dziecięce.','https://images.pexels.com/photos/3735641/pexels-photo-3735641.jpeg?auto=compress',1,2),(59,37,NULL,206,4,'Oddam leki przeciwbólowe.','https://images.pexels.com/photos/161449/medical-tablets-pills-drug-161449.jpeg?auto=compress',1,1);
+INSERT INTO `help` VALUES (50,34,37,1,2,'I need a room for three nights.','https://i.imgur.com/yV5OQht.jpg',2,2),(51,35,37,54,4,'Potrzebuję leki przeciwbólowe dla syna.','https://i.imgur.com/yaXNpE6.jpg',2,2),(52,36,37,138,1,'I will accept any pasta!','https://i.imgur.com/vU2ajjQ.jpg',2,2),(53,37,36,1,4,'Oddam leki przeciwzapalne widoczne na zdjęciu.','https://images.pexels.com/photos/161449/medical-tablets-pills-drug-161449.jpeg?auto=compress',1,2),(54,38,36,54,3,'I will give away clothes for an adult.','https://images.pexels.com/photos/3735641/pexels-photo-3735641.jpeg?auto=compress',1,2),(55,39,36,138,5,'I offer help in organizing a visit to a psychologist.','https://images.pexels.com/photos/161449/medical-tablets-pills-drug-161449.jpeg?auto=compress',1,2),(56,37,36,142,1,'Oddam 6 kg ryżu i 4 kg makaronu.','https://i.imgur.com/vU2ajjQ.jpg',1,2),(57,41,37,101,1,'Chcę jedzenie.','https://i.imgur.com/vU2ajjQ.jpg',2,3),(58,37,41,199,3,'Oddam ubrania dziecięce.','https://images.pexels.com/photos/3735641/pexels-photo-3735641.jpeg?auto=compress',1,2),(59,37,35,206,4,'Oddam leki przeciwbólowe.','https://images.pexels.com/photos/161449/medical-tablets-pills-drug-161449.jpeg?auto=compress',1,2);
 /*!40000 ALTER TABLE `help` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,7 +176,7 @@ CREATE TABLE `review` (
   KEY `help_id` (`help_id`),
   CONSTRAINT `review_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `review_ibfk_2` FOREIGN KEY (`help_id`) REFERENCES `help` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +185,7 @@ CREATE TABLE `review` (
 
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
-INSERT INTO `review` VALUES (1,6,2,4),(2,6,1,3),(3,6,1,7),(4,6,1,7),(5,6,1,7);
+INSERT INTO `review` VALUES (1,6,2,4),(2,6,1,3),(3,6,1,7),(4,6,1,7),(5,6,1,7),(6,37,52,1),(7,37,59,1);
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,6 +214,23 @@ INSERT INTO `role` VALUES (1,'Refugee'),(2,'Volunteer'),(3,'Administrator');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_notification_settings`
+--
+
+DROP TABLE IF EXISTS `user_notification_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_notification_settings` (
+  `user_id` int NOT NULL,
+  `new_help_offers` boolean DEFAULT FALSE,
+  `new_help_requests` boolean DEFAULT FALSE,
+  `accepted_help_offers` boolean DEFAULT FALSE,
+  `accepted_help_requests` boolean DEFAULT FALSE,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `user`
 --
 
@@ -233,15 +252,15 @@ CREATE TABLE `user` (
   `average_rating` int DEFAULT NULL,
   `reset_password_code` int DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_user_username` (`username`),
+  UNIQUE KEY `uq_user_email_adress` (`email_address`),
+  UNIQUE KEY `uq_user_identity_number` (`identity_number`),
+  UNIQUE KEY `uq_user_reset_password_code` (`reset_password_code`),
   KEY `role` (`role`),
   KEY `account_status` (`account_status`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`id`),
-  CONSTRAINT `user_ibfk_2` FOREIGN KEY (`account_status`) REFERENCES `account_status` (`id`),
-  CONSTRAINT `uq_user_username` UNIQUE (`username`),
-  CONSTRAINT `uq_user_email_adress` UNIQUE (`email_address`),
-  CONSTRAINT `uq_user_identity_number` UNIQUE (`identity_number`),
-  CONSTRAINT `uq_user_reset_password_code` UNIQUE (`reset_password_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `user_ibfk_2` FOREIGN KEY (`account_status`) REFERENCES `account_status` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,60 +269,8 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (6,'Aleksandra','Wojcik','olavv','575fed10280549b8177cdf0274fa104d5df49690c1c871727af990327031c3b4','ola@wojcik.pl',2,'',2,1,0,0),(7,'Aleksandra','Wojcik','test','ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae','w.ola10@interia.pl',1,'XD1234567',1,1,0,0),(8,'Wiktoria','Wiktoria','wiktoria','2d473299d563d12f061fde645764b9ee93475bf7ca7216c2277224544ff73712','wiktoria@mail.pl',3,'AK2972615',1,1,0,0),(9,'aleksandra','aleksandra','aleksandra','85932645925c3455b11b6f7da4c87f4a063e0f128e2a6ff9bc58e6d65a648757','aleksandra@aleksa.pl',1,'ZE1231232',1,1,0,0),(10,'Wiktoria','Wiktoria','wiktoria','2d473299d563d12f061fde645764b9ee93475bf7ca7216c2277224544ff73712','wiktoria@mail.pl',1,'XYZ000000',1,1,0,0),(11,'aleksandra','aleksandra','aleksandra','85932645925c3455b11b6f7da4c87f4a063e0f128e2a6ff9bc58e6d65a648757','aleksandra@aleksa.pl',1,'XYZ123123',1,1,0,0),(13,'admin','admin','admin','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','admin@admin.pl',3,'XXX111111',1,1,0,0),(34,'Sofia','Rodriguez','sofrod','eff5543e051d32c65ac3761c96a1e9e65d0512f1e469851a3d77b3c55454bd76','Sofia42@gmail.com',1,'JK4884848',1,1,0,0),(35,'Andrei','Ivanov','andiva','a5f15218089065432d992e53323545fed0d9cb3bb0660db6f1592f70bd04609f','Andrei1313@gmail.com',1,'GG4899488',1,1,0,0),(36,'Muhammad','Khan','muhkha','11c5d116ad0e56d6381075bbda6e8c628afdb771f491eef8ac4cdaaf052c5a65','MuhammadK5@gmail.com',1,'AR9409409',1,1,0,0),(37,'Katarzyna','Nowak','katnow','b38145332b50380625facc9b95e4133b536c45caf4b3df8326e7d6890d4a27a9','katarzynow@gmail.com',2,'BJ4891149',1,1,0,0),(38,'Mateusz','Kowalski','matkow','f74b64de96bb0c659933db1c3fbb45a2e42f26146fc5550888b8826694b48bd8','matkowalski@wp.pl',2,'BJ8418040',1,1,0,0),(39,'Jakub','Adamczyk','jakada','421b3118e95698483a5a39e250573f1d19e3b0165dc1bb8a086660c015bcbc1b','adamczykj@wp.pl',2,'NK8341884',1,1,0,0),(41,'Jakub','Nowak','jakub','1a67cddc45360c1964d5a01421b027f884934c6b07ad7a0547ae9cd5ad0b4fc3','jakub@gmail.com',1,'XYZ123235',1,1,0,0),(42,'Jakub','Kowalski','jakubkowalski','1a67cddc45360c1964d5a01421b027f884934c6b07ad7a0547ae9cd5ad0b4fc3','jakub@wp.pl',1,'',1,1,0,0),(43,'test','test','test','60303ae22b998861bce3b28f33eec1be758a213c86c93c076dbe9f558c11c752','test@test.pl',2,'ABC123123',1,1,0,0),(44,'test','test','test23','822e54d37dd37d83776ed8aac05e4578e8b201d8f3fa366bdc60b75228bc835f','test23@test.pl',2,'XYZ123133',1,1,0,0),(45,'test','test','test23','822e54d37dd37d83776ed8aac05e4578e8b201d8f3fa366bdc60b75228bc835f','test23@test.pl',2,'XYZ123133',1,1,0,0),(46,'test','test','test123','ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae','test123@test.pl',2,'XYZ123333',1,1,0,0);
+INSERT INTO `user` VALUES (33,'admin','admin','admin','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','admin@gmail.com',3,'BH8998899',1,1,0,0,NULL),(34,'Sofia','Rodriguez','sofrod','eff5543e051d32c65ac3761c96a1e9e65d0512f1e469851a3d77b3c55454bd76','Sofia42@gmail.com',1,'BH8998389',1,1,0,0,NULL),(35,'Andrei','Ivanov','andiva','a5f15218089065432d992e53323545fed0d9cb3bb0660db6f1592f70bd04609f','Andrei1313@gmail.com',1,'NJ3891938',1,1,0,0,NULL),(36,'Muhammad','Khan','muhkha','11c5d116ad0e56d6381075bbda6e8c628afdb771f491eef8ac4cdaaf052c5a65','MuhammadK5@gmail.com',1,'NH3919388',1,1,0,0,NULL),(37,'Katarzyna','Nowak','katnow','b38145332b50380625facc9b95e4133b536c45caf4b3df8326e7d6890d4a27a9','katarzynow@gmail.com',2,'NJ4891498',1,1,0,0,NULL),(38,'Mateusz','Kowalski','matkow','f74b64de96bb0c659933db1c3fbb45a2e42f26146fc5550888b8826694b48bd8','matkowalski@wp.pl',2,'KM3989813',1,1,0,0,NULL),(39,'Jakub','Adamczyk','jakada','421b3118e95698483a5a39e250573f1d19e3b0165dc1bb8a086660c015bcbc1b','adamczykj@wp.pl',2,'AH4781481',1,1,0,0,NULL),(40,'Jakub','Nowak','jakub','1a67cddc45360c1964d5a01421b027f884934c6b07ad7a0547ae9cd5ad0b4fc3','jakub@gmail.com',2,'TY3981984',1,1,0,0,NULL),(41,'Jakub','Kowalski','jakubkowalski','c4237a7fab4393f1a8ec3f6ffcb15885eed60a6aeca23b247d74da6c24146e6e','jakub@wp.pl',2,'',1,1,0,0,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user_notification_settings`
---
-
-DROP TABLE IF EXISTS `user_notification_settings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_notification_settings` (
-  `user_id` int NOT NULL,
-  `new_help_offers` tinyint(1) DEFAULT NULL,
-  `new_help_requests` tinyint(1) DEFAULT NULL,
-  `accepted_help_offers` tinyint(1) DEFAULT NULL,
-  `accepted_help_requests` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  CONSTRAINT `user_notification_settings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user_notification_settings`
---
-
-LOCK TABLES `user_notification_settings` WRITE;
-/*!40000 ALTER TABLE `user_notification_settings` DISABLE KEYS */;
-INSERT INTO `user_notification_settings` VALUES (6,0,1,0,1),(9,0,1,0,1);
-/*!40000 ALTER TABLE `user_notification_settings` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `voivodeship`
---
-
-DROP TABLE IF EXISTS `voivodeship`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `voivodeship` (
-  `id` int NOT NULL,
-  `name` varbinary(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `voivodeship`
---
-
-LOCK TABLES `voivodeship` WRITE;
-/*!40000 ALTER TABLE `voivodeship` DISABLE KEYS */;
-INSERT INTO `voivodeship` VALUES (1,_binary 'Dolnośląskie'),(2,_binary 'Kujawsko-Pomorskie'),(3,_binary 'Lubelskie'),(4,_binary 'Lubuskie'),(5,_binary 'Łódzkie'),(6,_binary 'Małopolskie'),(7,_binary 'Mazowieckie'),(8,_binary 'Opolskie'),(9,_binary 'Podkarpackie'),(10,_binary 'Podlaskie'),(11,_binary 'Pomorskie'),(12,_binary 'Śląskie'),(13,_binary 'Świętokrzyskie'),(14,_binary 'Warmińsko-Mazurskie'),(15,_binary 'Wielkopolskie'),(16,_binary 'Zachodniopomorskie');
-/*!40000 ALTER TABLE `voivodeship` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -315,4 +282,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-22 20:54:52
+-- Dump completed on 2023-11-26  1:19:51

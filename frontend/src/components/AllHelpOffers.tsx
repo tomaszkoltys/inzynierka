@@ -4,7 +4,7 @@ import { SingleHelpOffer } from "./SingleHelpOffer.tsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
+import { HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
 import { AllCountiesProps } from "./AllHelpRequests.tsx";
 
 export const CurrentHelps = () => {
@@ -80,53 +80,53 @@ export const CurrentHelps = () => {
         console.error("Error fetching /allhelps:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/help-type/allhelptypes',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setHelpTypes(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/user/allusers',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/user/allusers',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Error fetching /allusers:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setVoivodeships(response.data))
       .catch((error) => {
         console.error("Error fetching /allvoivodeships:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/county/allcounties',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/county/allcounties',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setAllCounties(response.data))
       .catch((error) => {
         console.error("Error fetching /allcounties:", error);
@@ -176,16 +176,16 @@ export const CurrentHelps = () => {
   };
 
   const handleCountyChangeByLocation = () => {
-    const countyIdByLocation = allCounties.find((county:AllCountiesProps) => county.name === location)?.id || null;
+    const countyIdByLocation = allCounties.find((county: AllCountiesProps) => county.name === location)?.id || null;
     setSelectedCountyIdByLocation(countyIdByLocation);
-   }
+  }
 
   const searchOffers = helps.filter((offer) => {
     return (
       (search.toLowerCase() === "" ||
         offer.description.toLowerCase().includes(search)) &&
       (selectedHelpType === null || offer.type === selectedHelpTypeId) &&
-      (selectedCounty === null || offer.county === selectedCountyId) && 
+      (selectedCounty === null || offer.county === selectedCountyId) &&
       (selectedCountyIdByLocation === null || offer.county === selectedCountyIdByLocation)
     );
   });
@@ -194,7 +194,7 @@ export const CurrentHelps = () => {
     <div className="flex items-center justify-center">
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
-          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1.5%]">
+          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-4%]">
             {t("all-help-offers")}
           </div>
           <div className="mx-2 my-2">

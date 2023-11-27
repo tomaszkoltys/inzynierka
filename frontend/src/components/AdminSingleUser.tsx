@@ -4,7 +4,7 @@ import "/dist/assets/index-d018f553.css";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { AiOutlineEdit, AiOutlineBlock, AiOutlineCheckCircle, AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineCheckCircle, AiOutlineDelete } from "react-icons/ai";
 import { TbLock, TbLockOpen } from "react-icons/tb";
 
 type AdminSingleUserProps = {
@@ -19,7 +19,6 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
   const isEven = user.id % 2 === 0;
   const rowClass = isEven ? "even" : "odd";
   const { t } = useTranslation();
-
   const [isEditing, setIsEditing] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
   const [editedUser, setEditedUser] = useState({ ...user });
@@ -43,7 +42,6 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
       })
       .catch((error) => {
         console.error("Error saving user:", error);
-        // Obsłuż błąd zapisu
         console.error(error);
         toast.error("Błąd podczas aktualizowania użytkownika!", {
           position: toast.POSITION.TOP_CENTER,
@@ -52,7 +50,6 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
   };
 
   const handleCancel = () => {
-    // Anuluj edycję i przywróć oryginalne dane użytkownika
     setEditedUser({ ...user });
     setIsEditing(false);
   };
@@ -272,8 +269,7 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
               className={`${user.account_status === 1 ? "bg-red-500 text-white" : "bg-green-500 text-white"} px-4 py-1 mx-2`}
               onClick={user.account_status === 1 ? handleBlock : handleUnblock}
             >
-             {user.account_status === 1 ? <TbLock /> : <TbLockOpen />}
-
+              {user.account_status === 1 ? <TbLock /> : <TbLockOpen />}
 
             </button>
             <button className="bg-red-600 text-white px-4 py-1 mx-2 mt-1" onClick={deleteUser}>

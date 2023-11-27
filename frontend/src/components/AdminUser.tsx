@@ -49,35 +49,35 @@ const AdminUser = () => {
         console.error("Error fetching /allusers:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/role/alluserroles',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-        }
-      })
-        .then((response) => setUserRoles(response.data))
-        .catch((error) => {
-          console.error("Error fetching /allusers:", error);
-        });
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/role/alluserroles',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
+      .then((response) => setUserRoles(response.data))
+      .catch((error) => {
+        console.error("Error fetching /allusers:", error);
+      });
 
-        axios({
-          method: 'get',
-          url: 'http://localhost:8080/api/v1/role/allaccountstatuses',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-          }
-        })
-          .then((response) => setAccountStatuses(response.data))
-          .catch((error) => {
-            console.error("Error fetching /allaccountstatuses:", error);
-          });
-    
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/role/allaccountstatuses',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
+      .then((response) => setAccountStatuses(response.data))
+      .catch((error) => {
+        console.error("Error fetching /allaccountstatuses:", error);
+      });
+
 
   }, []);
-  
+
 
   const handleUserRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = event.target.value;
@@ -89,27 +89,24 @@ const AdminUser = () => {
   const filteredUsers = users.filter((user) => {
     return (
       (search.toLowerCase() === "" ||
-        user.name.toLowerCase().includes(search)) &&
+        user.username.toLowerCase().includes(search.toLowerCase())) &&
       (userRolesId === null || user.role === userRolesId)
     );
   });
 
   const handleEditUser = (userId: number) => {
-    // Tutaj można dodać logikę edycji użytkownika
-    // Na przykład otwarcie formularza edycji
     console.log("Edit user with ID:", userId);
   };
 
   const handleBlockUser = (userId: number) => {
-    // Tutaj można dodać logikę blokowania użytkownika
     console.log("Block user with ID:", userId);
   };
 
   return (
     <div className="flex items-center justify-center bg-[#8AA9C7]">
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
-        <div className="relative border border-blue-default my-12 mx-8 py-6 px-2">
-          <div className="absolute text-2xl font-light px-4 bg-[#fffff] top-[-1.5%]">
+        <div className="relative border border-blue-default my-12 mx-8 py-16 px-2">
+          <div className="relative text-2xl font-light px-4 bg-[#fff] top-[-1%]">
             {t("admin-user")}
           </div>
           <div className="mx-2 my-2">
@@ -117,37 +114,36 @@ const AdminUser = () => {
           </div>
           <div className="flex flex-row lg:flex-col mx-2">
             <div className="flex items-center justify-between flex-col lg:flex-row mt-3 mb-12">
-                <div className="flex justify-center items-center text-[#000] w-60 h-10 border border-gray-300 rounded-md">
-                  <input
-                    autoFocus
-                    placeholder={t("search")}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="w-full border-none outline-none ml-2 text-sm"
-                  />
-                  <label className="border-l border-gray-300 h-full flex justify-center items-center w-16 rounded-md hover:cursor-pointer">
-                    <AiOutlineSearch />
-                  </label>
-                </div>
-                <div className="ml-0 lg:ml-6 w-60">
-                  <Dropdown
-                    label={t("role")}
-                    options={userRoles.map((userRole) => ({
-                      value: userRole.name,
-                    }))}
-                    onChange={handleUserRoleChange}
-                  />
-                </div>
-                <div className="w-full lg:w-80"><button className="px-4 py-2 rounded-lg bg-yellow-default hover:bg-yellow-light text-white" onClick={() => setShowRegisterForm(true)}>{t("add-new-user")}</button></div>
+              <div className="flex justify-center items-center text-[#000] w-60 h-10 border border-gray-300 rounded-md">
+                <input
+                  autoFocus
+                  placeholder={t("search")}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full border-none outline-none ml-2 text-sm"
+                />
+                <label className="border-l border-gray-300 h-full flex justify-center items-center w-16 rounded-md hover:cursor-pointer">
+                  <AiOutlineSearch />
+                </label>
+              </div>
+              <div className="ml-0 lg:ml-6 w-60">
+                <Dropdown
+                  label={t("role")}
+                  options={userRoles.map((userRole) => ({
+                    value: userRole.name,
+                  }))}
+                  onChange={handleUserRoleChange}
+                />
+              </div>
+              <div className="w-full lg:w-80"><button className="px-4 py-2 rounded-lg bg-yellow-default hover:bg-yellow-light text-white" onClick={() => setShowRegisterForm(true)}>{t("add-new-user")}</button></div>
             </div>
           </div>
           {showRegisterForm && (
             <div className="transition duration-700">
-              <button  className="px-4 py-2 rounded-lg bg-yellow-default hover:bg-yellow-light text-white" onClick={() => setShowRegisterForm(false)}>{t("hide")}</button>
-                <AddUserForm />
+              <button className="px-4 py-2 rounded-lg bg-yellow-default hover:bg-yellow-light text-white" onClick={() => setShowRegisterForm(false)}>{t("hide")}</button>
+              <AddUserForm />
             </div>
           )}
           <div className="border-t border-gray-300">
-            {/* Wyświetl użytkowników w tabeli */}
             <table className="w-full">
               <thead>
                 <tr>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineSearch } from "react-icons/ai";
-import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
+import { StatusProps, HelpTypeProps, OfferProps, UserProps } from "./Help";
 import { SingleMyHelpRequest } from "./SingleMyHelpRequest";
 
 export const MyHelpRequestsList = () => {
@@ -12,20 +12,6 @@ export const MyHelpRequestsList = () => {
   const [helpTypes, setHelpTypes] = useState<HelpTypeProps[]>([]);
   const [statuses, setStatuses] = useState<StatusProps[]>([]);
   const [users, setUsers] = useState<UserProps[]>([]);
-  const [voivodeships, setVoivodeships] = useState<VoivodeshipsProps[]>([]);
-  const [counties, setCounties] = useState<CountiesProps[]>([]);
-  const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(
-    null
-  );
-  const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<
-    number | null
-  >(null);
-  const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
-  const [selectedCountyId, setSelectedCountyId] = useState<number | null>(null);
-  const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
-  const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(
-    null
-  );
 
   useEffect(() => {
     axios({
@@ -41,7 +27,7 @@ export const MyHelpRequestsList = () => {
       })
       .catch((error) => {
         console.error(
-          `Error fetching acceptedhelpoffers?currentUserId=${localStorage.getItem('user-id')}:`,
+          `Error fetching myrequests?currentUserId=${localStorage.getItem('user-id')}:`,
           error
         );
       });
@@ -99,7 +85,7 @@ export const MyHelpRequestsList = () => {
     <div className="flex items-center justify-center">
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
-          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1.5%]">
+          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-3%]">
             {t("my-help-requests")}
           </div>
           <div className="flex flex-col mx-8 mt-10 mb-12">

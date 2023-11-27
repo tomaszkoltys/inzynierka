@@ -4,7 +4,7 @@ import { SingleHelpRequest } from "./SingleHelpRequest";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
+import { HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
 export type AllCountiesProps = {
   id: number;
   name: string;
@@ -57,9 +57,7 @@ export const CurrentNeeds = () => {
       .then((response) => {
         if (response.status === 200) {
           const result = response.data;
-          //takie dane zwraca api na podstawie szerokosci i dlugosci geograficznej
           console.log(result)
-          //i z tego miasto biore
           setLocation(result.city);
         }
       })
@@ -200,7 +198,7 @@ export const CurrentNeeds = () => {
     <div className="flex items-center justify-center">
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
-          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1.5%]">
+          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-4%]">
             {t("all-help-requests")}
           </div>
           <div className="mx-2 my-2">

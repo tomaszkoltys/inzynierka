@@ -4,9 +4,8 @@ import { SingleAdminHelp } from "./SingleAdminHelp.tsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { AdminHelp } from "../pages/AdminHelp.tsx";
 import { ToastContainer, toast } from "react-toastify";
-import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
+import { HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
 import "react-toastify/dist/ReactToastify.css";
 import { AllCountiesProps } from "./AllHelpRequests.tsx";
 
@@ -21,43 +20,12 @@ export const AdminHelpList = () => {
   const [counties, setCounties] = useState<CountiesProps[]>([]);
   const [allCounties, setAllCounties] = useState<AllCountiesProps[]>([]);
   const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(null);
-  const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<number | null >(null);
+  const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<number | null>(null);
   const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
   const [selectedCountyId, setSelectedCountyId] = useState<number | null>(null);
   const [selectedCountyIdByLocation, setSelectedCountyIdByLocation] = useState<number | null>(null);
   const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
-
-  const userCoordinates = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const bdcAPI = `https://api-bdc.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`;
-          getAPI(bdcAPI);
-        },
-        (err) => {
-          alert(err.message);
-        }
-      );
-    } else {
-      alert("Geolocation is not supported by this browser");
-    }
-  };
-
-  const getAPI = (bdcAPI: string) => {
-    axios
-      .get(bdcAPI)
-      .then((response) => {
-        if (response.status === 200) {
-          const result = response.data;
-          console.log(response);
-          setLocation(result.city);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
 
 
   useEffect(() => {
@@ -72,10 +40,10 @@ export const AdminHelpList = () => {
         'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
-    .then((response) => setHelps(response.data))
-    .catch((error) => {
-      console.error("Error fetching /allhelps:", error);
-    });
+      .then((response) => setHelps(response.data))
+      .catch((error) => {
+        console.error("Error fetching /allhelps:", error);
+      });
 
     axios({
       method: 'get',
@@ -85,45 +53,45 @@ export const AdminHelpList = () => {
         'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
-    .then((response) => setHelpTypes(response.data))
+      .then((response) => setHelpTypes(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/user/allusers',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/user/allusers',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Error fetching /allusers:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setVoivodeships(response.data))
       .catch((error) => {
         console.error("Error fetching /allvoivodeships:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/county/allcounties',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/county/allcounties',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setAllCounties(response.data))
       .catch((error) => {
         console.error("Error fetching /allcounties:", error);
@@ -140,8 +108,6 @@ export const AdminHelpList = () => {
       null;
     setSelectedVoivodeshipId(selectedVoivodeshipId);
 
-
-
     if (selectedVoivodeshipId !== null) {
       axios({
         method: 'get',
@@ -151,10 +117,10 @@ export const AdminHelpList = () => {
           'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
       })
-      .then((response) => setCounties(response.data))
-          .catch((error) => {
-            console.error("Error fetching counties:", error);
-          });
+        .then((response) => setCounties(response.data))
+        .catch((error) => {
+          console.error("Error fetching counties:", error);
+        });
     }
   };
 
@@ -175,16 +141,16 @@ export const AdminHelpList = () => {
   };
 
   const handleCountyChangeByLocation = () => {
-    const countyIdByLocation = allCounties.find((county:AllCountiesProps) => county.name === location)?.id || null;
+    const countyIdByLocation = allCounties.find((county: AllCountiesProps) => county.name === location)?.id || null;
     setSelectedCountyIdByLocation(countyIdByLocation);
-   }
-   
+  }
+
   const searchOffers = helps.filter((offer) => {
     return (
       (search.toLowerCase() === "" ||
         offer.description.toLowerCase().includes(search)) &&
       (selectedHelpType === null || offer.type === selectedHelpTypeId) &&
-      (selectedCounty === null || offer.county === selectedCountyId) && 
+      (selectedCounty === null || offer.county === selectedCountyId) &&
       (selectedCountyIdByLocation === null || offer.county === selectedCountyIdByLocation)
     );
   }
@@ -194,7 +160,7 @@ export const AdminHelpList = () => {
     <div className="flex items-center justify-center bg-[#8AA9C7]">
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-blue-default my-12 mx-8 py-6 px-2">
-          <div className="absolute text-2xl font-light px-4 bg-[#fffff] top-[-1.5%]">
+          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1%]">
             {t("admin-help")}
           </div>
           <div className="mx-2 my-2">
@@ -203,7 +169,7 @@ export const AdminHelpList = () => {
           <div className="flex flex-col mx-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 mt-3 mb-12">
               <div>
-                <div className="flex justify-center items-center text-[#000] w-60 h-10 border border-gray-300 rounded-md">
+                <div className="flex justify-center items-center text-[#000] w-[50%] h-10 border border-gray-300 rounded-md">
                   <input
                     autoFocus
                     placeholder={t("search")}
@@ -214,7 +180,7 @@ export const AdminHelpList = () => {
                     <AiOutlineSearch />
                   </label>
                 </div>
-                <div className="mt-3">
+                <div className="mt-3 w-[125%]">
                   <Dropdown
                     label={t("choose-type-of-help")}
                     options={helpTypes.map((helpType) => ({
@@ -225,7 +191,7 @@ export const AdminHelpList = () => {
                 </div>
               </div>
               <div>
-                <div>
+                <div className="mt-3 w-[125%]">
                   <Dropdown
                     label={t("choose-voivodeship")}
                     options={voivodeships.map((voivodeship) => ({
@@ -234,24 +200,13 @@ export const AdminHelpList = () => {
                     onChange={handleVoivodeshipChange}
                   />
                 </div>
-                <div className="mt-3">
+                <div className="mt-3 w-[125%]">
                   <Dropdown
                     label={t("choose-county")}
                     options={counties.map((county) => ({ value: county.name }))}
                     disabled={!selectedVoivodeship}
                     onChange={handleCountyChange}
                   />
-                </div>
-                <div className="flex items-center text-[#000] mt-3">
-                  <div className="flex items-center w-60 h-10 border border-gray-300 rounded-md outline-none pl-2">
-                    {location}
-                  </div>
-                  <div
-                    className="bg-gray-200 text-sm px-2 h-[80%] flex justify-center items-center ml-6 font-medium rounded-sm hover:cursor-pointer"
-                    onClick={() => userCoordinates()}
-                  >
-                    {t("get-location")}
-                  </div>
                 </div>
               </div>
             </div>

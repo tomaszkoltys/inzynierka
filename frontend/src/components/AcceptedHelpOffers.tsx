@@ -2,8 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineSearch } from "react-icons/ai";
-import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
-import { CurrentHelps } from "./AllHelpOffers"
+import { StatusProps, HelpTypeProps, OfferProps, UserProps } from "./Help";
 import { SingleAcceptedHelpOffer } from "./SingleAcceptedHelpOffer";
 
 export const AcceptedHelpOffersList = () => {
@@ -13,54 +12,7 @@ export const AcceptedHelpOffersList = () => {
   const [helpTypes, setHelpTypes] = useState<HelpTypeProps[]>([]);
   const [statuses, setStatuses] = useState<StatusProps[]>([]);
   const [users, setUsers] = useState<UserProps[]>([]);
-  const [location, setLocation] = useState<string>("");
-  const [helps, setHelps] = useState<OfferProps[]>([]);
-  const [voivodeships, setVoivodeships] = useState<VoivodeshipsProps[]>([]);
-  const [counties, setCounties] = useState<CountiesProps[]>([]);
-  const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(
-    null
-  );
-  const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<
-    number | null
-  >(null);
-  const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
-  const [selectedCountyId, setSelectedCountyId] = useState<number | null>(null);
-  const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
-  const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(
-    null
-  );
 
-  const userCoordinates = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const bdcAPI = `https://api-bdc.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`;
-          getAPI(bdcAPI);
-        },
-        (err) => {
-          alert(err.message);
-        }
-      );
-    } else {
-      alert("Geolocation is not supported by this browser");
-    }
-  };
-
-  const getAPI = (bdcAPI: string) => {
-    axios
-      .get(bdcAPI)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(response);
-          const result = response.data;
-          console.log(response);
-          setLocation(result.city);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
 
   useEffect(() => {
     axios({
@@ -134,7 +86,7 @@ export const AcceptedHelpOffersList = () => {
     <div className="flex items-center justify-center">
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
-          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1.5%]">
+          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-3%]">
             {t("accepted-help-offers")}
           </div>
           <div className="flex flex-col mx-8 mt-10 mb-12">

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiOutlineSearch } from "react-icons/ai";
 import { StatusProps, HelpTypeProps, OfferProps, UserProps, VoivodeshipsProps, CountiesProps } from "./Help";
-import { SingleMyHelpOffer } from "./SingleMyHelpOffer";
 import { Dropdown } from "./Dropdown";
 import { SingleAcceptedHelpRequest } from "./SingleAcceptedHelpRequest";
 
@@ -26,12 +25,10 @@ export const AcceptedHelpRequestsList = () => {
   const [uncompletedOption, setUncompletedOption] = useState<boolean>(false);
   const [completedOption, setCompletedOption] = useState<boolean>(false);
 
-  const currentUser_id = localStorage.getItem('user-id')
-
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/v1/help/acceptedhelprequests?currentUserId=${currentUser_id}`,
+      url: `http://localhost:8080/api/v1/help/acceptedhelprequests?currentUserId=${localStorage.getItem('user-id')}`,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
@@ -42,7 +39,7 @@ export const AcceptedHelpRequestsList = () => {
       })
       .catch((error) => {
         console.error(
-          `Error fetching /myhelpoffers?currentUserId=${currentUser_id}:`,
+          `Error fetching /myhelpoffers?currentUserId=${localStorage.getItem('user-id')}:`,
           error
         );
       });
@@ -142,7 +139,6 @@ export const AcceptedHelpRequestsList = () => {
     setSelectedCountyId(selectedCountyId);
   };
 
-
   const searchOffers = myHelps.filter((offer) => {
     return (
       (search.toLowerCase() === "" ||
@@ -152,15 +148,15 @@ export const AcceptedHelpRequestsList = () => {
       (inprogressOption === false ||
         uncompletedOption === true ||
         completedOption === true ||
-        offer.helpStatus === 1) &&
+        offer.helpStatus === 2) &&
       (uncompletedOption === false ||
         inprogressOption === true ||
         completedOption === true ||
-        offer.helpStatus === 2) &&
-        (completedOption === false ||
-          inprogressOption === true ||
-          uncompletedOption === true ||
-          offer.helpStatus === 3)
+        offer.helpStatus === 4) &&
+      (completedOption === false ||
+        inprogressOption === true ||
+        uncompletedOption === true ||
+        offer.helpStatus === 3)
     );
   });
 
@@ -168,7 +164,7 @@ export const AcceptedHelpRequestsList = () => {
     <div className="flex items-center justify-center">
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
-          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-0.5%]">
+          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1.5%]">
             {t("accepted-help-requests")}
           </div>
           <div className="mx-2 my-2">
