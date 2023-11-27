@@ -214,6 +214,23 @@ INSERT INTO `role` VALUES (1,'Refugee'),(2,'Volunteer'),(3,'Administrator');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_notification_settings`
+--
+
+DROP TABLE IF EXISTS `user_notification_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_notification_settings` (
+  `user_id` int NOT NULL,
+  `new_help_offers` boolean DEFAULT FALSE,
+  `new_help_requests` boolean DEFAULT FALSE,
+  `accepted_help_offers` boolean DEFAULT FALSE,
+  `accepted_help_requests` boolean DEFAULT FALSE,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `user`
 --
 
