@@ -134,7 +134,7 @@ export const AcceptedHelpOffersList = () => {
     <div className="flex items-center justify-center">
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
-          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1.5%]">
+          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-3%]">
             {t("accepted-help-offers")}
           </div>
           <div className="flex flex-col mx-8 mt-10 mb-12">

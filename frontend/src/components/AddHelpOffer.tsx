@@ -170,7 +170,7 @@ export const AddOfferForm = () => {
       <ToastContainer />
       <div className="w-full md:w-[70%] h-form flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
-          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-2.5%]">
+          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-2%]">
             {t('add-help-offer')}
           </div>
           <div className="flex flex-col mb-6">

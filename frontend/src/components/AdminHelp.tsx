@@ -140,8 +140,6 @@ export const AdminHelpList = () => {
       null;
     setSelectedVoivodeshipId(selectedVoivodeshipId);
 
-
-
     if (selectedVoivodeshipId !== null) {
       axios({
         method: 'get',
@@ -194,7 +192,7 @@ export const AdminHelpList = () => {
     <div className="flex items-center justify-center bg-[#8AA9C7]">
       <div className="w-full md:w-[70%] flex flex-col min-h-[800px] bg-[#fff]">
         <div className="relative border border-blue-default my-12 mx-8 py-6 px-2">
-          <div className="absolute text-2xl font-light px-4 bg-[#fffff] top-[-1.5%]">
+          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-1%]">
             {t("admin-help")}
           </div>
           <div className="mx-2 my-2">
