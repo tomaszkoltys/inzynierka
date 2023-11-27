@@ -201,7 +201,7 @@ export const AdminHelpList = () => {
           <div className="flex flex-col mx-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 mt-3 mb-12">
               <div>
-                <div className="flex justify-center items-center text-[#000] w-60 h-10 border border-gray-300 rounded-md">
+                <div className="flex justify-center items-center text-[#000] w-[50%] h-10 border border-gray-300 rounded-md">
                   <input
                     autoFocus
                     placeholder={t("search")}
@@ -212,7 +212,7 @@ export const AdminHelpList = () => {
                     <AiOutlineSearch />
                   </label>
                 </div>
-                <div className="mt-3">
+                <div className="mt-3 w-[125%]">
                   <Dropdown
                     label={t("choose-type-of-help")}
                     options={helpTypes.map((helpType) => ({
@@ -223,7 +223,7 @@ export const AdminHelpList = () => {
                 </div>
               </div>
               <div>
-                <div>
+              <div className="mt-3 w-[125%]">
                   <Dropdown
                     label={t("choose-voivodeship")}
                     options={voivodeships.map((voivodeship) => ({
@@ -232,24 +232,13 @@ export const AdminHelpList = () => {
                     onChange={handleVoivodeshipChange}
                   />
                 </div>
-                <div className="mt-3">
+                <div className="mt-3 w-[125%]">
                   <Dropdown
                     label={t("choose-county")}
                     options={counties.map((county) => ({ value: county.name }))}
                     disabled={!selectedVoivodeship}
                     onChange={handleCountyChange}
                   />
-                </div>
-                <div className="flex items-center text-[#000] mt-3">
-                  <div className="flex items-center w-60 h-10 border border-gray-300 rounded-md outline-none pl-2">
-                    {location}
-                  </div>
-                  <div
-                    className="bg-gray-200 text-sm px-2 h-[80%] flex justify-center items-center ml-6 font-medium rounded-sm hover:cursor-pointer"
-                    onClick={() => userCoordinates()}
-                  >
-                    {t("get-location")}
-                  </div>
                 </div>
               </div>
             </div>
