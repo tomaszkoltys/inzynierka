@@ -77,11 +77,11 @@ export const AddUserForm = () => {
       .refine((value) => ["volunteer", "refugee"].includes(value)),
   });
 
-  const { 
-    register, 
+  const {
+    register,
     handleSubmit,
     watch,
-    formState: { errors }, 
+    formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = async () => {
@@ -105,8 +105,8 @@ export const AddUserForm = () => {
       })
       toast.success("Pomyślnie założono konto!", {
         position: toast.POSITION.TOP_CENTER,
-      
-    })
+
+      })
     } catch (error) {
       console.error("Error while sending data:", error);
     }
@@ -120,132 +120,132 @@ export const AddUserForm = () => {
   const identity_number = watch("document");
 
   return (
-          <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-            <ToastContainer />
-            <label className="mt-6">{t("name")}*</label>
-            <input
-              type="text"
-              className="text-base py-3 px-2 bg-[#E1E1E1]"
-              maxLength={20}
-              {...register("firstName")}
-            />
-            {errors.firstName && (
-              <p className="text-[#e62727]"> {errors.firstName.message}</p>
-            )}
-            <label className="mt-6">{t("surname")}*</label>
-            <input
-              type="text"
-              className="text-base py-3 px-2 bg-[#E1E1E1]"
-              maxLength={20}
-              {...register("lastName")}
-            />
-            {errors.lastName && (
-              <p className="text-[#e62727]"> {errors.lastName.message}</p>
-            )}
-            <label className="mt-6">{t("username")}*</label>
-            <input
-              type="text"
-              className="text-base py-3 px-2 bg-[#E1E1E1]"
-              maxLength={30}
-              {...register("name")}
-            />
-            {errors.name && (
-              <p className="text-[#e62727]"> {errors.name.message}</p>
-            )}
-            <label className="mt-6">{t("password")}*</label>
-            <input
-              type="password"
-              className="text-base py-3 px-2 bg-[#E1E1E1]"
-              maxLength={20}
-              {...register("password")}
-            />
-            {errors.password && (
-              <p className="text-[#e62727]"> {errors.password.message}</p>
-            )}
-            <label className="mt-6">{t("e-mail")}*</label>
-            <input
-              type="email"
-              className="text-base py-3 px-2 bg-[#E1E1E1]"
-              maxLength={20}
-              {...register("email")}
-            />
-            {errors.email && (
-              <p className="text-[#e62727]"> {errors.email.message}</p>
-            )}
-            <div className="mt-16 mb-4 gap-24 lg:gap-36 flex flex-row items-center justify-center mx-auto xs:flex-col xs:gap-6 xs:items-start">
-              <label
-                className="flex items-center justify-center"
-                onClick={() => setSelectedOption(2)}
-              >
-                <input
-                  type="radio"
-                  className="register-radiobutton"
-                  value="volunteer"
-                  checked={selectedOption === 2}
-                  {...register("selectedOption")}
-                />
-                &nbsp;{t("volunteer")}{" "}
-              </label>
-              <label
-                className="flex items-center justify-center"
-                onClick={() => setSelectedOption(1)}
-              >
-                <input
-                  type="radio"
-                  className="register-radiobutton"
-                  value="refugee"
-                  checked={selectedOption === 1}
-                  {...register("selectedOption")}
-                />
-                &nbsp;{t("refugee")}{" "}
-              </label>{" "}
-              {errors.selectedOption && (
-                <p className="text-[#e62727]">
-                  {" "}
-                  {errors.selectedOption.message}{" "}
-                </p>
-              )}
-            </div>
-            <div className="flex flex-col">
-              <div className={`flex flex-col ${selectedOption && "order-2"}`}>
-                <label className="mt-6">{t("pesel-number")}</label>
-                <input
-                  type="text"
-                  className="text-base py-3 px-2 bg-[#E1E1E1]"
-                  maxLength={11}
-                  {...register("pesel")}
-                  onKeyPress={(e) => {
-                    const charCode = e.charCode || e.keyCode;
-                    if (charCode < 48 || charCode > 57) {
-                      e.preventDefault();
-                    }
-                  }}
-                />
-                {errors.pesel && (
-                  <p className="text-[#e62727]"> {errors.pesel.message}</p>
-                )}{" "}
-              </div>
-              <div className={`flex flex-col ${selectedOption && "order-1"}`}>
-                <label className="mt-6">
-                  {" "}
-                  {t("identity-card/passport-number")}{" "}
-                </label>
-                <input
-                  type="text"
-                  className="text-base py-3 px-2 bg-[#E1E1E1]"
-                  maxLength={9}
-                  {...register("document")}
-                />
-                {errors.document && (
-                  <p className="text-[#e62727]"> {errors.document.message}</p>
-                )}{" "}
-              </div>
-            </div>
-            <input
-              type="submit"
-              className="w-full my-10 py-2 px-2 text-xl text-[#fff] bg-yellow-default rounded-md hover:cursor-pointer hover:bg-yellow-light"
-              value={t("register")}
-            />
-          </form>
+    <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+      <ToastContainer />
+      <label className="mt-6">{t("name")}*</label>
+      <input
+        type="text"
+        className="text-base py-3 px-2 bg-[#E1E1E1]"
+        maxLength={20}
+        {...register("firstName")}
+      />
+      {errors.firstName && (
+        <p className="text-[#e62727]"> {errors.firstName.message}</p>
+      )}
+      <label className="mt-6">{t("surname")}*</label>
+      <input
+        type="text"
+        className="text-base py-3 px-2 bg-[#E1E1E1]"
+        maxLength={20}
+        {...register("lastName")}
+      />
+      {errors.lastName && (
+        <p className="text-[#e62727]"> {errors.lastName.message}</p>
+      )}
+      <label className="mt-6">{t("username")}*</label>
+      <input
+        type="text"
+        className="text-base py-3 px-2 bg-[#E1E1E1]"
+        maxLength={30}
+        {...register("name")}
+      />
+      {errors.name && (
+        <p className="text-[#e62727]"> {errors.name.message}</p>
+      )}
+      <label className="mt-6">{t("password")}*</label>
+      <input
+        type="password"
+        className="text-base py-3 px-2 bg-[#E1E1E1]"
+        maxLength={20}
+        {...register("password")}
+      />
+      {errors.password && (
+        <p className="text-[#e62727]"> {errors.password.message}</p>
+      )}
+      <label className="mt-6">{t("e-mail")}*</label>
+      <input
+        type="email"
+        className="text-base py-3 px-2 bg-[#E1E1E1]"
+        maxLength={20}
+        {...register("email")}
+      />
+      {errors.email && (
+        <p className="text-[#e62727]"> {errors.email.message}</p>
+      )}
+      <div className="mt-16 mb-4 gap-24 lg:gap-36 flex flex-row items-center justify-center mx-auto xs:flex-col xs:gap-6 xs:items-start">
+        <label
+          className="flex items-center justify-center"
+          onClick={() => setSelectedOption(2)}
+        >
+          <input
+            type="radio"
+            className="register-radiobutton"
+            value="volunteer"
+            checked={selectedOption === 2}
+            {...register("selectedOption")}
+          />
+          &nbsp;{t("volunteer")}{" "}
+        </label>
+        <label
+          className="flex items-center justify-center"
+          onClick={() => setSelectedOption(1)}
+        >
+          <input
+            type="radio"
+            className="register-radiobutton"
+            value="refugee"
+            checked={selectedOption === 1}
+            {...register("selectedOption")}
+          />
+          &nbsp;{t("refugee")}{" "}
+        </label>{" "}
+        {errors.selectedOption && (
+          <p className="text-[#e62727]">
+            {" "}
+            {errors.selectedOption.message}{" "}
+          </p>
+        )}
+      </div>
+      <div className="flex flex-col">
+        <div className={`flex flex-col ${selectedOption && "order-2"}`}>
+          <label className="mt-6">{t("pesel-number")}</label>
+          <input
+            type="text"
+            className="text-base py-3 px-2 bg-[#E1E1E1]"
+            maxLength={11}
+            {...register("pesel")}
+            onKeyPress={(e) => {
+              const charCode = e.charCode || e.keyCode;
+              if (charCode < 48 || charCode > 57) {
+                e.preventDefault();
+              }
+            }}
+          />
+          {errors.pesel && (
+            <p className="text-[#e62727]"> {errors.pesel.message}</p>
+          )}{" "}
+        </div>
+        <div className={`flex flex-col ${selectedOption && "order-1"}`}>
+          <label className="mt-6">
+            {" "}
+            {t("identity-card/passport-number")}{" "}
+          </label>
+          <input
+            type="text"
+            className="text-base py-3 px-2 bg-[#E1E1E1]"
+            maxLength={9}
+            {...register("document")}
+          />
+          {errors.document && (
+            <p className="text-[#e62727]"> {errors.document.message}</p>
+          )}{" "}
+        </div>
+      </div>
+      <input
+        type="submit"
+        className="w-full my-10 py-2 px-2 text-xl text-[#fff] bg-yellow-default rounded-md hover:cursor-pointer hover:bg-yellow-light"
+        value={t("register")}
+      />
+    </form>
   );
 };

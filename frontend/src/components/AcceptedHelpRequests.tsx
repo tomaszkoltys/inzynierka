@@ -140,7 +140,6 @@ export const AcceptedHelpRequestsList = () => {
     setSelectedCountyId(selectedCountyId);
   };
 
-
   const searchOffers = myHelps.filter((offer) => {
     return (
       (search.toLowerCase() === "" ||
@@ -155,10 +154,10 @@ export const AcceptedHelpRequestsList = () => {
         inprogressOption === true ||
         completedOption === true ||
         offer.helpStatus === 4) &&
-        (completedOption === false ||
-          inprogressOption === true ||
-          uncompletedOption === true ||
-          offer.helpStatus === 3)
+      (completedOption === false ||
+        inprogressOption === true ||
+        uncompletedOption === true ||
+        offer.helpStatus === 3)
     );
   });
 

@@ -21,7 +21,7 @@ export const AdminHelpList = () => {
   const [counties, setCounties] = useState<CountiesProps[]>([]);
   const [allCounties, setAllCounties] = useState<AllCountiesProps[]>([]);
   const [selectedVoivodeship, setSelectedVoivodeship] = useState<string | null>(null);
-  const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<number | null >(null);
+  const [selectedVoivodeshipId, setSelectedVoivodeshipId] = useState<number | null>(null);
   const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
   const [selectedCountyId, setSelectedCountyId] = useState<number | null>(null);
   const [selectedCountyIdByLocation, setSelectedCountyIdByLocation] = useState<number | null>(null);
@@ -59,7 +59,6 @@ export const AdminHelpList = () => {
       });
   };
 
-
   useEffect(() => {
     if (location !== "") {
       handleCountyChangeByLocation();
@@ -72,10 +71,10 @@ export const AdminHelpList = () => {
         'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
-    .then((response) => setHelps(response.data))
-    .catch((error) => {
-      console.error("Error fetching /allhelps:", error);
-    });
+      .then((response) => setHelps(response.data))
+      .catch((error) => {
+        console.error("Error fetching /allhelps:", error);
+      });
 
     axios({
       method: 'get',
@@ -85,45 +84,45 @@ export const AdminHelpList = () => {
         'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
       }
     })
-    .then((response) => setHelpTypes(response.data))
+      .then((response) => setHelpTypes(response.data))
       .catch((error) => {
         console.error("Error fetching /allhelptypes:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/user/allusers',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/user/allusers',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Error fetching /allusers:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/voivodeship/allvoivodeships',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setVoivodeships(response.data))
       .catch((error) => {
         console.error("Error fetching /allvoivodeships:", error);
       });
 
-      axios({
-        method: 'get',
-        url: 'http://localhost:8080/api/v1/county/allcounties',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-        }
-      })
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/v1/county/allcounties',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
       .then((response) => setAllCounties(response.data))
       .catch((error) => {
         console.error("Error fetching /allcounties:", error);
@@ -149,10 +148,10 @@ export const AdminHelpList = () => {
           'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
       })
-      .then((response) => setCounties(response.data))
-          .catch((error) => {
-            console.error("Error fetching counties:", error);
-          });
+        .then((response) => setCounties(response.data))
+        .catch((error) => {
+          console.error("Error fetching counties:", error);
+        });
     }
   };
 
@@ -173,16 +172,16 @@ export const AdminHelpList = () => {
   };
 
   const handleCountyChangeByLocation = () => {
-    const countyIdByLocation = allCounties.find((county:AllCountiesProps) => county.name === location)?.id || null;
+    const countyIdByLocation = allCounties.find((county: AllCountiesProps) => county.name === location)?.id || null;
     setSelectedCountyIdByLocation(countyIdByLocation);
-   }
-   
+  }
+
   const searchOffers = helps.filter((offer) => {
     return (
       (search.toLowerCase() === "" ||
         offer.description.toLowerCase().includes(search)) &&
       (selectedHelpType === null || offer.type === selectedHelpTypeId) &&
-      (selectedCounty === null || offer.county === selectedCountyId) && 
+      (selectedCounty === null || offer.county === selectedCountyId) &&
       (selectedCountyIdByLocation === null || offer.county === selectedCountyIdByLocation)
     );
   }
@@ -223,7 +222,7 @@ export const AdminHelpList = () => {
                 </div>
               </div>
               <div>
-              <div className="mt-3 w-[125%]">
+                <div className="mt-3 w-[125%]">
                   <Dropdown
                     label={t("choose-voivodeship")}
                     options={voivodeships.map((voivodeship) => ({

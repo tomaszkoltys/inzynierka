@@ -57,9 +57,7 @@ export const CurrentNeeds = () => {
       .then((response) => {
         if (response.status === 200) {
           const result = response.data;
-          //takie dane zwraca api na podstawie szerokosci i dlugosci geograficznej
           console.log(result)
-          //i z tego miasto biore
           setLocation(result.city);
         }
       })

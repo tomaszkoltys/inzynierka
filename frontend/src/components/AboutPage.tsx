@@ -9,16 +9,16 @@ export const AboutPage = () => {
                     <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-2.5%]">
                         {t("about-us")}
                     </div>
-                    <br/><p>
-                        <h1>Nasza misja</h1><br/>
+                    <br /><p>
+                        <h1>Nasza misja</h1><br />
                         Jesteśmy organizacją charytatywną dedykowaną pomocy uchodźcom. Nasza misja to zapewnienie wsparcia, schronienia i nadziei tym, którzy zostali zmuszeni do opuszczenia swojego domu w obliczu konfliktów i prześladowań.
                     </p>
                     <p>
-                        <h1>Nasza praca</h1><br/>
+                        <h1>Nasza praca</h1><br />
                         Działamy na wielu płaszczyznach, aby pomóc uchodźcom w odbudowie swojego życia. Na naszej stronie możesz zapewnić wsparcie medyczne, żywienie, odzież oraz zakwaterowanie potrzebującym.
                     </p>
                     <p>
-                        <h1>Jak możesz pomóc?</h1><br/>
+                        <h1>Jak możesz pomóc?</h1><br />
                         Twoja pomoc jest nieoceniona. Możesz wesprzeć naszą organizację, dodając ofertę pomocy. Razem możemy tworzyć lepsze jutro.
                     </p>
                 </div>

@@ -163,7 +163,6 @@ export const AddOfferForm = () => {
           console.error("Błąd podczas wysyłania oferty:", error);
         });
     }
-
   };
 
   return (
@@ -215,7 +214,7 @@ export const AddOfferForm = () => {
               {formErrors.description && <p className="text-red-500 mt-1">{t('enter-description')}</p>}
             </div>
             <div className="flex relative">
-            <div className="flex items-center justify-center w-[80px] h-[80px] bg-gray-300 relative my-6">
+              <div className="flex items-center justify-center w-[80px] h-[80px] bg-gray-300 relative my-6">
                 <input
                   type="file"
                   accept="image/*"

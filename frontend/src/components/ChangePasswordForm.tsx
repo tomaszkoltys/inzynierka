@@ -75,9 +75,6 @@ export const ChangePasswordForm = () => {
           position: toast.POSITION.TOP_CENTER,
         });
       });
-
-
-  
   };
 
   return (
@@ -109,7 +106,6 @@ export const ChangePasswordForm = () => {
             {errors.newPassword && (
               <p className="text-[#e62727]"> {errors.newPassword.message}</p>
             )}
-
             <input
               type="submit"
               className="w-full my-10 py-2 px-2 text-xl text-[#fff] bg-yellow-default rounded-md hover:cursor-pointer hover:bg-yellow-light"
