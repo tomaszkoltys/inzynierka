@@ -214,23 +214,6 @@ INSERT INTO `role` VALUES (1,'Refugee'),(2,'Volunteer'),(3,'Administrator');
 UNLOCK TABLES;
 
 --
--- Table structure for table `user_notification_settings`
---
-
-DROP TABLE IF EXISTS `user_notification_settings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_notification_settings` (
-  `user_id` int NOT NULL,
-  `new_help_offers` boolean DEFAULT FALSE,
-  `new_help_requests` boolean DEFAULT FALSE,
-  `accepted_help_offers` boolean DEFAULT FALSE,
-  `accepted_help_requests` boolean DEFAULT FALSE,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `user`
 --
 
@@ -260,7 +243,7 @@ CREATE TABLE `user` (
   KEY `account_status` (`account_status`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`id`),
   CONSTRAINT `user_ibfk_2` FOREIGN KEY (`account_status`) REFERENCES `account_status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,8 +252,58 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (33,'admin','admin','admin','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','admin@gmail.com',3,'BH8998899',1,1,0,0,NULL),(34,'Sofia','Rodriguez','sofrod','eff5543e051d32c65ac3761c96a1e9e65d0512f1e469851a3d77b3c55454bd76','Sofia42@gmail.com',1,'BH8998389',1,1,0,0,NULL),(35,'Andrei','Ivanov','andiva','a5f15218089065432d992e53323545fed0d9cb3bb0660db6f1592f70bd04609f','Andrei1313@gmail.com',1,'NJ3891938',1,1,0,0,NULL),(36,'Muhammad','Khan','muhkha','11c5d116ad0e56d6381075bbda6e8c628afdb771f491eef8ac4cdaaf052c5a65','MuhammadK5@gmail.com',1,'NH3919388',1,1,0,0,NULL),(37,'Katarzyna','Nowak','katnow','b38145332b50380625facc9b95e4133b536c45caf4b3df8326e7d6890d4a27a9','katarzynow@gmail.com',2,'NJ4891498',1,1,0,0,NULL),(38,'Mateusz','Kowalski','matkow','f74b64de96bb0c659933db1c3fbb45a2e42f26146fc5550888b8826694b48bd8','matkowalski@wp.pl',2,'KM3989813',1,1,0,0,NULL),(39,'Jakub','Adamczyk','jakada','421b3118e95698483a5a39e250573f1d19e3b0165dc1bb8a086660c015bcbc1b','adamczykj@wp.pl',2,'AH4781481',1,1,0,0,NULL),(40,'Jakub','Nowak','jakub','1a67cddc45360c1964d5a01421b027f884934c6b07ad7a0547ae9cd5ad0b4fc3','jakub@gmail.com',2,'TY3981984',1,1,0,0,NULL),(41,'Jakub','Kowalski','jakubkowalski','c4237a7fab4393f1a8ec3f6ffcb15885eed60a6aeca23b247d74da6c24146e6e','jakub@wp.pl',2,'',1,1,0,0,NULL);
+INSERT INTO `user` VALUES (33,'admin','admin','admin','8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918','admin@gmail.com',3,'BH8998899',1,1,0,0,NULL),(34,'Sofia','Rodriguez','sofrod','eff5543e051d32c65ac3761c96a1e9e65d0512f1e469851a3d77b3c55454bd76','Sofia42@gmail.com',1,'BH8998389',1,1,0,0,NULL),(35,'Andrei','Ivanov','andiva','a5f15218089065432d992e53323545fed0d9cb3bb0660db6f1592f70bd04609f','Andrei1313@gmail.com',1,'NJ3891938',1,1,0,0,NULL),(36,'Muhammad','Khan','muhkha','11c5d116ad0e56d6381075bbda6e8c628afdb771f491eef8ac4cdaaf052c5a65','MuhammadK5@gmail.com',1,'NH3919388',1,1,0,0,NULL),(37,'Katarzyna','Nowak','katnow','0d66b1ee0f565e0ca0f9bbbae8c3df4a6fc93fc28f9c94343058bdeffe262b03','katarzynow@gmail.com',2,'NJ4891498',1,1,0,0,NULL),(38,'Mateusz','Kowalski','matkow','f74b64de96bb0c659933db1c3fbb45a2e42f26146fc5550888b8826694b48bd8','matkowalski@wp.pl',2,'KM3989813',1,1,0,0,NULL),(39,'Jakub','Adamczyk','jakada','421b3118e95698483a5a39e250573f1d19e3b0165dc1bb8a086660c015bcbc1b','adamczykj@wp.pl',2,'AH4781481',1,1,0,0,NULL),(40,'Jakub','Nowak','jakub','1a67cddc45360c1964d5a01421b027f884934c6b07ad7a0547ae9cd5ad0b4fc3','jakub@gmail.com',2,'TY3981984',1,1,0,0,NULL),(41,'Jakub','Kowalski','jakubkowalski','c4237a7fab4393f1a8ec3f6ffcb15885eed60a6aeca23b247d74da6c24146e6e','jakub@wp.pl',2,'',1,1,0,0,NULL),(44,'tomek','koafokaefko','tomkol','a90c5434e73f8ae117899ce8cbc973da11df3e20e14728e37bba2073e0225bd1','t.koltys@wp.pl',2,'NJ4848941',1,1,0,0,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_notification_settings`
+--
+
+DROP TABLE IF EXISTS `user_notification_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_notification_settings` (
+  `user_id` int NOT NULL,
+  `new_help_offers` tinyint(1) DEFAULT '0',
+  `new_help_requests` tinyint(1) DEFAULT '0',
+  `accepted_help_offers` tinyint(1) DEFAULT '0',
+  `accepted_help_requests` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_notification_settings`
+--
+
+LOCK TABLES `user_notification_settings` WRITE;
+/*!40000 ALTER TABLE `user_notification_settings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_notification_settings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `voivodeship`
+--
+
+DROP TABLE IF EXISTS `voivodeship`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `voivodeship` (
+  `id` int NOT NULL,
+  `name` varbinary(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `voivodeship`
+--
+
+LOCK TABLES `voivodeship` WRITE;
+/*!40000 ALTER TABLE `voivodeship` DISABLE KEYS */;
+INSERT INTO `voivodeship` VALUES (1,_binary 'Dolnośląskie'),(2,_binary 'Kujawsko-Pomorskie'),(3,_binary 'Lubelskie'),(4,_binary 'Lubuskie'),(5,_binary 'Łódzkie'),(6,_binary 'Małopolskie'),(7,_binary 'Mazowieckie'),(8,_binary 'Opolskie'),(9,_binary 'Podkarpackie'),(10,_binary 'Podlaskie'),(11,_binary 'Pomorskie'),(12,_binary 'Śląskie'),(13,_binary 'Świętokrzyskie'),(14,_binary 'Warmińsko-Mazurskie'),(15,_binary 'Wielkopolskie'),(16,_binary 'Zachodniopomorskie');
+/*!40000 ALTER TABLE `voivodeship` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -282,4 +315,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-26  1:19:51
+-- Dump completed on 2023-11-28 22:02:33
