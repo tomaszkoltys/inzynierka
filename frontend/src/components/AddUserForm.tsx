@@ -12,7 +12,7 @@ type FormData = {
   lastName: string;
   name: string;
   password: string;
-  email: string;
+  email_address: string;
   pesel?: string;
   document?: string;
   selectedOption: string;
@@ -48,7 +48,7 @@ export const AddUserForm = () => {
         /^[A-Za-z0-9!@#$]+$/,
         "Pole może zawierać wyłącznie litery, cyfry lub znaki ! @ # $ "
       ),
-    email: z
+      email_address: z
       .string()
       .email("Pole musi zawierać znak @")
       .regex(
@@ -115,7 +115,7 @@ export const AddUserForm = () => {
   const lastName = watch("lastName");
   const username = watch("name");
   const password = watch("password");
-  const email_address = watch("email");
+  const email_address = watch("email_address");
   const role = watch("selectedOption") === "volunteer" ? 2 : 1;
   const identity_number = watch("document");
 
@@ -167,10 +167,10 @@ export const AddUserForm = () => {
         type="email"
         className="text-base py-3 px-2 bg-[#E1E1E1]"
         maxLength={20}
-        {...register("email")}
+        {...register("email_address")}
       />
-      {errors.email && (
-        <p className="text-[#e62727]"> {errors.email.message}</p>
+      {errors.email_address && (
+        <p className="text-[#e62727]"> {errors.email_address.message}</p>
       )}
       <div className="mt-16 mb-4 gap-24 lg:gap-36 flex flex-row items-center justify-center mx-auto xs:flex-col xs:gap-6 xs:items-start">
         <label
