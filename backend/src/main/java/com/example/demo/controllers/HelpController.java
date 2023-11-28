@@ -37,7 +37,7 @@ public class HelpController {
     @PostMapping(value = "/addhelp", headers = ("content-type=multipart/*"), consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void addHelp(@RequestParam("county") int county, @RequestParam("description") String description,
                         @RequestParam("photo") MultipartFile photo, @RequestParam("side") int side,
-                        @RequestParam("author") int author, @RequestParam("type") int type) throws IOException {
+                        @RequestParam("author") int author, @RequestParam("type") int type) throws Exception {
 
         helpPhotoService.uploadObject("inzynierka", "help-photos", photo.getOriginalFilename(), photo.getBytes());
         Help newHelp = new Help();
@@ -55,7 +55,7 @@ public class HelpController {
             case 2 -> NotificationType.new_help_requests;
             default -> throw new IllegalStateException("Unexpected value: " + side);
         };
-        notificationService.sendNotification(notificationType);
+        notificationService.sendNotification(notificationType, null);
     }
 
     @GetMapping(value = "/allhelps")
@@ -231,13 +231,15 @@ public class HelpController {
         if (optionalHelp.isPresent()) {
             Help help = optionalHelp.get();
 
-            // The rest of your code here
+
             help.setHelpStatus(help_status);
             helpRepository.save(help);
+
             return new ResponseEntity<>("Help status updated successfully", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Help offer not found", HttpStatus.NOT_FOUND);
         }
+
 
     }
 
@@ -269,16 +271,22 @@ public class HelpController {
     public ResponseEntity<?> acceptHelp(
             @RequestParam int id, // Identyfikator akceptowanej oferty
             @RequestParam int supporter
-    ) {
+    ) throws Exception {
         Optional<Help> optionalHelp = helpRepository.findById(id);
 
         if (optionalHelp.isPresent()) {
             Help help = optionalHelp.get();
 
-            // Aktualizuj pola oferty pomocy
-            help.setHelpStatus(2); // Ustawienie statusu oferty na "W trakcie realizacji"
+            help.setHelpStatus(2);
             help.setSupporter(supporter);
             helpRepository.save(help);
+
+            var notificationType = switch (help.getSide()){
+                case 1 -> NotificationType.accepted_help_offers;
+                case 2 -> NotificationType.accepted_help_requests;
+                default -> throw new IllegalStateException("Unexpected value: " + help.getSide());
+            };
+            notificationService.sendNotification(notificationType, supporter);
 
             return new ResponseEntity<>("Pomoc zaakceptowana pomyślnie", HttpStatus.OK);
         } else {

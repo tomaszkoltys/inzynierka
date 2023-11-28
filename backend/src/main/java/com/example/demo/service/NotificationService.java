@@ -15,8 +15,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class NotificationService {
     private final RestTemplate restTemplate = new RestTemplate();
     private String apiUrl = "https://api.courier.com/send";
 
-    public void sendNotification(NotificationType notificationType){
+    public void sendNotification(NotificationType notificationType, Integer supporterId) throws Exception {
         String template = switch(notificationType){
             case new_help_offers -> "E68SRAWDDH4X5EMFR45DR8TJWAD9";
             case new_help_requests -> "JJ1FMNJ7Z3MR1WMCVYYTEHEMK6KW";
@@ -33,14 +35,20 @@ public class NotificationService {
             case accepted_help_requests -> "W3K920K6114NC5HMFEW9Q0VN7RVM";
         };
 
+        if(supporterId==null){
+            throw new Exception("No supporter id provided");
+        }
         var emailList = switch(notificationType){
             case new_help_offers -> userRepository.findAllForNewHelpOffersNotification();
             case new_help_requests -> userRepository.findAllForNewHelpRequestsNotification();
-            case accepted_help_offers -> userRepository.findAllForAcceptedHelpOffersNotification();
-            case accepted_help_requests -> userRepository.findAllForAcceptedHelpRequestsNotification();
+            case accepted_help_offers -> userRepository.findAllById(List.of(supporterId));
+            case accepted_help_requests -> userRepository.findAllById(List.of(supporterId));
         };
 
-        emailList.stream()
+        if(StreamSupport.stream(emailList.spliterator(), false).findAny().isEmpty()){
+            throw new Exception("No users to notify found");
+        }
+        StreamSupport.stream(emailList.spliterator(), false)
                 .map(user -> {
                     var dataDTO = new DataDTO(user.getName(), null);
                     var emailDTO = new EmailDTO(user.getEmail_address());
