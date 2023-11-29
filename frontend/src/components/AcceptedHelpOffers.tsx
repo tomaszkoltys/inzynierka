@@ -25,6 +25,7 @@ export const AcceptedHelpOffersList = () => {
     })
       .then((response) => {
         setMyHelps(response.data);
+        console.log(response.data)
       })
       .catch((error) => {
         console.error(

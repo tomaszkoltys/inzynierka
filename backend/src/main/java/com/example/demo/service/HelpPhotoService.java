@@ -55,6 +55,6 @@ public class HelpPhotoService {
     }
 
     public HelpWithPhotoDTO getHelpWithPhoto(Help help) throws IOException {
-        return new HelpWithPhotoDTO(help, getObject("inzynierka", "help-photos", help.getPhoto()));
+        return new HelpWithPhotoDTO(help.getId(), help.getCounty(), help.getDescription(), getObject("inzynierka", "help-photos", help.getPhoto()), help.getSide(), help.getAuthor(), help.getSupporter(), help.getHelpStatus(), help.getType());
     }
 }

@@ -89,7 +89,7 @@ export const SingleAdminHelp = ({
     <div className="flex flex-col bg-yellow-light border border-yellow-light text-[#fff]">
       <div className="flex h-48">
         <div className="w-[50%]">
-          <img src={photo} alt="" className="w-full h-full object-cover" />
+          <img src={`data:image/png;base64,${photo}`} alt="" className="w-full h-full object-cover" />
         </div>
         <div className="w-[50%] mx-2 mb-2 my-2">
           {isEditing ? (
@@ -115,13 +115,13 @@ export const SingleAdminHelp = ({
                 onChange={(e) => setUpdatedDescription(e.target.value)}
               />
               <br />
-              <input
+              {/* <input
                 type="text"
                 className="w-full h-[40px] p-2 border border-gray-300 text-[#000] rounded-md text-sm resize-none outline-none md:w-[90%]"
                 placeholder={t("photo")}
                 value={updatedPhoto}
                 onChange={(e) => setUpdatedPhoto(e.target.value)}
-              />
+              /> */}
               <br />
 
             </div>

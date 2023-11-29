@@ -18,7 +18,7 @@ public class UserNotificationSettingsController {
 
     }
 
-    @GetMapping(value = "/setusersettings")
+    @PostMapping(value = "/setusersettings")
     public @ResponseBody UserNotificationSettings setUserSettings(@RequestParam int user_id, @RequestParam boolean new_help_offers,
                                                                   @RequestParam boolean new_help_requests, @RequestParam boolean accepted_help_offers,
                                                                   @RequestParam boolean accepted_help_requests){

@@ -35,9 +35,6 @@ public class NotificationService {
             case accepted_help_requests -> "W3K920K6114NC5HMFEW9Q0VN7RVM";
         };
 
-        if(supporterId==null){
-            throw new Exception("No supporter id provided");
-        }
         var emailList = switch(notificationType){
             case new_help_offers -> userRepository.findAllForNewHelpOffersNotification();
             case new_help_requests -> userRepository.findAllForNewHelpRequestsNotification();
@@ -69,7 +66,9 @@ public class NotificationService {
         String template = "0A1YB1E9QRMPX2GCQG5YJ9CZMY4F";
         var user =  userRepository.findByEmail(email_address).orElse(null);
         var randomCode = new Random().nextInt(900000)+100000;
-        userRepository.updateRandomCode(randomCode, user.getId());
+       user.setReset_password_code(randomCode);
+       userRepository.save(user);
+
 
         Stream.of(user)
                 .map(userData -> {

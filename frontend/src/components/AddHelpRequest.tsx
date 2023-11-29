@@ -19,7 +19,7 @@ export const AddHelpRequestForm = () => {
   const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
   const [description, setDescription] = useState("");
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<Blob | string>("");
   const [imageLink, setImageLink] = useState("");
   const [formErrors, setFormErrors] = useState({
     voivodeship: false,
@@ -107,14 +107,21 @@ export const AddHelpRequestForm = () => {
       return;
     }
     else {
-      axios({
-        method: 'post',
-        url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo=${imageLink}&side=2&author=${localStorage.getItem('user-id')}&type=${selectedHelpTypeId}`,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-        }
-      })
+      const form = new FormData();
+      form.append('county',selectedCountyId.toString());
+      form.append('description', description);
+      form.append('photo', imageFile);
+      form.append('side', "2");
+      form.append('author', localStorage.getItem('user-id')!.toString())
+      form.append('type', selectedHelpTypeId.toString());
+
+  axios.post('http://localhost:8080/api/v1/help/addhelp', form, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+    }
+    
+  })
         .then((response) => {
           console.log("Odpowiedź od serwera:", response.data);
           toast.success(t('help-request-added-successfully'), {

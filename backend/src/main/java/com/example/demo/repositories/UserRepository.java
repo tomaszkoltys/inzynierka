@@ -46,7 +46,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
 
     @Query(value = "update user set reset_password_code = :randomCode where id = :userId", nativeQuery = true)
-    int updateRandomCode(int randomCode, int userId);
+    void updateRandomCode(int randomCode, int userId);
 
 
 

@@ -22,7 +22,7 @@ export const RemindSecondStep = () => {
         /^[^ ]+@[^ ]+\.[a-z]{2,3}$/,
         t('field-xyz'),
       ),
-    randomCode: z.number().min(6, t('code-6-digits')).max(6),
+    randomCode: z.number(),
     password: z
     .string()
     .min(5, t('password-5-characters'))
@@ -83,7 +83,7 @@ export const RemindSecondStep = () => {
             <input
               type="tel"
               className="text-base py-3 px-2 bg-[#E1E1E1]"
-              maxLength={5}
+              maxLength={6}
               {...register("randomCode", { valueAsNumber: true })}
             />
             {errors.randomCode && (

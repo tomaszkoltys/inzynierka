@@ -14,7 +14,7 @@ type FormData = {
 };
 
 export const RemindFirstStep = () => {
-  const [secondStep, setSecondStep] = useState<boolean>(true)
+  const [secondStep, setSecondStep] = useState<boolean>(false)
 
   const schema: ZodType<FormData> = z.object({
     email_address: z
@@ -32,7 +32,7 @@ export const RemindFirstStep = () => {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const submitData = async (data: FormData) => {
+  const sendCode = async (data: FormData) => {
     console.log(data.email_address)
     axios({
       method: 'post',
@@ -66,7 +66,7 @@ export const RemindFirstStep = () => {
           <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-4%]">
             {t('remind-password')}
           </div>
-          <form className="flex flex-col" onSubmit={handleSubmit(submitData)}>
+          <form className="flex flex-col" onSubmit={handleSubmit(sendCode)}>
             <label className="mt-6">Email*</label>
             <input
               type="email"

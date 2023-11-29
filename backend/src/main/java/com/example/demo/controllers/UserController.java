@@ -5,6 +5,8 @@ import com.example.demo.helper.SecurityHelper;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.service.NotificationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpResponse;
@@ -13,6 +15,7 @@ import java.net.http.HttpResponse;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user")
+@Slf4j
 public class UserController {
     private final UserRepository userRepository;
     private final NotificationService notificationService;
@@ -123,13 +126,17 @@ public class UserController {
     }
 
     @PostMapping(value = "/resetpassword")
-    public void resetPassword(@RequestParam String email_address, @RequestParam int randomCode, @RequestParam String password) throws Exception {
+    public ResponseEntity<User> resetPassword(@RequestParam String email_address, @RequestParam int randomCode, @RequestParam String password) throws Exception {
         var user = userRepository.findByEmail(email_address).orElse(null);
         if(user == null){
             throw new Exception("User not found");
         }else if(user.getReset_password_code()==randomCode){
+            log.info(""+user.getPassword());
             user.setPassword(SecurityHelper.hashPassword(password));
+            log.info(""+user.getPassword());
+            userRepository.save(user);
         }
+        return ResponseEntity.of(userRepository.findByEmail(email_address));
     }
 
 }

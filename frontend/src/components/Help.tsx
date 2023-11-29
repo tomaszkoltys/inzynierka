@@ -9,7 +9,7 @@ export type OfferProps = {
   supporter: number;
   county: number;
   description: string;
-  photo: string;
+  photo: Blob;
   side: number;
   helpStatus: number;
   type: number;

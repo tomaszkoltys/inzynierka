@@ -4,12 +4,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 import i18n from "../services/i18next";
+import axios from "axios";
+import { SettingProps } from "./SettingsWindowRef";
 
 export const SettingsWindowVol = () => {
   const { t } = useTranslation();
-  const [isNewNotifications, setIsNewNotifications] = useState<boolean>(false);
-  const [isAcceptedNotifications, setIsAcceptedNotifications] =
-    useState<boolean>(false);
+  const [userSettings, setUserSettings] = useState<SettingProps>()
+  const [helpRequestsSettings, setHelpRequestsSettings] = useState<boolean>(false)
+  const [acceptedHelpOffersSettings, setAcceptedHelpOffersSettings] = useState<boolean>(false)
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const [loggedInUser, setLoggedInUser] = useState<null | string>(null);
   const [loggedInUserRole, setLoggedInUserRole] = useState<null | string>(null);
@@ -35,46 +37,45 @@ export const SettingsWindowVol = () => {
     window.location.href = '/login';
   };
 
-  const handleNewNotificationsChange = () => {
-    const updatedValue = !isNewNotifications;
-    setIsNewNotifications(updatedValue);
-  };
-
-  const handleAcceptedNotificationsChange = () => {
-    const updatedValue = !isAcceptedNotifications;
-    setIsAcceptedNotifications(updatedValue);
-  };
-
-  const handleSaveChanges = () => {
-    localStorage.setItem(
-      "newNotifications__vol",
-      isNewNotifications.toString(),
-    );
-    localStorage.setItem(
-      "acceptedNotifications__vol",
-      isAcceptedNotifications.toString(),
-    );
-
-    toast.success("Zapisano!", {
-      position: toast.POSITION.TOP_CENTER,
-    });
-  };
 
   useEffect(() => {
-    const newNotificationsValue = localStorage.getItem("newNotifications__vol");
-    const acceptedNotificationsValue = localStorage.getItem(
-      "acceptedNotifications__vol",
-    );
-
-    if (newNotificationsValue !== null) {
-      setIsNewNotifications(newNotificationsValue === "true");
-    }
-
-    if (acceptedNotificationsValue !== null) {
-      setIsAcceptedNotifications(acceptedNotificationsValue === "true");
-    }
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/api/v1/notificationsettings/getusersettings?user_id=${localStorage.getItem('user-id')}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
+    .then((response) => {
+      setUserSettings(response.data);
+      if (response.data) {
+        setHelpRequestsSettings(response.data.new_help_requests || false);
+        setAcceptedHelpOffersSettings(response.data.accepted_help_offers || false);
+      }
+    })
+      .catch((error) => {
+        console.error("Error fetching /getusersettings:", error);
+      });
   }, []);
 
+  const saveUserChoice = () => {
+    axios({
+      method: 'post',
+      url: `http://localhost:8080/api/v1/notificationsettings/setusersettings?user_id=${localStorage.getItem('user-id')}&new_help_offers=false&new_help_requests=${helpRequestsSettings}&accepted_help_offers=${acceptedHelpOffersSettings}&accepted_help_requests=false`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+      }
+    })
+      .then((response) => {
+        console.log("Saved:", response.data);
+        setUserSettings(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
   return (
     <div className="">
       <div className="flex items-center justify-center">
@@ -89,8 +90,8 @@ export const SettingsWindowVol = () => {
                 <input
                   type="checkbox"
                   className="settings-checkbox"
-                  checked={isNewNotifications}
-                  onChange={handleNewNotificationsChange}
+                  checked={userSettings?.new_help_requests}
+                  onChange={() => setHelpRequestsSettings(!helpRequestsSettings)}
                 />
                 &nbsp;{t("about-new-needs")}
               </label>
@@ -98,14 +99,14 @@ export const SettingsWindowVol = () => {
                 <input
                   type="checkbox"
                   className="settings-checkbox"
-                  checked={isAcceptedNotifications}
-                  onChange={handleAcceptedNotificationsChange}
+                  checked={userSettings?.accepted_help_offers}
+                  onChange={() => setAcceptedHelpOffersSettings(!acceptedHelpOffersSettings)}
                 />
                 &nbsp;{t("about-accepted-help-offers")}
               </label>
               <div
                 className="flex items-center justify-center mt-4 mb-8 py-2 px-2 bg-yellow-default rounded-md text-[#fff] hover:cursor-pointer hover:bg-yellow-light"
-                onClick={handleSaveChanges}
+                onClick={saveUserChoice}
               >
                 <a className="text-xl text-[#fff]">{t("save-changes")}</a>
                 <ToastContainer />
