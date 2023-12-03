@@ -232,7 +232,7 @@ export const MyHelpOffersList = () => {
               </div>
               <div className="flex mt-4 justify-between sm:justify-start">
                 <label
-                  className="flex items-center justify-center"
+                  className="flex items-center justify-center text-sm"
                   onClick={() => setInprogressOption(!inprogressOption)}
                 >
                   <input

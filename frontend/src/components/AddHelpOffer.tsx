@@ -19,8 +19,7 @@ export const AddOfferForm = () => {
   const [selectedHelpType, setSelectedHelpType] = useState<string | null>(null);
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
   const [description, setDescription] = useState("");
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imageLink, setImageLink] = useState("");
+  const [imageFile, setImageFile] = useState<Blob | string>("");
   const [formErrors, setFormErrors] = useState({
     voivodeship: false,
     county: false,
@@ -92,10 +91,6 @@ export const AddOfferForm = () => {
     setSelectedCountyId(selectedCountyId);
   };
 
-  const handleImageLinkChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setImageLink(event.target.value);
-  };
-
   const handleSubmit = () => {
     if (!selectedVoivodeshipId || !selectedCountyId || !selectedHelpTypeId || !description) {
       setFormErrors({
@@ -108,13 +103,20 @@ export const AddOfferForm = () => {
       return;
     }
     else {
-      axios({
-        method: 'post',
-        url: `http://localhost:8080/api/v1/help/addhelp?county=${selectedCountyId}&description=${description}&photo=${imageLink}&side=1&author=${localStorage.getItem('user-id')}&type=${selectedHelpTypeId}`,
+      const form = new FormData();
+      form.append('county',selectedCountyId.toString());
+      form.append('description', description);
+      form.append('photo', imageFile);
+      form.append('side', "1");
+      form.append('author', localStorage.getItem('user-id')!.toString())
+      form.append('type', selectedHelpTypeId.toString());
+
+      axios.post('http://localhost:8080/api/v1/help/addhelp', form, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
         }
+        
       })
         .then((response) => {
           console.log("Odpowiedź od serwera:", response.data);
@@ -202,15 +204,6 @@ export const AddOfferForm = () => {
               <div className="inline py-2 px-2 my-6">
                 <p className="text-gray-300">{t("add-photos")}</p>
               </div>
-            </div>
-            <div className="flex flex-col md:w-[40%]">
-              <input
-                type="text"
-                placeholder={t("image-link")}
-                className="w-full h-full p-2 border border-gray-300 text-[#000] rounded-md text-sm resize-none outline-none"
-                value={imageLink}
-                onChange={handleImageLinkChange}
-              />
             </div>
             <div className="flex items-center justify-center my-6 py-2 px-2 bg-yellow-default rounded-md text-xl text-[#fff] hover:cursor-pointer hover:bg-yellow-light addOffer__btn w-full md:w-[40%]">
               <input

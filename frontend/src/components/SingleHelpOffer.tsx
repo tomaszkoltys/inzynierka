@@ -148,7 +148,7 @@ export const SingleHelpOffer = ({
     <div className={`flex flex-col bg-${isAccepted ? "green" : "yellow"}-light border border-${isAccepted ? "green" : "yellow"}-light text-[#fff]`}>
       <div className="flex h-48">
         <div className="w-[50%]">
-          <img src={photo} alt="" className="w-full h-full object-cover" />
+          <img src={`data:image/png;base64,${photo}`} alt="" className="w-full h-full object-cover" />
         </div>
         <div className="w-[50%] mx-2 mb-2 my-2">
           <h4 className="text-xl font-semibold mx-5">{typeName}</h4>

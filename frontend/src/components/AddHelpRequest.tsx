@@ -20,7 +20,6 @@ export const AddHelpRequestForm = () => {
   const [selectedHelpTypeId, setSelectedHelpTypeId] = useState<number | null>(null);
   const [description, setDescription] = useState("");
   const [imageFile, setImageFile] = useState<Blob | string>("");
-  const [imageLink, setImageLink] = useState("");
   const [formErrors, setFormErrors] = useState({
     voivodeship: false,
     county: false,
@@ -89,10 +88,6 @@ export const AddHelpRequestForm = () => {
     setSelectedCounty(selected);
     const selectedCountyId = counties.find((county) => county.name === selected)?.id || null;
     setSelectedCountyId(selectedCountyId);
-  };
-
-  const handleImageLinkChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setImageLink(event.target.value);
   };
 
   const handleSubmit = () => {
@@ -208,15 +203,6 @@ export const AddHelpRequestForm = () => {
               <div className="inline py-2 px-2 my-6">
                 <p className="text-gray-300">{t("add-photos")}</p>
               </div>
-            </div>
-            <div className="flex flex-col md:w-[40%]">
-              <input
-                type="text"
-                placeholder={t("image-link")}
-                className="w-full h-full p-2 border border-gray-300 text-[#000] rounded-md text-sm resize-none outline-none"
-                value={imageLink}
-                onChange={handleImageLinkChange}
-              />
             </div>
             <div className="flex items-center justify-center my-6 py-2 px-2 bg-yellow-default rounded-md text-xl text-[#fff] hover:cursor-pointer hover:bg-yellow-light addOffer__btn w-full md:w-[40%]">
               <input
