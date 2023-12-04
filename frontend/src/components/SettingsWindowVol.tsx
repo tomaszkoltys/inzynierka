@@ -69,6 +69,10 @@ export const SettingsWindowVol = () => {
       }
     })
       .then((response) => {
+        toast.success("Zapisano!", {
+          position: toast.POSITION.TOP_CENTER,
+  
+        })
         console.log("Saved:", response.data);
         setUserSettings(response.data);
       })
@@ -78,6 +82,7 @@ export const SettingsWindowVol = () => {
   }
   return (
     <div className="">
+      <ToastContainer />
       <div className="flex items-center justify-center">
         <div className="w-full md:w-[50%] h-form flex flex-col min-h bg-[#fff]">
           <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">

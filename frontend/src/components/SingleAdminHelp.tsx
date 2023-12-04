@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { TbPencilCancel, TbPencil } from "react-icons/tb";
 import { MdDeleteOutline } from "react-icons/md";
-import { AiOutlineSave } from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineSave } from "react-icons/ai";
 
 export const SingleAdminHelp = ({
   author,
@@ -24,20 +24,32 @@ export const SingleAdminHelp = ({
   const [updatedType, setUpdatedType] = useState(type);
   const [updatedDescription, setUpdatedDescription] = useState(description);
   const [updatedPhoto, setUpdatedPhoto] = useState(photo);
+  const [imageFile, setImageFile] = useState<Blob | string>(`data:image/png;base64,${photo}`);
 
   const handleEditClick = () => {
     setEditing(true);
   };
 
   const handleSaveClick = () => {
-    axios({
-      method: 'put',
-      url: `http://localhost:8080/api/v1/help/updatehelp?id=${id}&type=${updatedType}&description=${updatedDescription}&photo=${updatedPhoto}`,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
-      }
-    })
+    if(updatedDescription === ""){
+      toast.error("Błąd podczas aktualizacji pomocy.", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+    else{
+      const form = new FormData();
+      form.append('id',id.toString());
+      form.append('type', updatedType.toString());
+      form.append('description', updatedDescription);
+      form.append('photo', imageFile);
+
+      axios.put('http://localhost:8080/api/v1/help/updatehelp', form, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('jwt-token')}`
+        }
+        
+      })
     .then((response) => {
       if (response.status === 200) {
         toast.success("Pomyślnie zaktualizowano pomoc!", {
@@ -52,6 +64,8 @@ export const SingleAdminHelp = ({
       });
       console.error(error);
     });
+    }
+
   };
 
   const handleCancelClick = () => {
@@ -89,7 +103,27 @@ export const SingleAdminHelp = ({
     <div className="flex flex-col bg-yellow-light border border-yellow-light text-[#fff]">
       <div className="flex h-48">
         <div className="w-[50%]">
-          <img src={`data:image/png;base64,${photo}`} alt="" className="w-full h-full object-cover" />
+          {isEditing ? (
+              <div className="flex items-center justify-center relative w-full h-full">
+              <div className="flex items-center justify-center w-[140px] h-[140px] bg-gray-300 relative my-2">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="absolute opacity-0 left-0 w-full h-full"
+                  onChange={(e) => {
+                    const files = e.target.files;
+                    if (files && files.length > 0) {
+                      const file = files[0];
+                      setImageFile(file);
+                    }
+                  }}
+                />
+                <AiOutlinePlus color="#fff" size={25} />
+              </div>
+            </div>
+          ):(
+            <img src={`data:image/png;base64,${photo}`} alt="" className="w-full h-full object-cover" />
+          )}
         </div>
         <div className="w-[50%] mx-2 mb-2 my-2">
           {isEditing ? (
@@ -115,13 +149,6 @@ export const SingleAdminHelp = ({
                 onChange={(e) => setUpdatedDescription(e.target.value)}
               />
               <br />
-              {/* <input
-                type="text"
-                className="w-full h-[40px] p-2 border border-gray-300 text-[#000] rounded-md text-sm resize-none outline-none md:w-[90%]"
-                placeholder={t("photo")}
-                value={updatedPhoto}
-                onChange={(e) => setUpdatedPhoto(e.target.value)}
-              /> */}
               <br />
 
             </div>

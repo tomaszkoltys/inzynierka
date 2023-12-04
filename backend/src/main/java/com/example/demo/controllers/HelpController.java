@@ -247,7 +247,7 @@ public class HelpController {
     public ResponseEntity<?> updateHelp(
             @RequestParam int id,
             @RequestParam String description,
-            @RequestParam String photo,
+            @RequestParam(required = false) MultipartFile photo,
             @RequestParam int type
     ) {
         Optional<Help> optionalHelp = helpRepository.findById(id);
@@ -256,16 +256,26 @@ public class HelpController {
             Help help = optionalHelp.get();
 
             help.setDescription(description);
-            help.setPhoto(photo);
-            help.setType(type);
 
-            helpRepository.save(help);
+            try {
+                // Update the photo only if a new one is provided
+                if (photo != null && !photo.isEmpty()) {
+                    helpPhotoService.uploadObject("inzynierka", "help-photos", photo.getOriginalFilename(), photo.getBytes());
+                    help.setPhoto(photo.getOriginalFilename());
+                }
 
-            return new ResponseEntity<>("Pomoc zaktualizowana pomyślnie", HttpStatus.OK);
+                help.setType(type);
+                helpRepository.save(help);
+
+                return new ResponseEntity<>("Pomoc zaktualizowana pomyślnie", HttpStatus.OK);
+            } catch (IOException e) {
+                return new ResponseEntity<>("Błąd podczas przetwarzania zdjęcia: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         } else {
             return new ResponseEntity<>("Oferta pomocy nie znaleziona", HttpStatus.NOT_FOUND);
         }
     }
+
 
     @PutMapping(value = "/accepthelp")
     public ResponseEntity<?> acceptHelp(
