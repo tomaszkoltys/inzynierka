@@ -36,16 +36,40 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
         onEdit(user.id, editedUser);
         setIsEditing(false);
         console.log(response);
-        toast.success("Pomyślnie zaktualizowano użytkownika!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        if(user.role === 1){
+          toast.success(`Pomyślnie zaktualizowano dane uchodźcy o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else if(user.role === 2){
+          toast.success(`Pomyślnie zaktualizowano dane wolontariusza o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else{
+          toast.success(`Pomyślnie zaktualizowano dane administratora o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
       })
       .catch((error) => {
         console.error("Error saving user:", error);
         console.error(error);
-        toast.error("Błąd podczas aktualizowania użytkownika!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        if(user.role === 1){
+          toast.error(`Błąd podczas aktualizowania danych uchodźcy o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else if(user.role === 2){
+          toast.error(`Błąd podczas aktualizowania danych wolontariusza o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else{
+          toast.error(`Błąd podczas aktualizowania danych administratora o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
       });
   };
 
@@ -67,16 +91,40 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
         onBlock(user.id);
         setIsBlocked(true);
         console.log(response);
-        toast.success("Pomyślnie zablokowano użytkownika!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        if(user.role === 1){
+          toast.success(`Pomyślnie zablokowano uchodźcę o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else if(user.role === 2){
+          toast.success(`Pomyślnie zablokowano wolontariusza o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else{
+          toast.success(`Pomyślnie zablokowano administratora o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
       })
       .catch((error) => {
         console.error("Error during blocking user:", error);
         console.error(error);
-        toast.success("Błąd podczas próby zablokowania użytkownika!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        if(user.role === 1){
+          toast.success(`Błąd podczas próby zablokowania uchodźy o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else if(user.role === 2){
+          toast.success(`Błąd podczas próby zablokowania wolontariusza o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else{
+          toast.success(`Błąd podczas próby zablokowania administatora o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
       });
   };
 
@@ -93,16 +141,40 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
         onBlock(user.id);
         setIsBlocked(false);
         console.log(response);
-        toast.success("Pomyślnie odblokowano użytkownika!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        if(user.role === 1){
+          toast.success(`Pomyślnie odblokowano uchodźę o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else if(user.role === 2){
+          toast.success(`Pomyślnie odblokowano wolontariusza o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else{
+          toast.success(`Pomyślnie odblokowano administratora o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
       })
       .catch((error) => {
         console.error("Error during unblocking user:", error);
         console.error(error);
-        toast.error("Błąd podczas próby odblokowania użytkownika.", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        if(user.role === 1){
+          toast.error(`Błąd podczas próby odblokowania uchodźy o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else if(user.role === 2){
+          toast.error(`Błąd podczas próby odblokowania wolontariusza o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else{
+          toast.error(`Błąd podczas próby odblokowania administatora o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
       });
   };
 
@@ -117,11 +189,38 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
     })
       .then((response) => {
         console.log("Odpowiedź od serwera:", response.data);
-        toast.success("Pomyślnie usunięto użytkownika!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        if(user.role === 1){
+          toast.success(`Pomyślnie usunięto uchodźę o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else if(user.role === 2){
+          toast.success(`Pomyślnie usunięto wolontariusza o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else{
+          toast.success(`Pomyślnie usunięto administratora o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
       })
       .catch((error) => {
+        if(user.role === 1){
+          toast.error(`Błąd podczas usuwania uchodźy o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else if(user.role === 2){
+          toast.error(`Błąd podczas usuwania wolontariusza o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else{
+          toast.error(`Błąd podczas usuwania administratora o nazwie ${user.username}!`, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
         console.error("Błąd podczas usuwania użytkownika:", error);
       });
   };

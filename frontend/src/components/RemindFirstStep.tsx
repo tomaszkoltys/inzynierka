@@ -58,7 +58,7 @@ export const RemindFirstStep = () => {
 
   return (
     <div className="flex flex-row-reverse">
-      <div className="w-full md:w-[50%] h-form flex flex-col relative min-h-[600px] bg-[#fff]">
+      <div className={`${secondStep ? 'min-h-[1000px]' : 'min-h-[600px]'} w-full md:w-[50%] h-form flex flex-col relative bg-[#fff]`}>
         {secondStep ? (
           <RemindSecondStep />
         ):(

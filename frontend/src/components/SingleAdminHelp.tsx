@@ -16,6 +16,7 @@ export const SingleAdminHelp = ({
   users,
   helpTypes,
   id,
+  side,
 }: OfferProps & { users: UserProps[] } & { helpTypes: HelpTypeProps[] }) => {
   const authorUser = users.find((user) => user.id === author);
   const { t } = useTranslation();
@@ -32,9 +33,16 @@ export const SingleAdminHelp = ({
 
   const handleSaveClick = () => {
     if(updatedDescription === ""){
-      toast.error("Błąd podczas aktualizacji pomocy.", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+      if(side === 1){
+        toast.error("Błąd podczas aktualizacji oferty pomocy!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+      else{
+        toast.error("Błąd podczas aktualizacji prośby o pomoc!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      } 
     }
     else{
       const form = new FormData();
@@ -52,16 +60,30 @@ export const SingleAdminHelp = ({
       })
     .then((response) => {
       if (response.status === 200) {
-        toast.success("Pomyślnie zaktualizowano pomoc!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        if(side === 1){
+          toast.success("Pomyślnie zaktualizowano ofertę pomocy!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else{
+          toast.success("Pomyślnie zaktualizowano prośbę o pomoc!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
         setEditing(false);
       }
     })
     .catch((error) => {
-      toast.error("Błąd podczas aktualizacji pomocy.", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+      if(side === 1){
+        toast.error("Błąd podczas aktualizacji oferty pomocy.", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+      else{
+        toast.error("Błąd podczas aktualizacji prośby o pomoc.", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
       console.error(error);
     });
     }
@@ -86,15 +108,29 @@ export const SingleAdminHelp = ({
     })
     .then((response) => {
       if (response.status === 200) {
-        toast.success("Pomyślnie usunięto pomoc!", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        if(side === 1){
+          toast.success("Pomyślnie usunięto ofertę pomocy!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+        else{
+          toast.success("Pomyślnie usunięto prośbę o pomoc!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
       }
     })
     .catch((error) => {
-      toast.error("Błąd podczas usuwania pomocy.", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+      if(side === 1){
+        toast.error("Błąd podczas usuwania oferty pomocy.", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+      else{
+        toast.error("Błąd podczas usuwania prośby o pomoc.", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
       console.error(error);
     });
   };

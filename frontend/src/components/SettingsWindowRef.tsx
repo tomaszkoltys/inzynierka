@@ -49,10 +49,16 @@ export const SettingsWindowRef = () => {
       }
     })
       .then((response) => {
+        toast.success("Zapisano ustawienia powiadomień!", {
+          position: toast.POSITION.TOP_CENTER,
+        })
         console.log("Saved:", response.data);
         setUserSettings(response.data);
       })
       .catch((error) => {
+        toast.error("Błąd!", {
+          position: toast.POSITION.TOP_CENTER,
+        })
         console.error("Error:", error);
       });
   }

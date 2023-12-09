@@ -11,6 +11,7 @@ type FormData = {
   email_address: string;
   randomCode: number;
   password: string;
+  cpassword: string;
 };
 
 export const RemindSecondStep = () => {
@@ -31,6 +32,18 @@ export const RemindSecondStep = () => {
       /^[A-Za-z0-9!@#$]+$/,
       t('password-letters-numbers-characters'),
     ),
+    cpassword: z
+    .string()
+    .min(5, t('password-5-characters'))
+    .max(20)
+    .regex(
+      /^[A-Za-z0-9!@#$]+$/,
+      t('password-letters-numbers-characters'),
+    ),
+  })
+  .refine((data) => data.password === data.cpassword, {
+    message: t('passwords-same'),
+    path: ["cpassword"],
   });
 
   const {
@@ -63,9 +76,9 @@ export const RemindSecondStep = () => {
 
   return (
     <div className="flex flex-row-reverse">
-      <div className="w-full md:w-[100%] h-form flex flex-col min-h-[600px] bg-[#fff]">
+      <div className="w-full md:w-[100%] h-form flex flex-col bg-[#fff]">
         <div className="relative border border-yellow-default my-12 mx-8 py-6 px-2">
-          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-4%]">
+          <div className="absolute text-2xl font-light px-4 bg-[#fff] top-[-3%]">
           {t('remind-password')}
           </div>
           <form className="flex flex-col" onSubmit={handleSubmit(changePassword)}>
@@ -74,8 +87,7 @@ export const RemindSecondStep = () => {
               type="email"
               className="text-base py-3 px-2 bg-[#E1E1E1]"
               maxLength={20}
-              {...register("email_address")}
-            />
+              {...register("email_address")} />
             {errors.email_address && (
               <p className="text-[#e62727]"> {errors.email_address.message}</p>
             )}
@@ -84,8 +96,7 @@ export const RemindSecondStep = () => {
               type="tel"
               className="text-base py-3 px-2 bg-[#E1E1E1]"
               maxLength={6}
-              {...register("randomCode", { valueAsNumber: true })}
-            />
+              {...register("randomCode", { valueAsNumber: true })} />
             {errors.randomCode && (
               <p className="text-[#e62727]"> {errors.randomCode.message}</p>
             )}
@@ -94,10 +105,19 @@ export const RemindSecondStep = () => {
               type="password"
               className="text-base py-3 px-2 bg-[#E1E1E1]"
               maxLength={20}
-              {...register("password")}
-            />
+              {...register("password")} />
             {errors.password && (
               <p className="text-[#e62727]"> {errors.password.message}</p>
+            )}
+            <label className="mt-6">{t(`confirm-new-password`)}</label>
+            <input
+              type="password"
+              className="text-base py-3 px-2 bg-[#E1E1E1]"
+              maxLength={20}
+              {...register("cpassword")}
+            />
+            {errors.cpassword && (
+              <p className="text-[#e62727]"> {errors.cpassword.message}</p>
             )}
             <input
               type="submit"

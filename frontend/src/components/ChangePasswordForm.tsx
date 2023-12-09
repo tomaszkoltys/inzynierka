@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 type FormData = {
   oldPassword: string;
   newPassword: string;
+  cpassword: string;
 };
 export const ChangePasswordForm = () => {
   const { t } = useTranslation();
@@ -26,7 +27,15 @@ export const ChangePasswordForm = () => {
         .regex(
           /^[A-Za-z0-9!@#$]+$/,
           t('password-letters-numbers-characters'),
-        )
+        ),
+      cpassword: z
+        .string()
+        .min(5, t('password-5-characters'))
+        .max(20)
+        .regex(
+          /^[A-Za-z0-9!@#$]+$/,
+          t('password-letters-numbers-characters'),
+        ),
     })
     .refine((data) => data.oldPassword !== data.newPassword, {
       message: t('another-new-password'),
@@ -35,6 +44,10 @@ export const ChangePasswordForm = () => {
     .refine((data) => data.oldPassword === localStorage.getItem('loggedInUserPassword'), {
       message: t('incorrect-old-password'),
       path: ["oldPassword"],
+    })
+    .refine((data) => data.newPassword === data.cpassword, {
+      message: t('passwords-same'),
+      path: ["cpassword"],
     });
 
   const {
@@ -94,6 +107,16 @@ export const ChangePasswordForm = () => {
             />
             {errors.newPassword && (
               <p className="text-[#e62727]"> {errors.newPassword.message}</p>
+            )}
+            <label className="mt-6">{t(`confirm-new-password`)}</label>
+            <input
+              type="password"
+              className="text-base py-3 px-2 bg-[#E1E1E1]"
+              maxLength={20}
+              {...register("cpassword")}
+            />
+            {errors.cpassword && (
+              <p className="text-[#e62727]"> {errors.cpassword.message}</p>
             )}
             <input
               type="submit"
