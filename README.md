@@ -1,65 +1,50 @@
-Docx (https://pollubpl-my.sharepoint.com/:w:/r/personal/s95605_pollub_edu_pl/_layouts/15/Doc.aspx?sourcedoc=%7BFA15A49F-8A64-4BD9-9286-5D246C364971%7D&file=Praca%20in%C5%BCynierska%20Final.docx&action=default&mobileredirect=true)
-- [ ] Wstęp
-  - [ ] Sprawdzenie i poprawienie formatowania.  
-- [ ] Projekt systemu
-  - [ ] Sprawdzenie i poprawienie formatowania.  
-- [ ] Implementacja
-  - [ ] Podmiana zrzutów ekranu.
-  - [ ] Uzupełnienie 3 podrozdziałów (Zmiana hasła, Powiadomienia, Resetowanie hasła)
-  - [ ] Sprawdzenie i poprawienie formatowania.  
-- [ ] Testy
-  - [ ] Podmiana zrzutów ekranu.
-  - [ ] Dodanie nowych zrzutów ekranu.
-  - [ ] Sprawdzenie i poprawienie formatowania.  
-- [ ] Wnioski
-  - [ ] Sprawdzenie i poprawienie formatowania.  
-- [ ] Bibliografia
-  - [ ] Sprawdzenie i poprawienie formatowania.
-  - [ ] Dodanie 9 źródeł, tak aby łącznie było 20 pozycji (z czego minimum 10 książek, im więcej tym lepiej)
+# Instrukcja uruchomienia
 
-I. Backend
-- [ ] Dodanie kolumny pesel do bazy danych, zmiana zapytań rejestracji użytkownika, tak aby uwzględniały numer pesel przy dodawaniu użytkownika.
-- [ ] Zapisywanie zdjęć dodawanych z dysku do bazy danych
 
-II. Frontend
+## Stworzone przy użyciu
 
-0. Moduły - wolontariusz/uchodźca
-- [ ] Pobieranie lokalizacji i uwzględnienie jej w filtrowaniu ofert/próśb o pomoc(działa jeśli nazwa zwróconego miasta jest równa nazwie powiatu w bazie)
+Visual Studio Code </br>
+IntelliJ IDEA </br>
+MySQL Workbench </br>
 
-1. Moduły - wolontariusz
 
-- [x] Dodaj ofertę pomocy
-- [x] Wszystkie prośby o pomoc
-- [x] Zaakceptowane prośby o pomoc
-- [x] Moje oferty pomocy
+## Stworzenie bazy
+1. Stworzenie w środowisku schematu o nazwie "inzynierka" </br>
+2. Import pliku "sql.sql" z katalogu "inzynierka/baza" </br>
 
-2. Moduły - uchodźca
+## Uruchomienie backend
+1. Uruchomienie środowiska i wybranie oraz otworzenie katalogu "backend" </br>
+2. Uruchomienie programu poprzez wybranie zielonej strzałki "Run" </br>
 
-- [x] Dodaj prośbę o pomoc
-- [x] Wszystkie oferty pomocy
-  - [x] Wyświetlanie procentu poleceń (ze wszystkich ofert wolontariusza przy jego ofercie)
-  - [x] Wyświetlanie liczby pozytywnych/negatywnych ocen (ze wszystkich ofert wolontariusza przy jego ofercie)
-- [x] Zaakceptowane oferty pomocy
-  - [x] Dodawanie like'ow/dislike'ow do bazy
-  - [x] Wyświetlanie procentu poleceń
-  - [x] Wyświetlanie liczby pozytywnych/negatywnych ocen
-- [x] Moje prośby o pomoc
-  - [x] Dodawanie like'ow/dislike'ow do bazy
-  - [x] Wyświetlanie procentu poleceń
-  - [x] Wyświetlanie liczby pozytywnych/negatywnych ocen
 
-3. Moduły - admin
+## Uruchomienie frontend
+1. Uruchomienie środowiska i wybranie oraz otworzenie katalogu "inzynierka" </br>
+2. Uruchomienie terminalu i przejście do katalogu "frontend" </br>
+```sh
+    cd inzynierka/frontend
+```
+3. Instalacja zależności
+```sh
+    npm install
+```
+4. Uruchomienie lokalnie (port 5174)
+```sh
+    npm run dev
+```
 
-- [x] Admin Help
-- [x] Admin User
 
-4. Moduły - system
+## Przykładowe dane logowania
+1. Wolontariusz: </br> 
+Login:tomkol </br>
+Hasło:tomkol </br>
+2. Uchodzca: </br>
+Login:sofrod </br>
+Hasło:sofrod </br>
+3. Admin: </br>
+Login:admin </br>
+Hasło:admin </br>
 
-- [x] Rejestracja
-- [x] Logowanie
-- [ ] Przypomnienie hasła
-- [x] Powiadomienia mailowe
 
-Mail:
-swopdu@gmail.com
-swopdupollub123?!
+
+
+

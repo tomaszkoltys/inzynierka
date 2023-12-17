@@ -36,7 +36,6 @@ export const SingleAcceptedHelpRequest = ({
   const supporterUser = users.find((user) => user.id === supporter);
 
   useEffect(() => {
-    // Pobierz początkowy status
     setStatusName(helpStat ? helpStat.name : "Nieznany status");
   }, [helpStatus]);
 

@@ -86,15 +86,15 @@ public class HelpController {
 
     @DeleteMapping("/deletehelp")
     public ResponseEntity<String> deleteHelp(@RequestParam int id) {
-        // Sprawdź, czy oferta istnieje
+
         Optional<Help> optionalHelp = helpRepository.findById(id);
 
         if (optionalHelp.isPresent()) {
-            // Jeśli oferta istnieje, usuń ją
+
             helpRepository.delete(optionalHelp.get());
             return new ResponseEntity<>("Pomoc została pomyślnie usunięta.", HttpStatus.OK);
         } else {
-            // Jeśli oferta o danym ID nie istnieje, zwróć błąd
+
             return new ResponseEntity<>("Oferta o podanym ID nie istnieje.", HttpStatus.NOT_FOUND);
         }
     }
@@ -258,7 +258,7 @@ public class HelpController {
             help.setDescription(description);
 
             try {
-                // Update the photo only if a new one is provided
+
                 if (photo != null && !photo.isEmpty()) {
                     helpPhotoService.uploadObject("inzynierka", "help-photos", photo.getOriginalFilename(), photo.getBytes());
                     help.setPhoto(photo.getOriginalFilename());
@@ -279,7 +279,7 @@ public class HelpController {
 
     @PutMapping(value = "/accepthelp")
     public ResponseEntity<?> acceptHelp(
-            @RequestParam int id, // Identyfikator akceptowanej oferty
+            @RequestParam int id,
             @RequestParam int supporter
     ) throws Exception {
         Optional<Help> optionalHelp = helpRepository.findById(id);

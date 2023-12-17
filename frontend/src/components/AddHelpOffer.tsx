@@ -132,6 +132,9 @@ export const AddOfferForm = () => {
           })
         })
         .catch((error) => {
+          toast.error(t('img-size'), {
+            position: toast.POSITION.TOP_CENTER,
+          });
           console.error("Błąd podczas wysyłania oferty:", error);
         });
     }

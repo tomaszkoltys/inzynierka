@@ -64,7 +64,6 @@ export const SettingsWindowRef = () => {
   }
 
   const handleLogout = () => {
-    // Wyczyszczenie tokena z localStorage
     localStorage.removeItem('jwt-token');
     localStorage.removeItem('loggedInUser');
     window.location.href = '/login';

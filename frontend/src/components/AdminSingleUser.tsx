@@ -334,7 +334,6 @@ const AdminSingleUser: React.FC<AdminSingleUserProps> = ({ user, userRoles, acco
             value={editedUser.accepted}
             onChange={(e) => setEditedUser({ ...editedUser, accepted: Number(e.target.value) })}
           >
-            {/* Tutaj możesz dodać opcje statusu */}
           </input>
         ) : (
           <span className={`${user.account_status === 1 ? "text-black" : "text-[#fc3d3d]"}`}>{user.accepted}</span>

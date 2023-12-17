@@ -69,9 +69,6 @@ public class SecurityConfig {
         return authenticationProvider;
     }
 
-//    private PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
     private PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }

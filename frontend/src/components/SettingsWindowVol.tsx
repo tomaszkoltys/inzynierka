@@ -29,7 +29,6 @@ export const SettingsWindowVol = () => {
   }, []);
 
   const handleLogout = () => {
-    // Wyczyszczenie tokena z localStorage
     localStorage.removeItem('jwt-token');
     localStorage.removeItem('loggedInUser');
     setLoggedInUser(null);
